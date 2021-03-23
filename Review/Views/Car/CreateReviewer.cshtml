@@ -1,0 +1,16 @@
+﻿@model Review.Model.Reviewer
+@{
+    ViewData["Title"] = "Adding a new reviewer";
+}
+<ol class="breadcrumb" style="margin-top: 20px;">
+    <li><a asp-action="Index">Cars list</a></li>
+    <li class="active">New Reviewer</li>
+</ol>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateReviewer">
+            <partial name="_CreateOrUpdateRev" />
+        </form>
+    </div>
+</div>

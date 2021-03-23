@@ -1,0 +1,16 @@
+﻿@model Review.Model.Car
+@{
+    ViewData["Title"] = "Adding a new car";
+}
+<ol class="breadcrumb" style="margin-top: 20px;">
+    <li><a asp-action="Index">Cars list</a></li>
+    <li class="active">New car</li>
+</ol>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreatePost">
+            <partial name="_CreateOrUpdate" />
+        </form>
+    </div>
+</div>
+

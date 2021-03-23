@@ -1,0 +1,9 @@
+C:\Users\Mirko\source\repos\Review\Review.Model\bin\Debug\netcoreapp2.1\Review.Model.deps.json
+C:\Users\Mirko\source\repos\Review\Review.Model\bin\Debug\netcoreapp2.1\Review.Model.dll
+C:\Users\Mirko\source\repos\Review\Review.Model\bin\Debug\netcoreapp2.1\Review.Model.pdb
+C:\Users\Mirko\source\repos\Review\Review.Model\obj\Debug\netcoreapp2.1\Review.Model.csproj.CoreCompileInputs.cache
+C:\Users\Mirko\source\repos\Review\Review.Model\obj\Debug\netcoreapp2.1\Review.Model.AssemblyInfoInputs.cache
+C:\Users\Mirko\source\repos\Review\Review.Model\obj\Debug\netcoreapp2.1\Review.Model.AssemblyInfo.cs
+C:\Users\Mirko\source\repos\Review\Review.Model\obj\Debug\netcoreapp2.1\Review.Model.dll
+C:\Users\Mirko\source\repos\Review\Review.Model\obj\Debug\netcoreapp2.1\Review.Model.pdb
+C:\Users\Mirko\source\repos\Review\Review.Model\obj\Debug\netcoreapp2.1\Review.Model.csprojAssemblyReference.cache

@@ -1,0 +1,35 @@
+﻿@model List<Review.Model.Reviewer>
+<ol class="breadcrumb" style="margin-top: 20px;">
+    <li><a asp-action="Index">Cars list</a></li>
+    <li class="active">Reviewers list</li>
+</ol>
+<table style="margin-top: 20px;" class="table table-condensed" id="tbl-cars">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date Of Birth</th>
+            <th>Gender</th>
+            <th>About</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.FirstName</td>
+            <td>@item.LastName</td>
+            <td>@item.DateOfBirth.Date.ToString("dd/MM/yyyy")</td>
+            <td>@item.Gender</td>
+            <td>@item.About</td>
+            <td>
+                <a asp-action="EditReviewer" asp-route-id="@item.ID">[edit reviewer]</a>
+            </td>
+            <td>
+                <a asp-action="DeleteReviewer" asp-route-id="@item.ID">[delete reviewer]</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

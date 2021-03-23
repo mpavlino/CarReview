@@ -1,0 +1,87 @@
+﻿@model Review.Model.Car
+@{
+    ViewData["Title"] = "Details";
+}
+<h2>Details</h2>
+@if (Model != null)
+{
+    <ol class="breadcrumb">
+        <li><a asp-action="Index">Cars list</a></li>
+        <li class="active">@Model.Brand?.Name</li>
+    </ol>
+
+    <div>
+        <h4>Car</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                ID
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ID)
+            </dd>
+            <dt>
+                Brand
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Brand.Name)
+            </dd>
+            <dt>
+                Model
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Model)
+            </dd>
+            <dt>
+                Model Year
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ModelYear.Year)
+            </dd>
+            <dt>
+                Engine
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Engine)
+            </dd>
+            <dt>
+                Max. speed
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TopSpeed) km/h
+            </dd>
+            <dt>
+                Acceleration
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Acceleration) sec
+            </dd>
+            <dt>
+                Summary (About)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                Country
+            </dt>
+            <dd>
+                @Model?.Country?.Name
+            </dd>
+            <dt>
+                Reviewer
+            </dt>
+            <dd>
+                @Model?.Reviewer?.FullName
+            </dd>
+        </dl>
+    </div>
+
+}
+else
+{
+    <div class="alert alert-danger">
+        Nije odabran ispravni ID automobila.
+    </div>
+
+}

@@ -1,0 +1,41 @@
+﻿@model List<Review.Model.Car>
+<table style="margin-top: 20px;" class="table table-condensed" id="tbl-cars">
+    <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Country</th>
+            <th>Engine</th>
+            <th>Reviewer</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.ID">@item.Brand?.Name</a>
+            </td>
+            <td>
+                <a asp-action="Blog" asp-route-id="@item.ID">@item.Model</a>
+            </td>
+
+            <td>@item.Country?.Name</td>
+            <td>@item.Engine</td>
+            <td>
+                <a asp-action="ReviewerDetails" asp-route-id="@item.ReviewerID">@item.Reviewer?.FullName</a>
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">[edit car]</a>
+            </td>
+            <td>
+                <a asp-action="EditReviewer" asp-route-id="@item.ReviewerID">[edit reviewer]</a>
+            </td>
+            <td>
+                <a asp-action="DeleteCar" asp-route-id="@item.ID">[delete car]</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

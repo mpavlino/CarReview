@@ -1,0 +1,14 @@
+C:\Users\Mirko\source\repos\Review\Review.DAL\bin\Debug\netcoreapp2.1\Review.DAL.deps.json
+C:\Users\Mirko\source\repos\Review\Review.DAL\bin\Debug\netcoreapp2.1\Review.DAL.dll
+C:\Users\Mirko\source\repos\Review\Review.DAL\obj\Debug\netcoreapp2.1\Review.DAL.csproj.CoreCompileInputs.cache
+C:\Users\Mirko\source\repos\Review\Review.DAL\obj\Debug\netcoreapp2.1\Review.DAL.AssemblyInfoInputs.cache
+C:\Users\Mirko\source\repos\Review\Review.DAL\obj\Debug\netcoreapp2.1\Review.DAL.AssemblyInfo.cs
+C:\Users\Mirko\source\repos\Review\Review.DAL\bin\Debug\netcoreapp2.1\Review.DAL.runtimeconfig.json
+C:\Users\Mirko\source\repos\Review\Review.DAL\bin\Debug\netcoreapp2.1\Review.DAL.runtimeconfig.dev.json
+C:\Users\Mirko\source\repos\Review\Review.DAL\bin\Debug\netcoreapp2.1\Review.DAL.pdb
+C:\Users\Mirko\source\repos\Review\Review.DAL\bin\Debug\netcoreapp2.1\Review.Model.dll
+C:\Users\Mirko\source\repos\Review\Review.DAL\bin\Debug\netcoreapp2.1\Review.Model.pdb
+C:\Users\Mirko\source\repos\Review\Review.DAL\obj\Debug\netcoreapp2.1\Review.DAL.csprojAssemblyReference.cache
+C:\Users\Mirko\source\repos\Review\Review.DAL\obj\Debug\netcoreapp2.1\Review.DAL.csproj.CopyComplete
+C:\Users\Mirko\source\repos\Review\Review.DAL\obj\Debug\netcoreapp2.1\Review.DAL.dll
+C:\Users\Mirko\source\repos\Review\Review.DAL\obj\Debug\netcoreapp2.1\Review.DAL.pdb

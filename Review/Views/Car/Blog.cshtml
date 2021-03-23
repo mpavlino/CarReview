@@ -1,0 +1,42 @@
+﻿@model Review.Model.Car
+@{
+    ViewData["Title"] = "Blog";
+}
+<h2>Details</h2>
+@if (Model != null)
+{
+
+
+    <ol class="breadcrumb">
+        <li><a asp-action="Index">Cars list</a></li>
+        <li class="active">@Model.Brand?.Name</li>
+    </ol>
+
+    <div class="row">
+        <div class="col-md-10">
+            <h2>@Model.Brand?.Name @Model.Model</h2>
+            <ul>
+                <li>Engine of this car is: @Model.Engine</li>
+                <li>It has top speed of: @Model.TopSpeed km/h</li>
+                <li>Acceleration time in seconds (0-100km/h): @Model.Acceleration</li>
+                <li>Year of model: @Model.ModelYear.Year</li>
+                <li>Country: @Model.Country?.Name</li>
+            </ul>
+        </div>
+    </div>
+    <div class="range">
+        <h3>About @Model.Model</h3>
+        <p>
+            @Model.Description
+        </p>
+    </div>
+
+
+}
+else
+{
+    <div class="alert alert-danger">
+        Nije odabran ispravni ID automobila.
+    </div>
+
+}
