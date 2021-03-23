@@ -8732,11 +8732,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Mirko\\source\\repos\\Review\\Review\\Review.csproj",
+      "projectUniqueName": "C:\\Users\\Mirko\\Documents\\CarReview\\Review\\Review.csproj",
       "projectName": "Review",
-      "projectPath": "C:\\Users\\Mirko\\source\\repos\\Review\\Review\\Review.csproj",
+      "projectPath": "C:\\Users\\Mirko\\Documents\\CarReview\\Review\\Review.csproj",
       "packagesPath": "C:\\Users\\Mirko\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Mirko\\source\\repos\\Review\\Review\\obj\\",
+      "outputPath": "C:\\Users\\Mirko\\Documents\\CarReview\\Review\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -8756,11 +8756,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\Mirko\\source\\repos\\Review\\Review.DAL\\Review.DAL.csproj": {
-              "projectPath": "C:\\Users\\Mirko\\source\\repos\\Review\\Review.DAL\\Review.DAL.csproj"
+            "C:\\Users\\Mirko\\Documents\\CarReview\\Review.DAL\\Review.DAL.csproj": {
+              "projectPath": "C:\\Users\\Mirko\\Documents\\CarReview\\Review.DAL\\Review.DAL.csproj"
             },
-            "C:\\Users\\Mirko\\source\\repos\\Review\\Review.Model\\Review.Model.csproj": {
-              "projectPath": "C:\\Users\\Mirko\\source\\repos\\Review\\Review.Model\\Review.Model.csproj"
+            "C:\\Users\\Mirko\\Documents\\CarReview\\Review.Model\\Review.Model.csproj": {
+              "projectPath": "C:\\Users\\Mirko\\Documents\\CarReview\\Review.Model\\Review.Model.csproj"
             }
           }
         }

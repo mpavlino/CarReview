@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Mirko\\source\\repos\\Review\\Review.Model\\Review.Model.csproj": {}
+    "C:\\Users\\Mirko\\Documents\\CarReview\\Review.Model\\Review.Model.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Mirko\\source\\repos\\Review\\Review.Model\\Review.Model.csproj": {
+    "C:\\Users\\Mirko\\Documents\\CarReview\\Review.Model\\Review.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mirko\\source\\repos\\Review\\Review.Model\\Review.Model.csproj",
+        "projectUniqueName": "C:\\Users\\Mirko\\Documents\\CarReview\\Review.Model\\Review.Model.csproj",
         "projectName": "Review.Model",
-        "projectPath": "C:\\Users\\Mirko\\source\\repos\\Review\\Review.Model\\Review.Model.csproj",
+        "projectPath": "C:\\Users\\Mirko\\Documents\\CarReview\\Review.Model\\Review.Model.csproj",
         "packagesPath": "C:\\Users\\Mirko\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mirko\\source\\repos\\Review\\Review.Model\\obj\\",
+        "outputPath": "C:\\Users\\Mirko\\Documents\\CarReview\\Review.Model\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
