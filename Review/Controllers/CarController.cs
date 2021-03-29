@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,12 +18,15 @@ namespace Review.Controllers
     {
       
         private CarManagerDbContext _dbContext;
+        private UserManager<AppUser> _userManager;
 
-        public CarController(CarManagerDbContext dbContext)
+        public CarController(CarManagerDbContext dbContext, UserManager<AppUser> userManager)
         {
             this._dbContext = dbContext;
+            this._userManager = userManager;
         }
 
+        [Authorize]
         public IActionResult Index(string query = null)
         {
             IQueryable<Car> carQuery = this._dbContext.Cars.Include(c => c.Brand).Include(c => c.Country).Include(c => c.Reviewer).AsQueryable();

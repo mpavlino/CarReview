@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Review.DAL;
+using Review.Model;
 
 namespace Review
 {
@@ -39,6 +40,10 @@ namespace Review
             services.AddDbContext<CarManagerDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("CarManagerDbContext")));
+
+            services.AddDefaultIdentity<AppUser>()
+                .AddEntityFrameworkStores<CarManagerDbContext>();
+                
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddRazorPages();
@@ -74,12 +79,13 @@ namespace Review
                 SupportedUICultures = supportedCultures
             });
 
-            //app.UseAuthentication();
+            app.UseAuthentication();
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
+                endpoints.MapRazorPages();
             });
         }
     }

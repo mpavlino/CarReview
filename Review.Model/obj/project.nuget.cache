@@ -1,8 +1,23 @@
 {
   "version": 2,
-  "dgSpecHash": "NzJ4T0jj5I6ttdoC4snOii0fqRkoZNBWHEDFjQ5sMk7BlARQdLp10qRrRA1fwyRwG9ieoQOIsmeQfiB5SBrL4A==",
+  "dgSpecHash": "NV6RXCneqWtWr2GTQ4YQ/YrgdR5wQBWMVPSiNEhLCHXBp/vjZ12i7lCzTNlKTXwdGQDZgvKQR9i7aP6YP4YVhQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Mirko\\Documents\\CarReview\\Review.Model\\Review.Model.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Mirko\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.13\\microsoft.aspnetcore.cryptography.internal.3.1.13.nupkg.sha512",
+    "C:\\Users\\Mirko\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.13\\microsoft.aspnetcore.cryptography.keyderivation.3.1.13.nupkg.sha512",
+    "C:\\Users\\Mirko\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\3.1.13\\microsoft.extensions.caching.abstractions.3.1.13.nupkg.sha512",
+    "C:\\Users\\Mirko\\.nuget\\packages\\microsoft.extensions.configuration\\3.1.13\\microsoft.extensions.configuration.3.1.13.nupkg.sha512",
+    "C:\\Users\\Mirko\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\3.1.13\\microsoft.extensions.configuration.abstractions.3.1.13.nupkg.sha512",
+    "C:\\Users\\Mirko\\.nuget\\packages\\microsoft.extensions.configuration.binder\\3.1.13\\microsoft.extensions.configuration.binder.3.1.13.nupkg.sha512",
+    "C:\\Users\\Mirko\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\3.1.13\\microsoft.extensions.dependencyinjection.3.1.13.nupkg.sha512",
+    "C:\\Users\\Mirko\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\3.1.13\\microsoft.extensions.dependencyinjection.abstractions.3.1.13.nupkg.sha512",
+    "C:\\Users\\Mirko\\.nuget\\packages\\microsoft.extensions.identity.core\\3.1.13\\microsoft.extensions.identity.core.3.1.13.nupkg.sha512",
+    "C:\\Users\\Mirko\\.nuget\\packages\\microsoft.extensions.identity.stores\\3.1.13\\microsoft.extensions.identity.stores.3.1.13.nupkg.sha512",
+    "C:\\Users\\Mirko\\.nuget\\packages\\microsoft.extensions.logging\\3.1.13\\microsoft.extensions.logging.3.1.13.nupkg.sha512",
+    "C:\\Users\\Mirko\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.1.13\\microsoft.extensions.logging.abstractions.3.1.13.nupkg.sha512",
+    "C:\\Users\\Mirko\\.nuget\\packages\\microsoft.extensions.options\\3.1.13\\microsoft.extensions.options.3.1.13.nupkg.sha512",
+    "C:\\Users\\Mirko\\.nuget\\packages\\microsoft.extensions.primitives\\3.1.13\\microsoft.extensions.primitives.3.1.13.nupkg.sha512"
+  ],
   "logs": []
 }

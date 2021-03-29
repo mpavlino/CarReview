@@ -7,3 +7,12 @@ C:\Users\Mirko\source\repos\Review\Review.Model\obj\Debug\netcoreapp3.1\Review.M
 C:\Users\Mirko\source\repos\Review\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.dll
 C:\Users\Mirko\source\repos\Review\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.pdb
 C:\Users\Mirko\source\repos\Review\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.csprojAssemblyReference.cache
+C:\Users\Mirko\Documents\CarReview\Review.Model\bin\Debug\netcoreapp3.1\Review.Model.deps.json
+C:\Users\Mirko\Documents\CarReview\Review.Model\bin\Debug\netcoreapp3.1\Review.Model.dll
+C:\Users\Mirko\Documents\CarReview\Review.Model\bin\Debug\netcoreapp3.1\Review.Model.pdb
+C:\Users\Mirko\Documents\CarReview\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.csprojAssemblyReference.cache
+C:\Users\Mirko\Documents\CarReview\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.AssemblyInfoInputs.cache
+C:\Users\Mirko\Documents\CarReview\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.AssemblyInfo.cs
+C:\Users\Mirko\Documents\CarReview\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.csproj.CoreCompileInputs.cache
+C:\Users\Mirko\Documents\CarReview\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.dll
+C:\Users\Mirko\Documents\CarReview\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.pdb

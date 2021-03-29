@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Review.Model;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace Review.DAL
 {
-    public class CarManagerDbContext : DbContext
+    public class CarManagerDbContext : IdentityDbContext<AppUser>
     {
         protected CarManagerDbContext()
         {
