@@ -31,10 +31,12 @@
     ".NETCoreApp,Version=v3.1": {
       "Review/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Authentication.Google": "3.1.21",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.13",
           "Microsoft.AspNetCore.Identity.UI": "3.1.13",
           "Microsoft.EntityFrameworkCore": "3.1.13",
           "Microsoft.EntityFrameworkCore.Design": "3.1.13",
+          "Microsoft.EntityFrameworkCore.InMemory": "3.1.13",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.13",
           "Microsoft.EntityFrameworkCore.Tools": "3.1.13",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "3.1.5",
@@ -306,6 +308,17 @@
         },
         "compile": {
           "Review.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.Google/3.1.21": {
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.Google.dll": {
+            "assemblyVersion": "3.1.21.0",
+            "fileVersion": "3.100.2121.52309"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.Google.dll": {}
         }
       },
       "Microsoft.AspNetCore.Cryptography.Internal/3.1.13": {
@@ -751,6 +764,20 @@
             "assemblyVersion": "3.1.13.0",
             "fileVersion": "3.100.1321.11604"
           }
+        }
+      },
+      "Microsoft.EntityFrameworkCore.InMemory/3.1.13": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "3.1.13"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.EntityFrameworkCore.InMemory.dll": {
+            "assemblyVersion": "3.1.13.0",
+            "fileVersion": "3.100.1321.11604"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.EntityFrameworkCore.InMemory.dll": {}
         }
       },
       "Microsoft.EntityFrameworkCore.Relational/3.1.13": {
@@ -1510,11 +1537,7 @@
           "System.Runtime": "4.3.0"
         }
       },
-      "System.ComponentModel.Annotations/4.7.0": {
-        "compile": {
-          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {}
-        }
-      },
+      "System.ComponentModel.Annotations/4.7.0": {},
       "System.ComponentModel.Primitives/4.3.0": {
         "dependencies": {
           "System.ComponentModel": "4.3.0",
@@ -3973,6 +3996,13 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Microsoft.AspNetCore.Authentication.Google/3.1.21": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iVV8QrdZk8MEH/7zE72jOn+OsLQzAJ/17dI7jVWabKv11Y57vsvdhVbEbJOWPHTLSaWbp+CE/+nYxE6TQPpHpQ==",
+      "path": "microsoft.aspnetcore.authentication.google/3.1.21",
+      "hashPath": "microsoft.aspnetcore.authentication.google.3.1.21.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Cryptography.Internal/3.1.13": {
       "type": "package",
       "serviceable": true,
@@ -4126,6 +4156,13 @@
       "sha512": "sha512-rcxpmGqAeHpR4qmsKm8H9ka1LeOPXlKwwxetJvo8D/et0Wa0iRy29RkWcWuPMF1OEfdm1N6lObmF31YwOedPdQ==",
       "path": "microsoft.entityframeworkcore.design/3.1.13",
       "hashPath": "microsoft.entityframeworkcore.design.3.1.13.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.InMemory/3.1.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tb+rdDCLlYhFqLdyPtJuANT7HpzO0/8QtRGWQz7m6qoZoPhTKiOLw1XrgfcI4JO/3EWWqmptSy0YS4nRCt7Enw==",
+      "path": "microsoft.entityframeworkcore.inmemory/3.1.13",
+      "hashPath": "microsoft.entityframeworkcore.inmemory.3.1.13.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore.Relational/3.1.13": {
       "type": "package",

@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Mirko\\Documents\\CarReview\\Review\\Review.csproj": {}
+    "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review\\Review.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Mirko\\Documents\\CarReview\\Review.DAL\\Review.DAL.csproj": {
+    "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.DAL\\Review.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mirko\\Documents\\CarReview\\Review.DAL\\Review.DAL.csproj",
+        "projectUniqueName": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.DAL\\Review.DAL.csproj",
         "projectName": "Review.DAL",
-        "projectPath": "C:\\Users\\Mirko\\Documents\\CarReview\\Review.DAL\\Review.DAL.csproj",
-        "packagesPath": "C:\\Users\\Mirko\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mirko\\Documents\\CarReview\\Review.DAL\\obj\\",
+        "projectPath": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.DAL\\Review.DAL.csproj",
+        "packagesPath": "C:\\Users\\MirkoP\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.DAL\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Mirko\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MirkoP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -31,8 +28,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Mirko\\Documents\\CarReview\\Review.Model\\Review.Model.csproj": {
-                "projectPath": "C:\\Users\\Mirko\\Documents\\CarReview\\Review.Model\\Review.Model.csproj"
+              "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.Model\\Review.Model.csproj": {
+                "projectPath": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.Model\\Review.Model.csproj"
               }
             }
           }
@@ -89,24 +86,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Mirko\\Documents\\CarReview\\Review.Model\\Review.Model.csproj": {
+    "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.Model\\Review.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mirko\\Documents\\CarReview\\Review.Model\\Review.Model.csproj",
+        "projectUniqueName": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.Model\\Review.Model.csproj",
         "projectName": "Review.Model",
-        "projectPath": "C:\\Users\\Mirko\\Documents\\CarReview\\Review.Model\\Review.Model.csproj",
-        "packagesPath": "C:\\Users\\Mirko\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mirko\\Documents\\CarReview\\Review.Model\\obj\\",
+        "projectPath": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.Model\\Review.Model.csproj",
+        "packagesPath": "C:\\Users\\MirkoP\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.Model\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Mirko\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MirkoP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -152,24 +146,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Mirko\\Documents\\CarReview\\Review\\Review.csproj": {
+    "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review\\Review.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mirko\\Documents\\CarReview\\Review\\Review.csproj",
+        "projectUniqueName": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review\\Review.csproj",
         "projectName": "Review",
-        "projectPath": "C:\\Users\\Mirko\\Documents\\CarReview\\Review\\Review.csproj",
-        "packagesPath": "C:\\Users\\Mirko\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mirko\\Documents\\CarReview\\Review\\obj\\",
+        "projectPath": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review\\Review.csproj",
+        "packagesPath": "C:\\Users\\MirkoP\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Mirko\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MirkoP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -183,11 +174,11 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Mirko\\Documents\\CarReview\\Review.DAL\\Review.DAL.csproj": {
-                "projectPath": "C:\\Users\\Mirko\\Documents\\CarReview\\Review.DAL\\Review.DAL.csproj"
+              "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.DAL\\Review.DAL.csproj": {
+                "projectPath": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.DAL\\Review.DAL.csproj"
               },
-              "C:\\Users\\Mirko\\Documents\\CarReview\\Review.Model\\Review.Model.csproj": {
-                "projectPath": "C:\\Users\\Mirko\\Documents\\CarReview\\Review.Model\\Review.Model.csproj"
+              "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.Model\\Review.Model.csproj": {
+                "projectPath": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.Model\\Review.Model.csproj"
               }
             }
           }
@@ -202,6 +193,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[3.1.21, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[3.1.13, )"
@@ -217,6 +212,10 @@
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
               "target": "Package",
               "version": "[3.1.13, )"
             },
@@ -257,7 +256,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

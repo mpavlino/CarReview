@@ -16,3 +16,23 @@ C:\Users\Mirko\Documents\CarReview\Review.Model\obj\Debug\netcoreapp3.1\Review.M
 C:\Users\Mirko\Documents\CarReview\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.csproj.CoreCompileInputs.cache
 C:\Users\Mirko\Documents\CarReview\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.dll
 C:\Users\Mirko\Documents\CarReview\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.pdb
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.Model\bin\Debug\netcoreapp3.1\Review.Model.deps.json
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.Model\bin\Debug\netcoreapp3.1\Review.Model.dll
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.Model\bin\Debug\netcoreapp3.1\Review.Model.pdb
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.csproj.AssemblyReference.cache
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.AssemblyInfoInputs.cache
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.AssemblyInfo.cs
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.csproj.CoreCompileInputs.cache
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.dll
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.pdb
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.Model\bin\Debug\netcoreapp3.1\Review.Model.deps.json
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.Model\bin\Debug\netcoreapp3.1\Review.Model.dll
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.Model\bin\Debug\netcoreapp3.1\Review.Model.pdb
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.csproj.AssemblyReference.cache
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.AssemblyInfoInputs.cache
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.AssemblyInfo.cs
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.csproj.CoreCompileInputs.cache
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.dll
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.Model\obj\Debug\netcoreapp3.1\Review.Model.pdb

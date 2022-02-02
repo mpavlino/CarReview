@@ -32,3 +32,39 @@ C:\Users\Mirko\Documents\CarReview\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL
 C:\Users\Mirko\Documents\CarReview\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.dll
 C:\Users\Mirko\Documents\CarReview\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.pdb
 C:\Users\Mirko\Documents\CarReview\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.genruntimeconfig.cache
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\appsettings.json
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\Review.DAL.deps.json
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\Review.DAL.runtimeconfig.json
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\Review.DAL.runtimeconfig.dev.json
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\Review.DAL.dll
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\Review.DAL.pdb
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\Review.Model.dll
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\Review.Model.pdb
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.csproj.AssemblyReference.cache
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.AssemblyInfoInputs.cache
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.AssemblyInfo.cs
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.csproj.CoreCompileInputs.cache
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.csproj.CopyComplete
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.dll
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.pdb
+C:\Users\MirkoP\OneDrive - Teched\Desktop\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.genruntimeconfig.cache
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\appsettings.json
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\Review.DAL.deps.json
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\Review.DAL.runtimeconfig.json
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\Review.DAL.runtimeconfig.dev.json
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\Review.DAL.dll
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\Review.DAL.pdb
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\Review.Model.dll
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\bin\Debug\netcoreapp3.1\Review.Model.pdb
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.csproj.AssemblyReference.cache
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.AssemblyInfoInputs.cache
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.AssemblyInfo.cs
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.csproj.CoreCompileInputs.cache
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.csproj.CopyComplete
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.dll
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.pdb
+C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\obj\Debug\netcoreapp3.1\Review.DAL.genruntimeconfig.cache
