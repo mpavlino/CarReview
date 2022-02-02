@@ -3,7 +3,7 @@
 This is simple ASP.NET Core MVC project with CRUD functionalities about car managing/reviewing.
 
 
-User can:
+Users can:
 
 -add a new car
 
