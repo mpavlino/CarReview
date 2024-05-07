@@ -45,20 +45,21 @@ namespace Review {
             services.AddMvc().SetCompatibilityVersion( CompatibilityVersion.Version_3_0 );
             services.AddRazorPages();
 
-            services.AddAuthentication()
-                .AddGoogle( options => {
-                    IConfigurationSection googleAuthNSection =
-                    Configuration.GetSection( "Authentication:Google" );
-                    options.ClientId = googleAuthNSection["ClientId"];
-                    options.ClientSecret = googleAuthNSection["ClientSecret"];
+            services.AddAuthentication();
+                //.AddGoogle( options => {
+                //    IConfigurationSection googleAuthNSection =
+                //    Configuration.GetSection( "Authentication:Google" );
+                //    options.ClientId = googleAuthNSection["ClientId"];
+                //    options.ClientSecret = googleAuthNSection["ClientSecret"];
 
-                } );
+                //} );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure( IApplicationBuilder app, IWebHostEnvironment env ) {
+        public void Configure( IApplicationBuilder app, IWebHostEnvironment env , CarManagerDbContext context) {
             if( env.IsDevelopment() ) {
                 app.UseDeveloperExceptionPage();
+                context.Database.EnsureCreated();
             }
             else {
                 app.UseExceptionHandler( "/Home/Error" );

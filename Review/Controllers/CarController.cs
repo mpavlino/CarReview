@@ -7,18 +7,26 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Review.DAL;
 using Review.Model;
+using Review.Model.Enums;
+using Review.Model.Helpers;
 using Review.Models;
 
 namespace Review.Controllers
 {
-    
+    [Authorize]
     public class CarController : Controller
     {
       
         private CarManagerDbContext _dbContext;
         private UserManager<AppUser> _userManager;
+        public string AlertMessage {
+            get { return TempData["AlertMessage"].ToString(); }
+
+            set { TempData["AlertMessage"] = value; }
+        }
 
         public CarController(CarManagerDbContext dbContext, UserManager<AppUser> userManager)
         {
@@ -46,19 +54,19 @@ namespace Review.Controllers
             //Primjer iterativnog građenja upita - dodaje se "where clause" samo u slučaju da je parametar doista proslijeđen.
             //To rezultira optimalnijim stablom izraza koje se kvalitetnije potencijalno prevodi u SQL
             if (!string.IsNullOrWhiteSpace(filter.Brand))
-                carQuery = carQuery.Where(p => p.BrandID != null && p.Brand.Name.Contains(filter.Brand.ToLower()));
+                carQuery = carQuery.Where(p => p.BrandID != null && p.Brand.Name.ToLower().Contains(filter.Brand.ToLower()));
 
             if (!string.IsNullOrWhiteSpace(filter.Model))
-                carQuery = carQuery.Where(p => p.Model.Contains(filter.Model.ToLower()));
+                carQuery = carQuery.Where(p => p.Model.ToLower().Contains(filter.Model.ToLower()));
 
             if (!string.IsNullOrWhiteSpace(filter.Engine))
-                carQuery = carQuery.Where(p => p.Engine.Contains(filter.Engine.ToLower()));
+                carQuery = carQuery.Where(p => p.Engine.ToLower().Contains(filter.Engine.ToLower()));
 
             if (!string.IsNullOrWhiteSpace(filter.Country))
-                carQuery = carQuery.Where(p => p.CountryID != null && p.Country.Name.Contains(filter.Country.ToLower()));
+                carQuery = carQuery.Where(p => p.CountryID != null && p.Country.Name.ToLower().Contains(filter.Country.ToLower()));
 
             if (!string.IsNullOrWhiteSpace(filter.Reviewer))
-                carQuery = carQuery.Where(p => p.ReviewerID != null && p.Reviewer.FullName.Contains(filter.Reviewer.ToLower()));
+                carQuery = carQuery.Where(p => p.ReviewerID != null && p.Reviewer.FullName.ToLower().Contains(filter.Reviewer.ToLower()));
 
             var model = carQuery.ToList();
             return PartialView("_IndexTable", model);
@@ -254,12 +262,14 @@ namespace Review.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { error = "Unable to locate client with provided ID", providedID = id });
+                    AlertMessage = JsonConvert.SerializeObject( ToastrHelper.ErrorMessage( "Delete error", $"Unable to locate client with provided ID - {id}", ToastrPositionEnum.ToastTopRight ) );
+                    return RedirectToAction( nameof( Index ) );
                 }
             }
             else
             {
-                return BadRequest(new { error = "Unable to delete reviewer with provided ID because he is used as a reviewer on a car blog", providedID = id });
+                AlertMessage = JsonConvert.SerializeObject( ToastrHelper.ErrorMessage( "Delete error", $"Unable to delete reviewer with provided ID because he is used as a reviewer on a car blog - {id}", ToastrPositionEnum.ToastTopRight ) );
+                return RedirectToAction( nameof( Index ) );
             }
         }
 

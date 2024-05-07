@@ -28,6 +28,16 @@ body {
     margin: 15px;
 }
 
+.img-responsive {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.carousel-inner {
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */

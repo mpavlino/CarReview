@@ -1,8 +1,10 @@
 ﻿@model List<Review.Model.Reviewer>
-<ol class="breadcrumb" style="margin-top: 20px;">
-    <li><a asp-action="Index">Cars list</a></li>
-    <li class="active">Reviewers list</li>
-</ol>
+<div class="pagetitle">
+    <h1>Reviewers</h1>
+</div>
+<div class="col-4" style="margin-top: 30px; margin-bottom: 30px; width: 200px;">
+    <a asp-action="CreateReviewer" class="btn btn-outline-primary" style="display: inline-block; width: 100%;"><i class="bi-plus-circle"></i> New reviewer</a>
+</div>
 <table style="margin-top: 20px;" class="table table-condensed" id="tbl-cars">
     <thead>
         <tr>
@@ -15,21 +17,19 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>@item.FirstName</td>
-            <td>@item.LastName</td>
-            <td>@item.DateOfBirth.Date.ToString("dd/MM/yyyy")</td>
-            <td>@item.Gender</td>
-            <td>@item.About</td>
-            <td>
-                <a asp-action="EditReviewer" asp-route-id="@item.ID">[edit reviewer]</a>
-            </td>
-            <td>
-                <a asp-action="DeleteReviewer" asp-route-id="@item.ID">[delete reviewer]</a>
-            </td>
-        </tr>
+        @foreach( var item in Model ) {
+            <tr>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.DateOfBirth.Date.ToString( "dd/MM/yyyy" )</td>
+                <td>@item.Gender</td>
+                <td>@item.About</td>
+                <td>
+                    <a asp-action="EditReviewer" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit</a>
+                    <a asp-action="ReviewerDetails" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-box-arrow-up-right"></i> Details</a>
+                    <a asp-action="DeleteReviewer" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm"><i class="bi-trash"></i> Delete</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

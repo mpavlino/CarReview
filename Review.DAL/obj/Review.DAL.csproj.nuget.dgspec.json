@@ -1,35 +1,36 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.DAL\\Review.DAL.csproj": {}
+    "C:\\Projects\\CarReview\\Review.DAL\\Review.DAL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.DAL\\Review.DAL.csproj": {
+    "C:\\Projects\\CarReview\\Review.DAL\\Review.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.DAL\\Review.DAL.csproj",
+        "projectUniqueName": "C:\\Projects\\CarReview\\Review.DAL\\Review.DAL.csproj",
         "projectName": "Review.DAL",
-        "projectPath": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.DAL\\Review.DAL.csproj",
+        "projectPath": "C:\\Projects\\CarReview\\Review.DAL\\Review.DAL.csproj",
         "packagesPath": "C:\\Users\\MirkoP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.DAL\\obj\\",
+        "outputPath": "C:\\Projects\\CarReview\\Review.DAL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\MirkoP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.1"
+          "net8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.telerik.com/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.Model\\Review.Model.csproj": {
-                "projectPath": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.Model\\Review.Model.csproj"
+              "C:\\Projects\\CarReview\\Review.Model\\Review.Model.csproj": {
+                "projectPath": "C:\\Projects\\CarReview\\Review.Model\\Review.Model.csproj"
               }
             }
           }
@@ -38,37 +39,42 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
-        "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "dependencies": {
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.13, )"
+              "version": "[8.0.4, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.13, )"
+              "version": "[8.0.4, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[3.1.13, )"
+              "version": "[8.0.4, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.13, )"
+              "version": "[8.0.4, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
-              "version": "[3.1.13, )"
+              "version": "[8.0.0, )"
             },
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
-              "version": "[3.1.13, )"
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -77,7 +83,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -86,33 +93,34 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.Model\\Review.Model.csproj": {
+    "C:\\Projects\\CarReview\\Review.Model\\Review.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.Model\\Review.Model.csproj",
+        "projectUniqueName": "C:\\Projects\\CarReview\\Review.Model\\Review.Model.csproj",
         "projectName": "Review.Model",
-        "projectPath": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.Model\\Review.Model.csproj",
+        "projectPath": "C:\\Projects\\CarReview\\Review.Model\\Review.Model.csproj",
         "packagesPath": "C:\\Users\\MirkoP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\MirkoP\\OneDrive - Teched\\Desktop\\Stuff\\CarReview-master\\Review.Model\\obj\\",
+        "outputPath": "C:\\Projects\\CarReview\\Review.Model\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\MirkoP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.1"
+          "net8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.telerik.com/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {}
           }
         },
@@ -120,15 +128,20 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
-        "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "dependencies": {
             "Microsoft.Extensions.Identity.Stores": {
               "target": "Package",
-              "version": "[3.1.13, )"
+              "version": "[8.0.4, )"
             }
           },
           "imports": [
@@ -137,7 +150,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -146,7 +160,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

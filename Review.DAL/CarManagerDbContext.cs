@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Review.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Review.DAL
@@ -25,6 +27,7 @@ namespace Review.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            PasswordHasher<AppUser> hasher = new PasswordHasher<AppUser>();
 
             modelBuilder.Entity<Brand>().HasData(new Brand { ID = 1, Name = "Audi" });
             modelBuilder.Entity<Brand>().HasData(new Brand { ID = 2, Name = "BMW" });
@@ -57,8 +60,57 @@ namespace Review.DAL
             modelBuilder.Entity<Country>().HasData(new Country { ID = 6, Name = "UK" });
             modelBuilder.Entity<Country>().HasData(new Country { ID = 7, Name = "South Korea" });
 
-            modelBuilder.Entity<Reviewer>().HasData(new Reviewer { ID = 1, FirstName = "Branko", LastName = "Marić" });
-            modelBuilder.Entity<Reviewer>().HasData(new Reviewer { ID = 2, FirstName = "Juraj", LastName = "Šebalj" });
+            modelBuilder.Entity<Reviewer>().HasData(new Reviewer { ID = 1, FirstName = "Branko", LastName = "Marić", Gender = 'M', DateOfBirth = new DateTime( 1980, 10, 10 ) } );
+            modelBuilder.Entity<Reviewer>().HasData(new Reviewer { ID = 2, FirstName = "Juraj", LastName = "Šebalj", Gender = 'M', DateOfBirth = new DateTime( 1975, 07, 17 ) } );
+
+            modelBuilder.Entity<Car>().HasData( new Car {
+                ID = 1,
+                BrandID = 1,
+                //Brand = Brands.FirstOrDefault( x => x.ID == 1 ),
+                Model = "A3",
+                Engine = "2.0 TDI",
+                EnginePower = "150",
+                Torque = "360",
+                EngineDisplacement = "1998",
+                TopSpeed = 210,
+                Acceleration = 8,
+                ModelYear = new DateTime( 2021, 2, 10 ),
+                Description = "Compact limousine.",
+                CountryID = 1,
+                //Country = Countries.FirstOrDefault( x => x.ID == 1 ),
+                ReviewerID = 1,
+                //Reviewer = Reviewers.FirstOrDefault( x => x.ID == 1 )
+            } );
+            modelBuilder.Entity<Car>().HasData( new Car {
+                ID = 2,
+                BrandID = 1,
+                //Brand = Brands.FirstOrDefault( x => x.ID == 1 ),
+                Model = "A6",
+                Engine = "3.0 TDI",
+                EnginePower = "258",
+                Torque = "500",
+                EngineDisplacement = "2998",
+                TopSpeed = 250,
+                Acceleration = 6,
+                ModelYear = new DateTime( 2020, 4, 10 ),
+                Description = "Compact limousine.",
+                CountryID = 1,
+                //Country = Countries.FirstOrDefault( x => x.ID == 1 ),
+                ReviewerID = 2,
+                //Reviewer = Reviewers.FirstOrDefault( x => x.ID == 1 )
+            } );
+
+            modelBuilder.Entity<AppUser>().HasData( new AppUser { 
+                UserName = "mirko.pavlinovic@gmail.com", 
+                Email = "mirko.pavlinovic@gmail.com",
+                NormalizedEmail = "MIRKO.PAVLINOVIC@GMAIL.COM",
+                NormalizedUserName = "MIRKO.PAVLINOVIC@GMAIL.COM",
+                OIB = "77759407998", 
+                PasswordHash = hasher.HashPassword( null, "F842077m.08" ),
+                EmailConfirmed = true,
+                SecurityStamp = string.Empty,
+                ConcurrencyStamp = Guid.NewGuid().ToString()
+            } );
         }
 
     }

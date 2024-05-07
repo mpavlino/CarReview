@@ -2,12 +2,12 @@
 @{
     ViewData["Title"] = "Adding a new car";
 }
-<ol class="breadcrumb" style="margin-top: 20px;">
-    <li><a asp-action="Index">Cars list</a></li>
-    <li class="active">New car</li>
+<ol class="breadcrumb">
+    <li><a asp-action="Index">Cars list /</a></li>
+    <li class="active">&nbsp;New car</li>
 </ol>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <form asp-action="CreatePost">
             <partial name="_CreateOrUpdate" />
         </form>

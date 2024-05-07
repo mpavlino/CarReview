@@ -2,17 +2,17 @@
 @{
     ViewData["Title"] = "Blog";
 }
-<h2>Details</h2>
+<ol class="breadcrumb">
+    <li><a asp-action="Index">Cars list /</a></li>
+    <li class="active">&nbsp;@Model.Brand?.Name</li>
+</ol>
+<div class="pagetitle">
+    <h1>Details</h1>
+</div>
 @if (Model != null)
 {
-
-
-    <ol class="breadcrumb">
-        <li><a asp-action="Index">Cars list</a></li>
-        <li class="active">@Model.Brand?.Name</li>
-    </ol>
-
     <div class="row">
+        <hr />
         <div class="col-md-10">
             <h2>@Model.Brand?.Name @Model.Model</h2>
             <ul>

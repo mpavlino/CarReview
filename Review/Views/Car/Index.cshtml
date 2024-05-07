@@ -1,30 +1,24 @@
 ﻿@model List<Review.Model.Car>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Cars";
 }
-<h2 class="display-4">Cars list</h2>
+<div class="pagetitle">
+    <h1>Cars</h1>
+</div>
 <div style="margin-top: 20px;">
     <partial name="_CarFilter" model="new CarFilterModel()" />
 </div>
-<div>
-        <div class="col-md-12" style="margin-top: 30px; margin-bottom: 30px; width: 200px;">
-            <a asp-action="Create" class="btn btn-primary" style="display: inline-block; width: 100%;"><b>ADD A NEW CAR</b></a>
-        </div>
-        <div class="col-md-12" style="margin-top: 30px; margin-bottom: 30px; width: 200px;">
-            <a asp-action="CreateReviewer" class="btn btn-primary" style="display: inline-block; width: 100%;"><b>ADD A REVIEWER</b></a>
-        </div>
-        <div class="col-md-12" style="margin-top: 30px; margin-bottom: 30px; width: 200px;">
-            <a asp-action="GetReviewers" class="btn btn-primary" style="display: inline-block; width: 100%;"><b>REVIEWERS LIST</b></a>
-        </div>
+<div class="col-4" style="margin-top: 30px; margin-bottom: 30px; width: 200px;">
+    <a asp-action="Create" class="btn btn-outline-primary" style="display: inline-block; width: 100%;"><i class="bi-plus-circle"></i> New car</a>
 </div>
 <partial name="_IndexTable" />
-@section Scripts{
+@section Scripts {
     <script type="text/javascript">
-        function performSearch(sender){
+        function performSearch(sender) {
             var formValues = $(sender).closest('form').serialize();
 
             $.ajax({
-                url: '@Url.Action("IndexAjax", "Car")',
+                url: '@Url.Action( "IndexAjax", "Car" )',
                 data: formValues,
                 method: "POST",
                 success: function (html) {

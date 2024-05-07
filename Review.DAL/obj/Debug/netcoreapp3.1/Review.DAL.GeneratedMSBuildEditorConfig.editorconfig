@@ -1,3 +1,5 @@
 is_global = true
 build_property.RootNamespace = Review.DAL
-build_property.ProjectDir = C:\Users\MirkoP\OneDrive - Teched\Desktop\Stuff\CarReview-master\Review.DAL\
+build_property.ProjectDir = C:\Projects\CarReview\Review.DAL\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

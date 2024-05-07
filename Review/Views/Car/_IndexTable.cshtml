@@ -27,13 +27,9 @@
                 <a asp-action="ReviewerDetails" asp-route-id="@item.ReviewerID">@item.Reviewer?.FullName</a>
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">[edit car]</a>
-            </td>
-            <td>
-                <a asp-action="EditReviewer" asp-route-id="@item.ReviewerID">[edit reviewer]</a>
-            </td>
-            <td>
-                <a asp-action="DeleteCar" asp-route-id="@item.ID">[delete car]</a>
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit car </a>
+                    <a asp-action="EditReviewer" asp-route-id="@item.ReviewerID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit reviewer</a>
+                    <a asp-action="DeleteCar" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm"><i class="bi-trash"></i> Delete car</a>
             </td>
         </tr>
         }

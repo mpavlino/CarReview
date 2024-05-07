@@ -1,0 +1,13 @@
+C:\Projects\CarReview\Review.Model\bin\Debug\net8.0\Review.Model.deps.json
+C:\Projects\CarReview\Review.Model\bin\Debug\net8.0\Review.Model.dll
+C:\Projects\CarReview\Review.Model\bin\Debug\net8.0\Review.Model.pdb
+C:\Projects\CarReview\Review.Model\obj\Debug\net8.0\Review.Model.csproj.AssemblyReference.cache
+C:\Projects\CarReview\Review.Model\obj\Debug\net8.0\Review.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\CarReview\Review.Model\obj\Debug\net8.0\Review.Model.AssemblyInfoInputs.cache
+C:\Projects\CarReview\Review.Model\obj\Debug\net8.0\Review.Model.AssemblyInfo.cs
+C:\Projects\CarReview\Review.Model\obj\Debug\net8.0\Review.Model.csproj.CoreCompileInputs.cache
+C:\Projects\CarReview\Review.Model\obj\Debug\net8.0\Review.Model.sourcelink.json
+C:\Projects\CarReview\Review.Model\obj\Debug\net8.0\Review.Model.dll
+C:\Projects\CarReview\Review.Model\obj\Debug\net8.0\refint\Review.Model.dll
+C:\Projects\CarReview\Review.Model\obj\Debug\net8.0\Review.Model.pdb
+C:\Projects\CarReview\Review.Model\obj\Debug\net8.0\ref\Review.Model.dll
