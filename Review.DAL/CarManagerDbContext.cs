@@ -101,12 +101,12 @@ namespace Review.DAL
             } );
 
             modelBuilder.Entity<AppUser>().HasData( new AppUser { 
-                UserName = "mirko.pavlinovic@gmail.com", 
-                Email = "mirko.pavlinovic@gmail.com",
-                NormalizedEmail = "MIRKO.PAVLINOVIC@GMAIL.COM",
-                NormalizedUserName = "MIRKO.PAVLINOVIC@GMAIL.COM",
-                OIB = "77759407998", 
-                PasswordHash = hasher.HashPassword( null, "F842077m.08" ),
+                UserName = "korisnik@test.com", 
+                Email = "korisnik@test.com",
+                NormalizedEmail = "KORISNIK@TEST.COM",
+                NormalizedUserName = "KORISNIK@TEST.COM",
+                OIB = "84858742558", 
+                PasswordHash = hasher.HashPassword( null, "12345M.78" ),
                 EmailConfirmed = true,
                 SecurityStamp = string.Empty,
                 ConcurrencyStamp = Guid.NewGuid().ToString()

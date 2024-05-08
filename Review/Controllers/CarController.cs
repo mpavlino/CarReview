@@ -184,7 +184,7 @@ namespace Review.Controllers
                 });
             }
 
-            ViewBag.PossibleBrands = brands;
+            ViewBag.PossibleBrands = brands.OrderBy( x => x.Text );
         }
 
         private void FillDropdownValues2()
@@ -206,7 +206,7 @@ namespace Review.Controllers
                 });
             }
 
-            ViewBag.PossibleCountries = countries;
+            ViewBag.PossibleCountries = countries.OrderBy( x => x.Text ); 
         }
 
         private void FillDropdownValues3()
@@ -232,7 +232,7 @@ namespace Review.Controllers
                 });
             }
 
-            ViewBag.PossibleReviewers = reviewers;
+            ViewBag.PossibleReviewers = reviewers.OrderBy( x => x.Text ); ;
         }
 
 
