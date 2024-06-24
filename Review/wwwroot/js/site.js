@@ -47,4 +47,24 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = navLink.getAttribute('href');
         });
     });
+
+    function checkCookie(cookieName, cookieValue) {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(cookieName + '=' + cookieValue)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    var cookieExists = checkCookie('.AspNet.Consent', 'yes');
+
+    if (!cookieExists) {
+        document.querySelector("#cookieConsent button[data-cookie-string]").addEventListener("click", function (el) {
+            document.cookie = el.target.dataset.cookieString;
+            document.querySelector("#cookieConsent").classList.add("d-none");
+        }, false);
+    }
 });
