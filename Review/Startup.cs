@@ -15,6 +15,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Review.DAL;
 using Review.Model;
+using Review.Model.Interfaces;
+using Review.Services;
 
 namespace Review {
     public class Startup {
@@ -41,8 +43,11 @@ namespace Review {
             services.AddDefaultIdentity<AppUser>()
                 .AddEntityFrameworkStores<CarManagerDbContext>();
 
+            services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<ICarService, CarService>();
 
-            services.AddMvc().SetCompatibilityVersion( CompatibilityVersion.Version_3_0 );
+
+            services.AddMvc();
             services.AddRazorPages();
 
             services.AddAuthentication();

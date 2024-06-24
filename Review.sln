@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.421
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Review", "Review\Review.csproj", "{48646C08-0A17-4829-B041-23815579FE80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Review", "Review\Review.csproj", "{48646C08-0A17-4829-B041-23815579FE80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Review.Model", "Review.Model\Review.Model.csproj", "{07032A3C-DA13-484F-9EB6-FD76F50AEC6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Review.Model", "Review.Model\Review.Model.csproj", "{07032A3C-DA13-484F-9EB6-FD76F50AEC6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Review.DAL", "Review.DAL\Review.DAL.csproj", "{EAB613E4-FB7B-4FC1-B7C0-5E5AF5732CB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Review.DAL", "Review.DAL\Review.DAL.csproj", "{EAB613E4-FB7B-4FC1-B7C0-5E5AF5732CB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

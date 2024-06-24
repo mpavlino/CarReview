@@ -62,8 +62,8 @@ namespace Review.Controllers
         {
             if (ModelState.IsValid)
             {
-                c.CountryID = c.CountryID ?? c.Country?.ID;
-                c.Country = null;
+                c.Brand.CountryID = c.Brand.CountryID;
+                c.Brand.Country = null;
                 this._dbContext.Cars.Add(c);
                 this._dbContext.SaveChanges();
 

@@ -1,0 +1,35 @@
+﻿@model List<Review.Model.Brand>
+@{
+    ViewData["Title"] = "Brands";
+}
+<div class="pagetitle">
+    <h1>Brands</h1>
+</div>
+<div class="col-4" style="margin-top: 30px; margin-bottom: 30px; width: 200px;">
+    <a asp-action="Create" class="btn btn-outline-primary" style="display: inline-block; width: 100%;"><i class="bi-plus-circle"></i> New Brand</a>
+</div>
+<div class="card">
+    <div class="card-body">
+        <table style="margin-top: 20px;" class="table datatable" id="tbl-brands">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th data-sortable="false"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach( var item in Model ) {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Country?.Name</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit brand </a>
+                            <a asp-action="DeleteBrand" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm"><i class="bi-trash"></i> Delete brand</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

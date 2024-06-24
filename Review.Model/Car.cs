@@ -14,6 +14,8 @@ namespace Review.Model
         public int? BrandID { get; set; }
         public Brand Brand { get; set; }
 
+        [Required( ErrorMessage = "Car name is required." )]
+        [UniqueCarModelName( ErrorMessage = "A car with this model name already exists." )]
         [StringLength(200)]
         public string Model { get; set; }
 
@@ -29,12 +31,9 @@ namespace Review.Model
         public DateTime ModelYear { get; set; }
         public string Description { get; set; }
 
-        [ForeignKey(nameof(Country))]
-        public int? CountryID { get; set; }
-        public Country Country { get; set; }
-
         [ForeignKey(nameof(Reviewer))]
         public int? ReviewerID { get; set; }
         public Reviewer Reviewer { get; set; }
+        public int Rating { get; set; }
     }
 }

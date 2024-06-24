@@ -72,7 +72,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a asp-controller="Home" asp-action="Index" class="nav-link">
+                <a asp-controller="Home" asp-action="Index" class="nav-link collapsed">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
@@ -83,13 +83,19 @@
                     <i class="bi bi-menu-button-wide"></i>
                     <span>Cars</span>
                 </a>
-            </li><!-- End Components Nav -->
+            </li><!-- End Cars Nav -->
             <li class="nav-item">
                 <a asp-controller="Car" asp-action="GetReviewers" class="nav-link collapsed">
                     <i class="bi-people"></i>
                     <span>Reviewers</span>
                 </a>
-            </li><!-- End Components Nav -->
+            </li><!-- End Reviewers Nav -->
+            <li class="nav-item">
+                <a asp-controller="Brand" asp-action="Index" class="nav-link collapsed">
+                    <i class="bi-car-front"></i>
+                    <span>Brands</span>
+                </a>
+            </li><!-- End Brands Nav -->
         </ul>
 
     </aside><!-- End Sidebar-->

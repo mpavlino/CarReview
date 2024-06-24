@@ -1,0 +1,15 @@
+﻿@model Review.Model.Brand
+@{
+    ViewData["Title"] = "Adding a new brand";
+}
+<ol class="breadcrumb">
+    <li><a asp-action="Index">Brands list /</a></li>
+    <li class="active">&nbsp;New brand</li>
+</ol>
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="CreatePost">
+            <partial name="_CreateOrUpdateBrand" />
+        </form>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 ﻿@using Review.Models
 @model CarFilterModel
+
 <form asp-action="IndexAjax" method="post" class="form-inline">
     <div class="row mb-2">
         <div class="form-group col-4">
@@ -23,5 +24,4 @@
             <button type="button" class="btn btn-outline-primary btn-sm mt-1" onclick="performSearch(this)"><i class="bi-search"></i> Search</button>
         </div>
     </div>
-    
 </form>

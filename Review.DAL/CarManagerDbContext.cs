@@ -29,28 +29,38 @@ namespace Review.DAL
             base.OnModelCreating(modelBuilder);
             PasswordHasher<AppUser> hasher = new PasswordHasher<AppUser>();
 
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 1, Name = "Audi" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 2, Name = "BMW" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 11, Name = "Ferrari" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 9, Name = "Ford" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 8, Name = "Honda" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 12, Name = "Lamborghini" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 7, Name = "Mazda" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 6, Name = "Mercedes-Benz" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 4, Name = "Peugeot" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 3, Name = "Renault" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 10, Name = "Toyota" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 5, Name = "Volkswagen" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 13, Name = "McLaren" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 14, Name = "Jaguar" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 15, Name = "KIA" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 16, Name = "Hyundai" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 17, Name = "Fiat" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 18, Name = "Porsche" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 19, Name = "Opel" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 20, Name = "Alfa Romeo" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 21, Name = "Bugatti" });
-            modelBuilder.Entity<Brand>().HasData(new Brand { ID = 22, Name = "Aston Martin" });
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 1, Name = "Audi", CountryID = 1 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 2, Name = "BMW", CountryID = 1 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 11, Name = "Ferrari", CountryID = 5 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 9, Name = "Ford", CountryID = 4 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 8, Name = "Honda", CountryID = 3 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 12, Name = "Lamborghini", CountryID = 5 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 7, Name = "Mazda", CountryID = 3 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 6, Name = "Mercedes-Benz", CountryID = 1 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 4, Name = "Peugeot", CountryID = 2 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 3, Name = "Renault", CountryID = 2 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 10, Name = "Toyota", CountryID = 3 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 5, Name = "Volkswagen", CountryID = 1 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 13, Name = "McLaren", CountryID = 6 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 14, Name = "Jaguar", CountryID = 6 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 15, Name = "KIA", CountryID = 7 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 16, Name = "Hyundai", CountryID = 7 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 17, Name = "Fiat", CountryID = 5 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 18, Name = "Porsche", CountryID = 1 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 19, Name = "Opel", CountryID = 1 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 20, Name = "Alfa Romeo", CountryID = 5 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 21, Name = "Bugatti", CountryID = 1 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 22, Name = "Aston Martin", CountryID = 6 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 23, Name = "McLaren", CountryID = 6 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 24, Name = "Land Rover", CountryID = 6 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 25, Name = "Citroen", CountryID = 2 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 26, Name = "Volvo", CountryID = 8 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 27, Name = "Jeep", CountryID = 4 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 28, Name = "Nissan", CountryID = 3 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 29, Name = "Bentley", CountryID = 6 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 30, Name = "Škoda", CountryID = 9 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 31, Name = "Tesla", CountryID = 4 } );
+            modelBuilder.Entity<Brand>().HasData( new Brand { ID = 32, Name = "Seat", CountryID = 10 } );
 
             modelBuilder.Entity<Country>().HasData(new Country { ID = 1, Name = "Germany" });
             modelBuilder.Entity<Country>().HasData(new Country { ID = 2, Name = "France" });
@@ -59,6 +69,9 @@ namespace Review.DAL
             modelBuilder.Entity<Country>().HasData(new Country { ID = 5, Name = "Italy" });
             modelBuilder.Entity<Country>().HasData(new Country { ID = 6, Name = "UK" });
             modelBuilder.Entity<Country>().HasData(new Country { ID = 7, Name = "South Korea" });
+            modelBuilder.Entity<Country>().HasData(new Country { ID = 8, Name = "Sweden" });
+            modelBuilder.Entity<Country>().HasData(new Country { ID = 9, Name = "Czech Republic" });
+            modelBuilder.Entity<Country>().HasData(new Country { ID = 10, Name = "Spain" });
 
             modelBuilder.Entity<Reviewer>().HasData(new Reviewer { ID = 1, FirstName = "Branko", LastName = "Marić", Gender = 'M', DateOfBirth = new DateTime( 1980, 10, 10 ) } );
             modelBuilder.Entity<Reviewer>().HasData(new Reviewer { ID = 2, FirstName = "Juraj", LastName = "Šebalj", Gender = 'M', DateOfBirth = new DateTime( 1975, 07, 17 ) } );
@@ -76,7 +89,6 @@ namespace Review.DAL
                 Acceleration = 8,
                 ModelYear = new DateTime( 2021, 2, 10 ),
                 Description = "Compact limousine.",
-                CountryID = 1,
                 //Country = Countries.FirstOrDefault( x => x.ID == 1 ),
                 ReviewerID = 1,
                 //Reviewer = Reviewers.FirstOrDefault( x => x.ID == 1 )
@@ -94,7 +106,6 @@ namespace Review.DAL
                 Acceleration = 6,
                 ModelYear = new DateTime( 2020, 4, 10 ),
                 Description = "Compact limousine.",
-                CountryID = 1,
                 //Country = Countries.FirstOrDefault( x => x.ID == 1 ),
                 ReviewerID = 2,
                 //Reviewer = Reviewers.FirstOrDefault( x => x.ID == 1 )

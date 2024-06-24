@@ -1,5 +1,5 @@
 ﻿@model List<Review.Model.Car>
-<table style="margin-top: 20px;" class="table table-condensed" id="tbl-cars">
+<table style="margin-top: 20px;" class="table datatable" id="tbl-cars">
     <thead>
         <tr>
             <th>Brand</th>
@@ -7,31 +7,30 @@
             <th>Country</th>
             <th>Engine</th>
             <th>Reviewer</th>
-            <th></th>
+            <th data-sortable="false"></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.ID">@item.Brand?.Name</a>
-            </td>
-            <td>
-                <a asp-action="Blog" asp-route-id="@item.ID">@item.Model</a>
-            </td>
+        @foreach( var item in Model ) {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ID">@item.Brand?.Name</a>
+                </td>
+                <td>
+                    <a asp-action="Blog" asp-route-id="@item.ID">@item.Model</a>
+                </td>
 
-            <td>@item.Country?.Name</td>
-            <td>@item.Engine</td>
-            <td>
-                <a asp-action="ReviewerDetails" asp-route-id="@item.ReviewerID">@item.Reviewer?.FullName</a>
-            </td>
-            <td>
+                <td>@item.Brand.Country?.Name</td>
+                <td>@item.Engine</td>
+                <td>
+                    <a asp-action="ReviewerDetails" asp-route-id="@item.ReviewerID">@item.Reviewer?.FullName</a>
+                </td>
+                <td>
                     <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit car </a>
                     <a asp-action="EditReviewer" asp-route-id="@item.ReviewerID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit reviewer</a>
                     <a asp-action="DeleteCar" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm"><i class="bi-trash"></i> Delete car</a>
-            </td>
-        </tr>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

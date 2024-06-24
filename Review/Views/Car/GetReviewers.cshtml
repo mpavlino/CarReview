@@ -2,34 +2,40 @@
 <div class="pagetitle">
     <h1>Reviewers</h1>
 </div>
+
 <div class="col-4" style="margin-top: 30px; margin-bottom: 30px; width: 200px;">
     <a asp-action="CreateReviewer" class="btn btn-outline-primary" style="display: inline-block; width: 100%;"><i class="bi-plus-circle"></i> New reviewer</a>
 </div>
-<table style="margin-top: 20px;" class="table table-condensed" id="tbl-cars">
-    <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Date Of Birth</th>
-            <th>Gender</th>
-            <th>About</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach( var item in Model ) {
-            <tr>
-                <td>@item.FirstName</td>
-                <td>@item.LastName</td>
-                <td>@item.DateOfBirth.Date.ToString( "dd/MM/yyyy" )</td>
-                <td>@item.Gender</td>
-                <td>@item.About</td>
-                <td>
-                    <a asp-action="EditReviewer" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit</a>
-                    <a asp-action="ReviewerDetails" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-box-arrow-up-right"></i> Details</a>
-                    <a asp-action="DeleteReviewer" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm"><i class="bi-trash"></i> Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="card">
+    <div class="card-body">
+        <table style="margin-top: 20px;" class="table datatable" id="tbl-reviewers">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Date Of Birth</th>
+                    <th>Gender</th>
+                    <th>About</th>
+                    <th data-sortable="false"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach( var item in Model ) {
+                    <tr>
+                        <td>@item.FirstName</td>
+                        <td>@item.LastName</td>
+                        <td>@item.DateOfBirth.Date.ToString( "dd/MM/yyyy" )</td>
+                        <td>@item.Gender</td>
+                        <td>@item.About</td>
+                        <td>
+                            <a asp-action="EditReviewer" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit</a>
+                            <a asp-action="ReviewerDetails" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-box-arrow-up-right"></i> Details</a>
+                            <a asp-action="DeleteReviewer" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm"><i class="bi-trash"></i> Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

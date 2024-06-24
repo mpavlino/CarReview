@@ -38,6 +38,33 @@ body {
     box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
 }
 
+.star-rating {
+    direction: rtl;
+    display: inline-block;
+    padding: 0;
+}
+
+    .star-rating input[type="radio"] {
+        display: none;
+    }
+
+    .star-rating label {
+        font-size: 1.7rem;
+        color: #ddd;
+        padding: 0 0.1rem;
+        cursor: pointer;
+    }
+
+    .star-rating input[type="radio"]:checked ~ label {
+        color: #f5b301;
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+        color: #f5b301;
+    }
+
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */

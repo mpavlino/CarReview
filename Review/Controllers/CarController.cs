@@ -18,8 +18,7 @@ namespace Review.Controllers
 {
     [Authorize]
     public class CarController : Controller
-    {
-      
+    {  
         private CarManagerDbContext _dbContext;
         private UserManager<AppUser> _userManager;
         public string AlertMessage {
@@ -37,7 +36,7 @@ namespace Review.Controllers
         [Authorize]
         public IActionResult Index(string query = null)
         {
-            IQueryable<Car> carQuery = this._dbContext.Cars.Include(c => c.Brand).Include(c => c.Country).Include(c => c.Reviewer).AsQueryable();
+            IQueryable<Car> carQuery = this._dbContext.Cars.Include(c => c.Brand).ThenInclude(c => c.Country).Include(c => c.Reviewer).AsQueryable();
 
             //if (!string.IsNullOrWhiteSpace(query))
             //    carQuery = carQuery.Where(p => p.Model.Contains(query));
@@ -49,7 +48,7 @@ namespace Review.Controllers
         [HttpPost]
         public ActionResult IndexAjax(CarFilterModel filter)
         {
-            var carQuery = this._dbContext.Cars.Include(c => c.Brand).Include(c => c.Country).Include(c => c.Reviewer).AsQueryable();
+            var carQuery = this._dbContext.Cars.Include(c => c.Brand).Include(c => c.Brand.Country).Include(c => c.Reviewer).AsQueryable();
 
             //Primjer iterativnog građenja upita - dodaje se "where clause" samo u slučaju da je parametar doista proslijeđen.
             //To rezultira optimalnijim stablom izraza koje se kvalitetnije potencijalno prevodi u SQL
@@ -63,7 +62,7 @@ namespace Review.Controllers
                 carQuery = carQuery.Where(p => p.Engine.ToLower().Contains(filter.Engine.ToLower()));
 
             if (!string.IsNullOrWhiteSpace(filter.Country))
-                carQuery = carQuery.Where(p => p.CountryID != null && p.Country.Name.ToLower().Contains(filter.Country.ToLower()));
+                carQuery = carQuery.Where(p => p.Brand.Country.Name.ToLower().Contains(filter.Country.ToLower()));
 
             if (!string.IsNullOrWhiteSpace(filter.Reviewer))
                 carQuery = carQuery.Where(p => p.ReviewerID != null && p.Reviewer.FullName.ToLower().Contains(filter.Reviewer.ToLower()));
@@ -76,7 +75,7 @@ namespace Review.Controllers
         {
             Car car = this._dbContext.Cars
                 .Include(p => p.Brand)
-                .Include(p => p.Country)
+                .ThenInclude(p => p.Country)
                 .Include(p => p.Reviewer)
                 .Where(p => p.ID == id)
                 .FirstOrDefault();
@@ -95,7 +94,7 @@ namespace Review.Controllers
             }
             else
             {
-                return BadRequest(new { error = "Unable to locate client with provided ID", providedID = id });
+                return BadRequest(new { error = "Unable to locate car with provided ID", providedID = id });
             }
         }
 
@@ -103,7 +102,7 @@ namespace Review.Controllers
         {
             var car = this._dbContext.Cars
                 .Include(p => p.Brand)
-                .Include(p => p.Country)
+                .ThenInclude(p => p.Country)
                 .Include(p => p.Reviewer)
                 .Where(p => p.ID == id)
                 .FirstOrDefault();
@@ -133,9 +132,7 @@ namespace Review.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-
-
-            return View(carmodel);
+            return View( "Create", carmodel );
         }
 
         [ActionName("Edit")]
@@ -162,7 +159,7 @@ namespace Review.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(car);
+            return View( "Edit", car );
         }
 
         private void FillDropdownValues()
@@ -232,7 +229,7 @@ namespace Review.Controllers
                 });
             }
 
-            ViewBag.PossibleReviewers = reviewers.OrderBy( x => x.Text ); ;
+            ViewBag.PossibleReviewers = reviewers.OrderBy( x => x.Text ); 
         }
 
 

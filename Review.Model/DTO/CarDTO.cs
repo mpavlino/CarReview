@@ -18,10 +18,10 @@ namespace Review.Model.DTO
             ID = p.ID,
             BrandName = p.Brand.Name,
             ModelName= p.Model,
-            Country = p.CountryID == null ? null : new CountryDTO()
+            Country = p.Brand.CountryID == null ? null : new CountryDTO()
             {
-                ID = p.Country.ID,
-                Name = p.Country.Name
+                ID = p.Brand.Country.ID,
+                Name = p.Brand.Country.Name
             },
             Engine = p.Engine
         };
