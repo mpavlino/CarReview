@@ -72,6 +72,7 @@ namespace Review.DAL
             modelBuilder.Entity<Country>().HasData(new Country { ID = 8, Name = "Sweden" });
             modelBuilder.Entity<Country>().HasData(new Country { ID = 9, Name = "Czech Republic" });
             modelBuilder.Entity<Country>().HasData(new Country { ID = 10, Name = "Spain" });
+            modelBuilder.Entity<Country>().HasData(new Country { ID = 11, Name = "Croatia" });
 
             modelBuilder.Entity<Reviewer>().HasData(new Reviewer { ID = 1, FirstName = "Branko", LastName = "Marić", Gender = 'M', DateOfBirth = new DateTime( 1980, 10, 10 ) } );
             modelBuilder.Entity<Reviewer>().HasData(new Reviewer { ID = 2, FirstName = "Juraj", LastName = "Šebalj", Gender = 'M', DateOfBirth = new DateTime( 1975, 07, 17 ) } );
