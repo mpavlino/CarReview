@@ -1,141 +1,243 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using Review.DAL;
 using Review.Model;
 using Review.Model.DTO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Review.Controllers
-{
-    [Route("/api/car")]
+namespace Review.Controllers {
+    [Route( "api/cars" )]
     [ApiController]
-    public class CarApiController : Controller
-    {
-       
-        private CarManagerDbContext _dbContext;
+    public class CarApiController : ControllerBase {
+        private readonly CarManagerDbContext _dbContext;
 
-        public CarApiController(CarManagerDbContext dbContext)
-        {
-            this._dbContext = dbContext;
+        public CarApiController( CarManagerDbContext dbContext ) {
+            _dbContext = dbContext;
         }
 
-        [Route("")]
-        public ActionResult<List<CarDTO>> Get()
-        {
-            List<CarDTO> cars = this._dbContext.Cars
-                .Select(CarDTO.SelectorExpression)
-                .ToList();
+        #region Cars
+        [HttpGet]
+        public ActionResult<IEnumerable<CarDTO>> GetAllCars() {
+            try {
+                List<CarDTO> cars = _dbContext.Cars
+                    .Select( CarDTO.SelectorExpression )
+                    .ToList();
 
-            return cars;
+                return Ok( cars );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
         }
 
-        [Route("{id:int}")]
-        public ActionResult<CarDTO> Get(int id)
-        {
-            var car = this._dbContext.Cars
-                .Where(c => c.ID == id)
-                .Select(CarDTO.SelectorExpression)
-                .FirstOrDefault();
+        [HttpGet( "{id:int}" )]
+        public ActionResult<CarDTO> GetCarById( int id ) {
+            try {
+                var car = _dbContext.Cars
+                    .Where( c => c.ID == id )
+                    .Select( CarDTO.SelectorExpression )
+                    .FirstOrDefault();
 
-            return car;
+                if( car == null ) {
+                    return NotFound( new { message = "Car not found" } );
+                }
+
+                return Ok( car );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
         }
 
-        [Route("pretraga/{q}")]
-        public ActionResult<List<CarDTO>> Get(string q)
-        {
-            var cars = this._dbContext.Cars
-                .Where(c => c.Brand.Name.Contains(q))
-                .Select(CarDTO.SelectorExpression)
-                .ToList();
+        [HttpGet( "pretraga/{q}" )]
+        public ActionResult<IEnumerable<CarDTO>> SearchCars( string q ) {
+            try {
+                var cars = _dbContext.Cars
+                    .Where( c => c.Brand.Name.Contains( q ) )
+                    .Select( CarDTO.SelectorExpression )
+                    .ToList();
 
-            return cars;
+                return Ok( cars );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
         }
 
-        [Route("")]
         [HttpPost]
-        public ActionResult<CarDTO> Post(Car c)
-        {
-            if (ModelState.IsValid)
-            {
-                c.Brand.CountryID = c.Brand.CountryID;
-                c.Brand.Country = null;
-                this._dbContext.Cars.Add(c);
-                this._dbContext.SaveChanges();
+        public ActionResult<CarDTO> CreateCar( [FromBody] Car c ) {
+            try {
+                if( ModelState.IsValid ) {
+                    c.Brand.CountryID = c.Brand.CountryID;
+                    c.Brand.Country = null;
+                    _dbContext.Cars.Add( c );
+                    _dbContext.SaveChanges();
 
-                return Get(c.ID);
+                    return CreatedAtAction( nameof( GetCarById ), new { id = c.ID }, GetCarById( c.ID ).Value );
+                }
+
+                return BadRequest( ModelState );
             }
-
-            return BadRequest(ModelState);
-        }
-
-        [Route("{id:int}")]
-        [HttpPut]
-        public async Task<ActionResult<CarDTO>> Put(int id, [FromBody] JObject model)
-        {
-            var valueProvider = new ObjectSourceValueProvider(model);
-
-            Car existing = _dbContext.Cars.FirstOrDefault(p => p.ID == id);
-            if (existing != null && ModelState.IsValid && await TryUpdateModelAsync(existing, "", valueProvider))
-            {
-                this._dbContext.SaveChanges();
-                return Get(id);
-            }
-
-            if (existing == null)
-            {
-                ModelState.AddModelError("id", "Invalid client ID");
-            }
-
-            return BadRequest(ModelState);
-        }
-
-        [Route("{id:int}")]
-        [HttpDelete]
-        public IActionResult Delete(int id)
-        {
-            var existing = _dbContext.Cars.FirstOrDefault(p => p.ID == id);
-            if (existing != null)
-            {
-                this._dbContext.Entry(existing).State = EntityState.Deleted;
-                this._dbContext.SaveChanges();
-                return Ok();
-            }
-            else
-            {
-                return BadRequest(new { error = "Unable to locate client with provided ID", providedID = id });
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
             }
         }
 
+        [HttpPut( "{id:int}" )]
+        public async Task<ActionResult<CarDTO>> UpdateCar( int id, [FromBody] JObject model ) {
+            try {
+                var valueProvider = new ObjectSourceValueProvider( model );
+
+                Car existing = _dbContext.Cars.FirstOrDefault( p => p.ID == id );
+                if( existing != null && ModelState.IsValid && await TryUpdateModelAsync( existing, "", valueProvider ) ) {
+                    _dbContext.SaveChanges();
+                    return GetCarById( id );
+                }
+
+                if( existing == null ) {
+                    ModelState.AddModelError( "id", "Invalid car ID" );
+                }
+
+                return BadRequest( ModelState );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+
+        [HttpDelete( "{id:int}" )]
+        public IActionResult DeleteCar( int id ) {
+            try {
+                var existing = _dbContext.Cars.FirstOrDefault( p => p.ID == id );
+                if( existing != null ) {
+                    _dbContext.Entry( existing ).State = EntityState.Deleted;
+                    _dbContext.SaveChanges();
+                    return Ok();
+                }
+                else {
+                    return NotFound( new { error = "Car not found", providedID = id } );
+                }
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+        #endregion
+
+        #region Reviewers
+        [HttpGet( "reviewers" )]
+        public ActionResult<IEnumerable<ReviewerDTO>> GetAllReviewers() {
+            try {
+                List<ReviewerDTO> reviewers = _dbContext.Reviewers
+                    .Select( ReviewerDTO.SelectorExpression )
+                    .ToList();
+
+                return Ok( reviewers );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+
+        [HttpGet( "reviewers/{id:int}" )]
+        public ActionResult<ReviewerDTO> GetReviewerById( int id ) {
+            try {
+                var reviewer = _dbContext.Reviewers
+                    .Where( r => r.ID == id )
+                    .Select( ReviewerDTO.SelectorExpression )
+                    .FirstOrDefault();
+
+                if( reviewer == null ) {
+                    return NotFound( new { message = "Reviewer not found" } );
+                }
+
+                return Ok( reviewer );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+
+        [HttpPost( "reviewers" )]
+        public ActionResult<ReviewerDTO> CreateReviewer( [FromBody] Reviewer reviewer ) {
+            try {
+                if( ModelState.IsValid ) {
+                    _dbContext.Reviewers.Add( reviewer );
+                    _dbContext.SaveChanges();
+
+                    return CreatedAtAction( nameof( GetReviewerById ), new { id = reviewer.ID }, GetReviewerById( reviewer.ID ).Value );
+                }
+
+                return BadRequest( ModelState );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+
+        [HttpPut( "reviewers/{id:int}" )]
+        public async Task<ActionResult<ReviewerDTO>> UpdateReviewer( int id, [FromBody] JObject model ) {
+            try {
+                var valueProvider = new ObjectSourceValueProvider( model );
+
+                Reviewer existing = _dbContext.Reviewers.FirstOrDefault( r => r.ID == id );
+                if( existing != null && ModelState.IsValid && await TryUpdateModelAsync( existing, "", valueProvider ) ) {
+                    _dbContext.SaveChanges();
+                    return GetReviewerById( id );
+                }
+
+                if( existing == null ) {
+                    ModelState.AddModelError( "id", "Invalid reviewer ID" );
+                }
+
+                return BadRequest( ModelState );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+
+        [HttpDelete( "reviewers/{id:int}" )]
+        public IActionResult DeleteReviewer( int id ) {
+            try {
+                var existing = _dbContext.Reviewers.FirstOrDefault( r => r.ID == id );
+                if( existing != null ) {
+                    _dbContext.Entry( existing ).State = EntityState.Deleted;
+                    _dbContext.SaveChanges();
+                    return Ok();
+                }
+                else {
+                    return NotFound( new { error = "Reviewer not found", providedID = id } );
+                }
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+        #endregion
     }
 
-    public class ObjectSourceValueProvider : IValueProvider
-    {
-        private JObject _x;
+    public class ObjectSourceValueProvider : IValueProvider {
+        private readonly JObject _source;
 
-        public ObjectSourceValueProvider(JObject x)
-        {
-            this._x = x;
+        public ObjectSourceValueProvider( JObject source ) {
+            _source = source ?? throw new ArgumentNullException( nameof( source ) );
         }
 
-        public bool ContainsPrefix(string prefix)
-        {
-            return _x.Properties().Any(p => p.Name == prefix);
+        public bool ContainsPrefix( string prefix ) {
+            return _source.Properties().Any( p => p.Name.Equals( prefix, StringComparison.OrdinalIgnoreCase ) );
         }
 
-        public ValueProviderResult GetValue(string key)
-        {
-            var prop = _x.Properties().Where(p => p.Name.ToLower() == key?.ToLower()).FirstOrDefault();
-
-            if (prop == null)
-            {
-                return ValueProviderResult.None;
+        public ValueProviderResult GetValue( string key ) {
+            if( _source.TryGetValue( key, StringComparison.OrdinalIgnoreCase, out var value ) ) {
+                return new ValueProviderResult( value.ToString() );
             }
-            return new ValueProviderResult(prop.Value.ToString());
+            return ValueProviderResult.None;
         }
     }
 }

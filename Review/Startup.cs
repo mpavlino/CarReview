@@ -17,6 +17,7 @@ using Review.DAL;
 using Review.Model;
 using Review.Model.Interfaces;
 using Review.Services;
+using System.Net.Http.Headers;
 
 namespace Review {
     public class Startup {
@@ -43,10 +44,26 @@ namespace Review {
             services.AddDefaultIdentity<AppUser>()
                 .AddEntityFrameworkStores<CarManagerDbContext>();
 
-            services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<ICarService, CarService>();
+            services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<IReviewerService, ReviewerService>();
+            services.AddScoped<IDropdownService, DropdownService>();
 
+            services.AddHttpClient<ICarService, CarService>( client => {
+                client.BaseAddress = new Uri( "https://localhost:7235/" );
+                client.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "application/json" ) );
+            } );
+            services.AddHttpClient<IBrandService, BrandService>( client =>
+            {
+                client.BaseAddress = new Uri( "https://localhost:7235/" );
+                client.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "application/json" ) );
+            } );
+            services.AddHttpClient<IReviewerService, ReviewerService>( client => {
+                client.BaseAddress = new Uri( "https://localhost:7235/" );
+                client.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "application/json" ) );
+            } );
 
+            services.AddLogging();
             services.AddMvc();
             services.AddRazorPages();
 

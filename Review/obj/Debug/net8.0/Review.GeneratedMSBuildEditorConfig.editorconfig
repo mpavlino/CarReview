@@ -90,10 +90,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/CarReview/Review/Views/Car/CreateReviewer.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXENyZWF0ZVJldmlld2VyLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Projects/CarReview/Review/Views/Car/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -102,20 +98,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/CarReview/Review/Views/Car/EditReviewer.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXEVkaXRSZXZpZXdlci5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Projects/CarReview/Review/Views/Car/GetReviewers.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXEdldFJldmlld2Vycy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Projects/CarReview/Review/Views/Car/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Projects/CarReview/Review/Views/Car/ReviewerDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXFJldmlld2VyRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Projects/CarReview/Review/Views/Car/_CarFilter.cshtml]
@@ -124,10 +108,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Projects/CarReview/Review/Views/Car/_CreateOrUpdate.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXF9DcmVhdGVPclVwZGF0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Projects/CarReview/Review/Views/Car/_CreateOrUpdateRev.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXF9DcmVhdGVPclVwZGF0ZVJldi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Projects/CarReview/Review/Views/Car/_IndexTable.cshtml]
@@ -148,6 +128,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Projects/CarReview/Review/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/CarReview/Review/Views/Reviewer/CreateReviewer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3ZXJcQ3JlYXRlUmV2aWV3ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/CarReview/Review/Views/Reviewer/EditReviewer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3ZXJcRWRpdFJldmlld2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/CarReview/Review/Views/Reviewer/GetReviewers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3ZXJcR2V0UmV2aWV3ZXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/CarReview/Review/Views/Reviewer/ReviewerDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3ZXJcUmV2aWV3ZXJEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/CarReview/Review/Views/Reviewer/_CreateOrUpdateRev.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3ZXJcX0NyZWF0ZU9yVXBkYXRlUmV2LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Projects/CarReview/Review/Views/Shared/Error.cshtml]

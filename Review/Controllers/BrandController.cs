@@ -8,102 +8,120 @@ using Review.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Review.Model.Interfaces;
+using System.Drawing.Drawing2D;
+using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
+using Microsoft.Extensions.Logging;
+using Review.Models;
+using System.Diagnostics;
+using System;
 
 namespace Review.Controllers {
 
     [Authorize]
     public class BrandController : Controller {
 
-        private CarManagerDbContext _dbContext;
-        private UserManager<AppUser> _userManager;
+        private readonly IBrandService _brandService;
+        private readonly IDropdownService _dropdownService;
+        private readonly ILogger<BrandController> _logger;
+
         public string AlertMessage {
             get { return TempData["AlertMessage"].ToString(); }
-
             set { TempData["AlertMessage"] = value; }
         }
 
-        public BrandController( CarManagerDbContext dbContext, UserManager<AppUser> userManager ) {
-            this._dbContext = dbContext;
-            this._userManager = userManager;
+        public BrandController( IBrandService brandService, IDropdownService dropdownService, ILogger<BrandController> logger ) {
+            _brandService = brandService;
+            _dropdownService = dropdownService;
+            _logger = logger;
         }
 
-        public IActionResult Index() {
-
-            IQueryable<Brand> brandQuery = this._dbContext.Brands.Include( c => c.Country ).AsQueryable();
-
-            return View( brandQuery.ToList() );
+        public async Task<IActionResult> Index() {
+            try {
+                IEnumerable<Brand> brandQuery = await _brandService.GetAllBrandsAsync();
+                return View( brandQuery.ToList() );
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while getting all brands." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+            }
         }
 
         [HttpGet]
-        public IActionResult Create() {
-            this.FillDropdownValues();
-            return View();
+        public async Task<IActionResult> Create() {
+            try {
+                ViewBag.PossibleCountries = await _dropdownService.GetCountriesAsync();
+                return View();
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while preparing the create view." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+            }
         }
 
         [HttpPost]
-        public IActionResult CreatePost( Brand brandmodel ) {
+        public async Task<IActionResult> Create( Brand brandmodel ) {
+            try {
+                ViewBag.PossibleCountries = await _dropdownService.GetCountriesAsync();
 
-            this.FillDropdownValues();
-
-            if( ModelState.IsValid ) {
-                this._dbContext.Brands.Add( brandmodel );
-                this._dbContext.SaveChanges();
-
-                return RedirectToAction( nameof( Index ) );
+                if( ModelState.IsValid ) {
+                    var createdBrand = await _brandService.CreateBrandAsync( brandmodel );
+                    return RedirectToAction( nameof( Index ) );
+                }
+                return View( brandmodel );
             }
-
-            return View( "Create", brandmodel );
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while creating a brand." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+            }
         }
 
-        [ActionName( "Edit" )]
-        public IActionResult EditGet( int id ) {
-            this.FillDropdownValues();
-            return View( this._dbContext.Brands.FirstOrDefault( p => p.ID == id ) );
+        [HttpGet, ActionName( "Edit" )]
+        public async Task<IActionResult> Edit( int id ) {
+            try {
+                ViewBag.PossibleCountries = await _dropdownService.GetCountriesAsync();
+                var brand = await _brandService.GetBrandByIdAsync( id );
+                if( brand == null ) {
+                    return NotFound();
+                }
+                return View( brand );
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while preparing the edit view." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+            }
         }
 
         [HttpPost, ActionName( "Edit" )]
-        public async Task<IActionResult> EditPost( int id ) {
-            var brand = this._dbContext.Brands.FirstOrDefault( p => p.ID == id );
-            var ok = await this.TryUpdateModelAsync( brand );
-            this.FillDropdownValues();
+        public async Task<IActionResult> Edit( int id, Brand brand ) {
+            try {
+                ViewBag.PossibleCountries = await _dropdownService.GetCountriesAsync();
 
-            if( ok ) {
-                this._dbContext.SaveChanges();
-                return RedirectToAction( nameof( Index ) );
+                if( ModelState.IsValid ) {
+                    var brandJObject = JObject.FromObject( brand );
+                    var updatedBrand = await _brandService.UpdateBrandAsync( id, brandJObject );
+                    return RedirectToAction( nameof( Index ) );
+                }
+                return View( brand );
             }
-
-            return View( "Edit", brand );
-        }
-
-        public IActionResult DeleteBrand( int? id = null ) {
-            var existing = _dbContext.Brands.FirstOrDefault( p => p.ID == id );
-            if( existing != null ) {
-                this._dbContext.Entry( existing ).State = EntityState.Deleted;
-                this._dbContext.SaveChanges();
-                return RedirectToAction( nameof( Index ) );
-            }
-            else {
-                return BadRequest( new { error = "Unable to locate brand with provided ID", providedID = id } );
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while editing a brand." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
             }
         }
 
-        private void FillDropdownValues() {
-            var countries = new List<SelectListItem>();
-
-            //Polje je opcionalno
-            var listItem = new SelectListItem();
-            listItem.Text = "- select -";
-            listItem.Value = "";
-            countries.Add( listItem );
-
-            foreach( var country in _dbContext.Countries ) {
-                countries.Add( new SelectListItem() {
-                    Value = "" + country.ID,
-                    Text = country.Name
-                } );
+        public async Task<IActionResult> DeleteBrand( int id ) {
+            try {
+                await _brandService.DeleteBrandAsync( id );
+                return RedirectToAction( "Index" );
             }
-
-            ViewBag.PossibleCountries = countries.OrderBy( x => x.Text );
+            catch( HttpRequestException ex ) {
+                _logger.LogError( ex, "An error occurred while deleting a brand." );
+                ModelState.AddModelError( string.Empty, $"Error deleting brand: {ex.Message}" );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+            }
         }
     }
 }
