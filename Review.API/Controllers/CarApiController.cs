@@ -89,13 +89,13 @@ namespace Review.Controllers {
         }
 
         [HttpPut( "{id:int}" )]
-        public async Task<ActionResult<CarDTO>> UpdateCar( int id, [FromBody] JObject model ) {
+        public async Task<ActionResult<CarDTO>> UpdateCar( int id, [FromBody] Car car ) {
             try {
-                var valueProvider = new ObjectSourceValueProvider( model );
 
                 Car existing = _dbContext.Cars.FirstOrDefault( p => p.ID == id );
-                if( existing != null && ModelState.IsValid && await TryUpdateModelAsync( existing, "", valueProvider ) ) {
-                    _dbContext.SaveChanges();
+                if( existing != null && ModelState.IsValid ) {
+                    _dbContext.Entry( existing ).CurrentValues.SetValues( car );
+                    await _dbContext.SaveChangesAsync();
                     return GetCarById( id );
                 }
 
@@ -121,98 +121,6 @@ namespace Review.Controllers {
                 }
                 else {
                     return NotFound( new { error = "Car not found", providedID = id } );
-                }
-            }
-            catch( Exception ex ) {
-                return StatusCode( 500, new { message = ex.Message } );
-            }
-        }
-        #endregion
-
-        #region Reviewers
-        [HttpGet( "reviewers" )]
-        public ActionResult<IEnumerable<ReviewerDTO>> GetAllReviewers() {
-            try {
-                List<ReviewerDTO> reviewers = _dbContext.Reviewers
-                    .Select( ReviewerDTO.SelectorExpression )
-                    .ToList();
-
-                return Ok( reviewers );
-            }
-            catch( Exception ex ) {
-                return StatusCode( 500, new { message = ex.Message } );
-            }
-        }
-
-        [HttpGet( "reviewers/{id:int}" )]
-        public ActionResult<ReviewerDTO> GetReviewerById( int id ) {
-            try {
-                var reviewer = _dbContext.Reviewers
-                    .Where( r => r.ID == id )
-                    .Select( ReviewerDTO.SelectorExpression )
-                    .FirstOrDefault();
-
-                if( reviewer == null ) {
-                    return NotFound( new { message = "Reviewer not found" } );
-                }
-
-                return Ok( reviewer );
-            }
-            catch( Exception ex ) {
-                return StatusCode( 500, new { message = ex.Message } );
-            }
-        }
-
-        [HttpPost( "reviewers" )]
-        public ActionResult<ReviewerDTO> CreateReviewer( [FromBody] Reviewer reviewer ) {
-            try {
-                if( ModelState.IsValid ) {
-                    _dbContext.Reviewers.Add( reviewer );
-                    _dbContext.SaveChanges();
-
-                    return CreatedAtAction( nameof( GetReviewerById ), new { id = reviewer.ID }, GetReviewerById( reviewer.ID ).Value );
-                }
-
-                return BadRequest( ModelState );
-            }
-            catch( Exception ex ) {
-                return StatusCode( 500, new { message = ex.Message } );
-            }
-        }
-
-        [HttpPut( "reviewers/{id:int}" )]
-        public async Task<ActionResult<ReviewerDTO>> UpdateReviewer( int id, [FromBody] JObject model ) {
-            try {
-                var valueProvider = new ObjectSourceValueProvider( model );
-
-                Reviewer existing = _dbContext.Reviewers.FirstOrDefault( r => r.ID == id );
-                if( existing != null && ModelState.IsValid && await TryUpdateModelAsync( existing, "", valueProvider ) ) {
-                    _dbContext.SaveChanges();
-                    return GetReviewerById( id );
-                }
-
-                if( existing == null ) {
-                    ModelState.AddModelError( "id", "Invalid reviewer ID" );
-                }
-
-                return BadRequest( ModelState );
-            }
-            catch( Exception ex ) {
-                return StatusCode( 500, new { message = ex.Message } );
-            }
-        }
-
-        [HttpDelete( "reviewers/{id:int}" )]
-        public IActionResult DeleteReviewer( int id ) {
-            try {
-                var existing = _dbContext.Reviewers.FirstOrDefault( r => r.ID == id );
-                if( existing != null ) {
-                    _dbContext.Entry( existing ).State = EntityState.Deleted;
-                    _dbContext.SaveChanges();
-                    return Ok();
-                }
-                else {
-                    return NotFound( new { error = "Reviewer not found", providedID = id } );
                 }
             }
             catch( Exception ex ) {

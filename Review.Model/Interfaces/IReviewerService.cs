@@ -1,14 +1,15 @@
-﻿using Review.Model;
+﻿using Newtonsoft.Json.Linq;
+using Review.Model;
 using Review.Model.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Review.Model.Interfaces {
     public interface IReviewerService {
-        Task<IEnumerable<ReviewerDTO>> GetAllReviewersAsync();
-        Task<ReviewerDTO> GetReviewerByIdAsync( int id );
-        Task<ReviewerDTO> CreateReviewerAsync( Reviewer reviewer );
-        Task<ReviewerDTO> UpdateReviewerAsync( int id, Reviewer reviewer );
+        Task<IEnumerable<Reviewer>> GetAllReviewersAsync();
+        Task<Reviewer> GetReviewerByIdAsync( int id );
+        Task<Reviewer> CreateReviewerAsync( Reviewer reviewer );
+        Task<Reviewer> UpdateReviewerAsync( int id, Reviewer model );
         Task DeleteReviewerAsync( int id );
     }
 }

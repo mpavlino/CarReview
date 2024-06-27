@@ -8,6 +8,7 @@ using Review.Model.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 
 namespace Review.API.Controllers {
     [Route( "api/brands" )]
@@ -71,13 +72,13 @@ namespace Review.API.Controllers {
         }
 
         [HttpPut( "{id:int}" )]
-        public async Task<ActionResult<BrandDTO>> UpdateBrand( int id, [FromBody] JObject model ) {
+        public async Task<ActionResult<BrandDTO>> UpdateBrand( int id, [FromBody] BrandDTO brand ) {
             try {
-                var valueProvider = new ObjectSourceValueProvider( model );
 
                 Brand existing = _dbContext.Brands.FirstOrDefault( p => p.ID == id );
-                if( existing != null && ModelState.IsValid && await TryUpdateModelAsync( existing, "", valueProvider ) ) {
-                    _dbContext.SaveChanges();
+                if( existing != null && ModelState.IsValid ) {
+                    _dbContext.Entry( existing ).CurrentValues.SetValues( brand );
+                    await _dbContext.SaveChangesAsync();
                     return GetBrandById( id );
                 }
                 if( existing == null ) {

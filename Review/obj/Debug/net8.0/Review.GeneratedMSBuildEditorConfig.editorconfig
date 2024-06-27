@@ -130,20 +130,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/CarReview/Review/Views/Reviewer/CreateReviewer.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3ZXJcQ3JlYXRlUmV2aWV3ZXIuY3NodG1s
+[C:/Projects/CarReview/Review/Views/Reviewer/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3ZXJcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/CarReview/Review/Views/Reviewer/EditReviewer.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3ZXJcRWRpdFJldmlld2VyLmNzaHRtbA==
+[C:/Projects/CarReview/Review/Views/Reviewer/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3ZXJcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/CarReview/Review/Views/Reviewer/GetReviewers.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3ZXJcR2V0UmV2aWV3ZXJzLmNzaHRtbA==
+[C:/Projects/CarReview/Review/Views/Reviewer/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3ZXJcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/CarReview/Review/Views/Reviewer/ReviewerDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3ZXJcUmV2aWV3ZXJEZXRhaWxzLmNzaHRtbA==
+[C:/Projects/CarReview/Review/Views/Reviewer/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3ZXJcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Projects/CarReview/Review/Views/Reviewer/_CreateOrUpdateRev.cshtml]

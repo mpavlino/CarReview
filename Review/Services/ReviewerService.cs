@@ -20,12 +20,12 @@ namespace Review.Services {
             _logger = logger ?? throw new ArgumentNullException( nameof( logger ) );
         }
 
-        public async Task<IEnumerable<ReviewerDTO>> GetAllReviewersAsync() {
+        public async Task<IEnumerable<Reviewer>> GetAllReviewersAsync() {
             try {
                 var response = await _httpClient.GetAsync( "api/reviewers" );
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<IEnumerable<ReviewerDTO>>();
+                return await response.Content.ReadFromJsonAsync<IEnumerable<Reviewer>>();
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while getting all reviewers." );
@@ -33,12 +33,12 @@ namespace Review.Services {
             }
         }
 
-        public async Task<ReviewerDTO> GetReviewerByIdAsync( int id ) {
+        public async Task<Reviewer> GetReviewerByIdAsync( int id ) {
             try {
                 var response = await _httpClient.GetAsync( $"api/reviewers/{id}" );
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<ReviewerDTO>();
+                return await response.Content.ReadFromJsonAsync<Reviewer>();
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, $"An error occurred while getting reviewer with ID {id}." );
@@ -46,12 +46,12 @@ namespace Review.Services {
             }
         }
 
-        public async Task<ReviewerDTO> CreateReviewerAsync( Reviewer reviewer ) {
+        public async Task<Reviewer> CreateReviewerAsync( Reviewer reviewer ) {
             try {
                 var response = await _httpClient.PostAsJsonAsync( "api/reviewers", reviewer );
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<ReviewerDTO>();
+                return await response.Content.ReadFromJsonAsync<Reviewer>();
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while creating a reviewer." );
@@ -59,12 +59,12 @@ namespace Review.Services {
             }
         }
 
-        public async Task<ReviewerDTO> UpdateReviewerAsync( int id, Reviewer reviewer ) {
+        public async Task<Reviewer> UpdateReviewerAsync( int id, Reviewer model ) {
             try {
-                var response = await _httpClient.PutAsJsonAsync( $"api/reviewers/{id}", reviewer );
+                var response = await _httpClient.PutAsJsonAsync( $"api/reviewers/{id}", model );
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<ReviewerDTO>();
+                return await response.Content.ReadFromJsonAsync<Reviewer>();
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, $"An error occurred while updating reviewer with ID {id}." );

@@ -7,6 +7,7 @@
             <th>Country</th>
             <th>Engine</th>
             <th>Reviewer</th>
+            <th>Rating</th>
             <th data-sortable="false"></th>
         </tr>
     </thead>
@@ -23,12 +24,14 @@
                 <td>@item.Brand.Country?.Name</td>
                 <td>@item.Engine</td>
                 <td>
-                    <a asp-action="ReviewerDetails" asp-route-id="@item.ReviewerID">@item.Reviewer?.FullName</a>
+                    <a asp-controller="Reviewer" asp-action="Details" asp-route-id="@item.ReviewerID">@item.Reviewer?.FullName</a>
                 </td>
+                <td>@item.Rating</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit car </a>
-                    <a asp-action="EditReviewer" asp-route-id="@item.ReviewerID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit reviewer</a>
-                    <a asp-action="DeleteCar" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm"><i class="bi-trash"></i> Delete car</a>
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-box-arrow-up-right"></i> Details</a>
+                    @* <a asp-action="EditReviewer" asp-route-id="@item.ReviewerID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit reviewer</a> *@
+                    <a asp-action="DeleteCar" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm"><i class="bi-trash"></i> Delete</a>
                 </td>
             </tr>
         }

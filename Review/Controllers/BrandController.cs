@@ -100,8 +100,7 @@ namespace Review.Controllers {
                 ViewBag.PossibleCountries = await _dropdownService.GetCountriesAsync();
 
                 if( ModelState.IsValid ) {
-                    var brandJObject = JObject.FromObject( brand );
-                    var updatedBrand = await _brandService.UpdateBrandAsync( id, brandJObject );
+                    var updatedBrand = await _brandService.UpdateBrandAsync( id, brand );
                     return RedirectToAction( nameof( Index ) );
                 }
                 return View( brand );

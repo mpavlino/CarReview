@@ -35,7 +35,7 @@ namespace Review.Controllers {
 
         public async Task<IActionResult> Index() {
             try {
-                IEnumerable<CarDTO> cars = await _carService.GetAllCarsAsync();
+                IEnumerable<Car> cars = await _carService.GetAllCarsAsync();
                 return View( cars.ToList() );
             }
             catch( Exception ex ) {
@@ -47,7 +47,8 @@ namespace Review.Controllers {
         [HttpGet]
         public async Task<IActionResult> Create() {
             try {
-                ViewBag.PossibleCountries = await _dropdownService.GetCountriesAsync();
+                ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
+                ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
                 return View();
             }
             catch( Exception ex ) {
@@ -59,7 +60,8 @@ namespace Review.Controllers {
         [HttpPost]
         public async Task<IActionResult> Create( Car carModel ) {
             try {
-                ViewBag.PossibleCountries = await _dropdownService.GetCountriesAsync();
+                ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
+                ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
 
                 if( ModelState.IsValid ) {
                     var createdCar = await _carService.CreateCarAsync( carModel );
@@ -77,7 +79,8 @@ namespace Review.Controllers {
         [HttpGet, ActionName( "Edit" )]
         public async Task<IActionResult> Edit( int id ) {
             try {
-                ViewBag.PossibleCountries = await _dropdownService.GetCountriesAsync();
+                ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
+                ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
                 var car = await _carService.GetCarByIdAsync( id );
                 if( car == null ) {
                     return NotFound();
@@ -93,11 +96,11 @@ namespace Review.Controllers {
         [HttpPost, ActionName( "Edit" )]
         public async Task<IActionResult> Edit( int id, Car car ) {
             try {
-                ViewBag.PossibleCountries = await _dropdownService.GetCountriesAsync();
+                ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
+                ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
 
                 if( ModelState.IsValid ) {
-                    var carJObject = JObject.FromObject( car );
-                    var updatedCar = await _carService.UpdateCarAsync( id, carJObject );
+                    var updatedCar = await _carService.UpdateCarAsync( id, car );
                     return RedirectToAction( nameof( Index ) );
                 }
 
@@ -105,6 +108,36 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while editing a car." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details( int id ) {
+            try {
+                var car = await _carService.GetCarByIdAsync( id );
+                if( car == null ) {
+                    return NotFound();
+                }
+                return View( car );
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while preparing the details view." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Blog( int id ) {
+            try {
+                var car = await _carService.GetCarByIdAsync( id );
+                if( car == null ) {
+                    return NotFound();
+                }
+                return View( car );
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while preparing the details view." );
                 return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
             }
         }

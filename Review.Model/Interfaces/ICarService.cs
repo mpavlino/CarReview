@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace Review.Model.Interfaces {
     public interface ICarService {
         bool IsCarModelNameUnique( string name );
-        Task<IEnumerable<CarDTO>> GetAllCarsAsync();
-        Task<CarDTO> GetCarByIdAsync( int id );
-        Task<IEnumerable<CarDTO>> SearchCarsAsync( string q );
-        Task<CarDTO> CreateCarAsync( Car car );
-        Task<CarDTO> UpdateCarAsync( int id, JObject model );
+        Task<IEnumerable<Car>> GetAllCarsAsync();
+        Task<Car> GetCarByIdAsync( int id );
+        Task<IEnumerable<Car>> SearchCarsAsync( string q );
+        Task<Car> CreateCarAsync( Car car );
+        Task<Car> UpdateCarAsync( int id, Car model );
         Task DeleteCarAsync( int id );
     }
 }

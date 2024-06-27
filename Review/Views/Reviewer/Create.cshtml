@@ -3,13 +3,13 @@
     ViewData["Title"] = "Adding a new reviewer";
 }
 <ol class="breadcrumb">
-    <li><a asp-action="GetReviewers">Reviewers list /</a></li>
+    <li><a asp-action="Index">Reviewers list /</a></li>
     <li class="active">&nbsp;New Reviewer</li>
 </ol>
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateReviewer">
+        <form asp-action="Create">
             <partial name="_CreateOrUpdateRev" />
         </form>
     </div>

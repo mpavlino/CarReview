@@ -8,8 +8,9 @@ namespace Review.Model {
     public class UniqueBrandNameAttribute : ValidationAttribute {
         protected override ValidationResult IsValid( object value, ValidationContext validationContext ) {
             var service = (IBrandService) validationContext.GetService( typeof( IBrandService ) );
+            var brand = (Brand) validationContext.ObjectInstance;
 
-            if( service != null && value is string brandName ) {
+            if( service != null && value is string brandName && brand.ID == 0 ) {
                 if( !service.IsBrandNameUnique( brandName ) ) {
                     return new ValidationResult( ErrorMessage ?? "A brand with this name already exists." );
                 }

@@ -85,7 +85,7 @@
                 </a>
             </li><!-- End Cars Nav -->
             <li class="nav-item">
-                <a asp-controller="Car" asp-action="GetReviewers" class="nav-link collapsed">
+                <a asp-controller="Reviewer" asp-action="Index" class="nav-link collapsed">
                     <i class="bi-people"></i>
                     <span>Reviewers</span>
                 </a>
@@ -140,7 +140,8 @@
                 $("#datepicker").datepicker({
                     format: "mm/yyyy",
                     viewMode: "months",
-                    minViewMode: "months"
+                    minViewMode: "months",
+                    orientation: "bottom auto"
                 });
             });
         </script>

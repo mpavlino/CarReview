@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 
 namespace Review.Controllers {
@@ -31,7 +32,7 @@ namespace Review.Controllers {
 
         public async Task<IActionResult> Index() {
             try {
-                IEnumerable<ReviewerDTO> reviewers = await _reviewerService.GetAllReviewersAsync();
+                IEnumerable<Reviewer> reviewers = await _reviewerService.GetAllReviewersAsync();
                 return View( reviewers.ToList() );
             }
             catch( Exception ex ) {
@@ -98,7 +99,22 @@ namespace Review.Controllers {
             }
         }
 
-        public async Task<IActionResult> DeleteReviewer( int id ) {
+        [HttpGet]
+        public async Task<IActionResult> Details( int id ) {
+            try {
+                var reviewer = await _reviewerService.GetReviewerByIdAsync( id );
+                if( reviewer == null ) {
+                    return NotFound();
+                }
+                return View( reviewer );
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while preparing the details view." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+            }
+        }
+
+        public async Task<IActionResult> Delete( int id ) {
             try {
                 await _reviewerService.DeleteReviewerAsync( id );
                 return RedirectToAction( "Index" );

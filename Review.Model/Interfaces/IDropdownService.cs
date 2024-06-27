@@ -8,5 +8,7 @@ using System.Threading.Tasks;
 namespace Review.Model.Interfaces {
     public interface IDropdownService {
         Task<IEnumerable<SelectListItem>> GetCountriesAsync();
+        Task<IEnumerable<SelectListItem>> GetBrandsAsync();
+        Task<IEnumerable<SelectListItem>> GetReviewersAsync();
     }
 }

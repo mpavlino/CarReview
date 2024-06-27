@@ -75,7 +75,7 @@ namespace Review.Services {
             }
         }
 
-        public async Task<Brand> UpdateBrandAsync( int id, JObject brand ) {
+        public async Task<Brand> UpdateBrandAsync( int id, Brand brand ) {
             try {
                 var response = await _httpClient.PutAsJsonAsync( $"api/brands/{id}", brand );
                 response.EnsureSuccessStatusCode();

@@ -29,12 +29,12 @@ namespace Review.Services {
             return !_dbContext.Cars.Any( b => b.Model == name );
         }
 
-        public async Task<IEnumerable<CarDTO>> GetAllCarsAsync() {
+        public async Task<IEnumerable<Car>> GetAllCarsAsync() {
             try {
                 var response = await _httpClient.GetAsync( "api/cars" );
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<IEnumerable<CarDTO>>();
+                return await response.Content.ReadFromJsonAsync<IEnumerable<Car>>();
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while getting all cars." );
@@ -42,12 +42,12 @@ namespace Review.Services {
             }
         }
 
-        public async Task<CarDTO> GetCarByIdAsync( int id ) {
+        public async Task<Car> GetCarByIdAsync( int id ) {
             try {
                 var response = await _httpClient.GetAsync( $"api/cars/{id}" );
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<CarDTO>();
+                return await response.Content.ReadFromJsonAsync<Car>();
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, $"An error occurred while getting car with ID {id}." );
@@ -55,12 +55,12 @@ namespace Review.Services {
             }
         }
 
-        public async Task<IEnumerable<CarDTO>> SearchCarsAsync( string q ) {
+        public async Task<IEnumerable<Car>> SearchCarsAsync( string q ) {
             try {
                 var response = await _httpClient.GetAsync( $"api/cars/search/{q}" );
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<IEnumerable<CarDTO>>();
+                return await response.Content.ReadFromJsonAsync<IEnumerable<Car>>();
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, $"An error occurred while searching cars with query '{q}'." );
@@ -68,12 +68,12 @@ namespace Review.Services {
             }
         }
 
-        public async Task<CarDTO> CreateCarAsync( Car car ) {
+        public async Task<Car> CreateCarAsync( Car car ) {
             try {
                 var response = await _httpClient.PostAsJsonAsync( "api/cars", car );
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<CarDTO>();
+                return await response.Content.ReadFromJsonAsync<Car>();
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while creating a car." );
@@ -81,12 +81,12 @@ namespace Review.Services {
             }
         }
 
-        public async Task<CarDTO> UpdateCarAsync( int id, JObject model ) {
+        public async Task<Car> UpdateCarAsync( int id, Car model ) {
             try {
                 var response = await _httpClient.PutAsJsonAsync( $"api/cars/{id}", model );
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<CarDTO>();
+                return await response.Content.ReadFromJsonAsync<Car>();
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, $"An error occurred while updating car with ID {id}." );
