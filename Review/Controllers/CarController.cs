@@ -44,6 +44,17 @@ namespace Review.Controllers {
             }
         }
 
+        public async Task<IActionResult> IndexAjax( CarFilterModel filter ) {
+            try {
+                var cars = await _carService.SearchCarsAsync( filter );
+                return PartialView( "_IndexTable", cars.ToList() );
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while searching cars." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> Create() {
             try {
@@ -64,7 +75,7 @@ namespace Review.Controllers {
                 ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
 
                 if( ModelState.IsValid ) {
-                    var createdCar = await _carService.CreateCarAsync( carModel );
+                    bool isCarCreated = await _carService.CreateCarAsync( carModel );
                     return RedirectToAction( nameof( Index ) );
                 }
 

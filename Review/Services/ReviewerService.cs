@@ -46,12 +46,12 @@ namespace Review.Services {
             }
         }
 
-        public async Task<Reviewer> CreateReviewerAsync( Reviewer reviewer ) {
+        public async Task<bool> CreateReviewerAsync( Reviewer reviewer ) {
             try {
                 var response = await _httpClient.PostAsJsonAsync( "api/reviewers", reviewer );
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<Reviewer>();
+                return response.IsSuccessStatusCode;
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while creating a reviewer." );

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Review.DAL;
@@ -16,7 +17,7 @@ builder.Services.AddSwaggerGen();
 
 // Add the database context for in-memory database
 builder.Services.AddDbContext<CarManagerDbContext>( options =>
-    options.UseInMemoryDatabase( databaseName: "CarManager" ) );
+    options.UseNpgsql( builder.Configuration.GetConnectionString( "CarManagerDbContext" ) ) );
 
 // Add any additional services here
 // builder.Services.AddScoped<ISomeService, SomeService>();

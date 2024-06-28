@@ -56,7 +56,7 @@ namespace Review.Controllers {
         public async Task<IActionResult> Create( Reviewer reviewer ) {
             try {
                 if( ModelState.IsValid ) {
-                    var createdReviewer = await _reviewerService.CreateReviewerAsync( reviewer );
+                    bool isReviewerCreated = await _reviewerService.CreateReviewerAsync( reviewer );
                     return RedirectToAction( nameof( Index ) );
                 }
 

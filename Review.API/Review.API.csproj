@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Review.DAL\Review.DAL.csproj" />
     <ProjectReference Include="..\Review.Model\Review.Model.csproj" />
+    <ProjectReference Include="..\Review\Review.csproj" />
   </ItemGroup>
 
 </Project>

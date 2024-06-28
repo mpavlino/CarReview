@@ -67,7 +67,7 @@ namespace Review.Controllers {
                 ViewBag.PossibleCountries = await _dropdownService.GetCountriesAsync();
 
                 if( ModelState.IsValid ) {
-                    var createdBrand = await _brandService.CreateBrandAsync( brandmodel );
+                    bool isBrandCreated = await _brandService.CreateBrandAsync( brandmodel );
                     return RedirectToAction( nameof( Index ) );
                 }
                 return View( brandmodel );

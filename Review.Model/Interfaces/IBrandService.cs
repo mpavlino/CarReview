@@ -10,7 +10,7 @@ namespace Review.Model.Interfaces {
         bool IsBrandNameUnique( string name );
         Task<IEnumerable<Brand>> GetAllBrandsAsync();
         Task<Brand> GetBrandByIdAsync( int id );
-        Task<Brand> CreateBrandAsync( Brand brand );
+        Task<bool> CreateBrandAsync( Brand brand );
         Task<Brand> UpdateBrandAsync( int id, Brand brand );
         Task DeleteBrandAsync( int id );
     }

@@ -54,13 +54,29 @@ namespace Review.Controllers {
             }
         }
 
-        [HttpGet( "pretraga/{q}" )]
-        public ActionResult<IEnumerable<CarDTO>> SearchCars( string q ) {
+        [HttpPost( "search" )]
+        public ActionResult<IEnumerable<CarDTO>> SearchCars( CarFilterModel filter ) {
             try {
-                var cars = _dbContext.Cars
-                    .Where( c => c.Brand.Name.Contains( q ) )
-                    .Select( CarDTO.SelectorExpression )
-                    .ToList();
+                var carQuery = this._dbContext.Cars.Include( c => c.Brand ).ThenInclude( c => c.Country ).Include( c => c.Reviewer ).AsQueryable();
+
+                //Primjer iterativnog građenja upita - dodaje se "where clause" samo u slučaju da je parametar doista proslijeđen.
+                //To rezultira optimalnijim stablom izraza koje se kvalitetnije potencijalno prevodi u SQL
+                if( !string.IsNullOrWhiteSpace( filter.Brand ) )
+                    carQuery = carQuery.Where( p => p.BrandID != null && p.Brand.Name.ToLower().Contains( filter.Brand.ToLower() ) );
+
+                if( !string.IsNullOrWhiteSpace( filter.Model ) )
+                    carQuery = carQuery.Where( p => p.Model.ToLower().Contains( filter.Model.ToLower() ) );
+
+                if( !string.IsNullOrWhiteSpace( filter.Engine ) )
+                    carQuery = carQuery.Where( p => p.Engine.ToLower().Contains( filter.Engine.ToLower() ) );
+
+                if( !string.IsNullOrWhiteSpace( filter.Country ) )
+                    carQuery = carQuery.Where( p => p.Brand.CountryID != null && p.Brand.Country.Name.ToLower().Contains( filter.Country.ToLower() ) );
+
+                if( !string.IsNullOrWhiteSpace( filter.Reviewer ) )
+                    carQuery = carQuery.Where( p => p.ReviewerID != null && p.Reviewer.FullName.ToLower().Contains( filter.Reviewer.ToLower() ) );
+
+                var cars = carQuery.Select( CarDTO.SelectorExpression ).ToList();
 
                 return Ok( cars );
             }
@@ -73,8 +89,6 @@ namespace Review.Controllers {
         public ActionResult<CarDTO> CreateCar( [FromBody] Car c ) {
             try {
                 if( ModelState.IsValid ) {
-                    c.Brand.CountryID = c.Brand.CountryID;
-                    c.Brand.Country = null;
                     _dbContext.Cars.Add( c );
                     _dbContext.SaveChanges();
 

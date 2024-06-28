@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Review.Models;
 
 namespace Review.Services {
     public class CarService : ICarService {
@@ -55,25 +56,25 @@ namespace Review.Services {
             }
         }
 
-        public async Task<IEnumerable<Car>> SearchCarsAsync( string q ) {
+        public async Task<IEnumerable<Car>> SearchCarsAsync( CarFilterModel filter ) {
             try {
-                var response = await _httpClient.GetAsync( $"api/cars/search/{q}" );
+                var response = await _httpClient.PostAsJsonAsync( $"api/cars/search", filter );
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadFromJsonAsync<IEnumerable<Car>>();
             }
             catch( Exception ex ) {
-                _logger.LogError( ex, $"An error occurred while searching cars with query '{q}'." );
+                _logger.LogError( ex, $"An error occurred while searching cars with query." );
                 throw;
             }
         }
 
-        public async Task<Car> CreateCarAsync( Car car ) {
+        public async Task<bool> CreateCarAsync( Car car ) {
             try {
                 var response = await _httpClient.PostAsJsonAsync( "api/cars", car );
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<Car>();
+                return response.IsSuccessStatusCode;
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while creating a car." );

@@ -35,11 +35,14 @@ namespace Review {
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             } );
 
-            services.AddDbContext<CarManagerDbContext>( options => options.UseInMemoryDatabase( "CarManager" ) );
+            //services.AddDbContext<CarManagerDbContext>( options => options.UseInMemoryDatabase( "CarManager" ) );
+
+            //services.AddDbContext<CarManagerDbContext>( options =>
+            //     options.UseSqlServer(
+            //         Configuration.GetConnectionString( "CarManagerDbContext" ) ) );
 
             services.AddDbContext<CarManagerDbContext>( options =>
-                 options.UseSqlServer(
-                     Configuration.GetConnectionString( "CarManagerDbContext" ) ) );
+                options.UseNpgsql( Configuration.GetConnectionString( "CarManagerDbContext" ) ) );
 
             services.AddDefaultIdentity<AppUser>()
                 .AddEntityFrameworkStores<CarManagerDbContext>();

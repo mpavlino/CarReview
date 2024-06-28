@@ -61,13 +61,12 @@ namespace Review.Services {
             }
         }
 
-        public async Task<Brand> CreateBrandAsync( Brand brand ) {
+        public async Task<bool> CreateBrandAsync( Brand brand ) {
             try {
                 var response = await _httpClient.PostAsJsonAsync( "api/brands/", brand );
                 response.EnsureSuccessStatusCode();
 
-                Brand result = await response.Content.ReadFromJsonAsync<Brand>();
-                return result;
+                return response.IsSuccessStatusCode;
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while creating a brand." );
