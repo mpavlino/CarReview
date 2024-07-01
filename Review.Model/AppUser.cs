@@ -8,7 +8,6 @@ namespace Review.Model
 {
     public class AppUser : IdentityUser
     {
-        [Required]
         [RegularExpression("[0-9]{11}")]
         public string OIB { get; set; }
     }

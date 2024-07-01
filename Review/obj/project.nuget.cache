@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "JCbLrFVbh5o=",
+  "dgSpecHash": "awRuBOPzGHI=",
   "success": true,
   "projectFilePath": "C:\\Projects\\CarReview\\Review\\Review.csproj",
   "expectedPackageFiles": [
@@ -104,7 +104,7 @@
     "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.data.sqlclient\\5.1.5\\microsoft.data.sqlclient.5.1.5.nupkg.sha512",
     "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\5.1.1\\microsoft.data.sqlclient.sni.runtime.5.1.1.nupkg.sha512",
-    "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.data.sqlite.core\\8.0.3\\microsoft.data.sqlite.core.8.0.3.nupkg.sha512",
+    "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.data.sqlite.core\\8.0.4\\microsoft.data.sqlite.core.8.0.4.nupkg.sha512",
     "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.diasymreader\\2.0.0\\microsoft.diasymreader.2.0.0.nupkg.sha512",
     "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.dotnet.scaffolding.shared\\8.0.2\\microsoft.dotnet.scaffolding.shared.8.0.2.nupkg.sha512",
     "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.4\\microsoft.entityframeworkcore.8.0.4.nupkg.sha512",
@@ -113,8 +113,8 @@
     "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.entityframeworkcore.design\\8.0.4\\microsoft.entityframeworkcore.design.8.0.4.nupkg.sha512",
     "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\8.0.4\\microsoft.entityframeworkcore.inmemory.8.0.4.nupkg.sha512",
     "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\8.0.4\\microsoft.entityframeworkcore.relational.8.0.4.nupkg.sha512",
-    "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite\\8.0.3\\microsoft.entityframeworkcore.sqlite.8.0.3.nupkg.sha512",
-    "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite.core\\8.0.3\\microsoft.entityframeworkcore.sqlite.core.8.0.3.nupkg.sha512",
+    "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite\\8.0.4\\microsoft.entityframeworkcore.sqlite.8.0.4.nupkg.sha512",
+    "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite.core\\8.0.4\\microsoft.entityframeworkcore.sqlite.core.8.0.4.nupkg.sha512",
     "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\8.0.4\\microsoft.entityframeworkcore.sqlserver.8.0.4.nupkg.sha512",
     "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\8.0.4\\microsoft.entityframeworkcore.tools.8.0.4.nupkg.sha512",
     "C:\\Users\\MirkoP\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0\\microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",

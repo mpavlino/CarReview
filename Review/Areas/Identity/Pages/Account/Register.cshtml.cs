@@ -62,7 +62,6 @@ namespace Review.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            [Required]
             [RegularExpression("[0-9]{11}", ErrorMessage = "OIB is required and must be 11 characters long.")]
             public string OIB { get; set; }
         }
