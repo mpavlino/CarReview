@@ -2,6 +2,15 @@
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
+@{
+    var user = await UserManager.GetUserAsync(User);
+    string role = "";
+    if(user != null) {
+        var userRoles = await UserManager.GetRolesAsync( user );
+        role = userRoles.FirstOrDefault();
+    }
+}
+
 
 @if( SignInManager.IsSignedIn( User ) ) {
 @*     <li class="nav-item">
@@ -168,6 +177,7 @@
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
                 <h6>@User.Identity.Name</h6>
+                <span>@role</span>
                 @* <span>Web Designer</span> *@
             </li>
             <li>

@@ -18,6 +18,7 @@ using Review.Model;
 using Review.Model.Interfaces;
 using Review.Services;
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Identity;
 
 namespace Review {
     public class Startup {
@@ -45,6 +46,7 @@ namespace Review {
                 options.UseNpgsql( Configuration.GetConnectionString( "CarManagerDbContext" ) ) );
 
             services.AddDefaultIdentity<AppUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<CarManagerDbContext>();
 
             services.AddScoped<ICarService, CarService>();
