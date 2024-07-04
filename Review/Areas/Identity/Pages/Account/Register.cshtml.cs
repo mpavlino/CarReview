@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Review.Model;
+using Review.Models;
 
 namespace Review.Areas.Identity.Pages.Account
 {
@@ -48,6 +49,7 @@ namespace Review.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
+            [UniqueEmailAttribute]
             [Display(Name = "Email")]
             public string Email { get; set; }
 

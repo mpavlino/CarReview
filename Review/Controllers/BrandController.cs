@@ -20,7 +20,7 @@ using System;
 
 namespace Review.Controllers {
 
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class BrandController : Controller {
 
         private readonly IBrandService _brandService;

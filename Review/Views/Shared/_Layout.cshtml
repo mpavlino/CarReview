@@ -90,12 +90,15 @@
                     <span>Reviewers</span>
                 </a>
             </li><!-- End Reviewers Nav -->
+            @if( User.IsInRole( "Administrator" ) ) {
                 <li class="nav-item">
                     <a asp-controller="Brand" asp-action="Index" class="nav-link collapsed">
-                    <i class="bi-car-front"></i>
-                    <span>Brands</span>
-                </a>
-            </li><!-- End Brands Nav -->
+                        <i class="bi-car-front"></i>
+                        <span>Brands</span>
+                    </a>
+                </li>
+                <!-- End Brands Nav -->
+            }
         </ul>
 
     </aside><!-- End Sidebar-->
