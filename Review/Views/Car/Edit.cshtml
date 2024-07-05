@@ -1,4 +1,4 @@
-﻿@model Review.Model.Car
+﻿@model Review.Models.Car.CarViewModel
 @{
     ViewData["Title"] = "Car edit";
 }
@@ -8,7 +8,8 @@
 </ol>
 <div class="row">
     <div class="col-lg-12">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
             <input type="hidden" asp-for="ID" />
             <partial name="_CreateOrUpdate" />
         </form>

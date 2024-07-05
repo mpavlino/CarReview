@@ -88,6 +88,17 @@
             <dd>
                 @Model?.Reviewer?.FullName
             </dd>
+            <dt>
+                Rating
+            </dt>
+            <dd>
+                @Model.Rating ★
+            </dd>
+            <div class="col-6">
+                @if( Model.ImageData != null ) {
+                    <img src="data:@Model.ImageMimeType;base64,@Convert.ToBase64String(Model.ImageData)" class="img-fluid" alt="Car Image" />
+                }
+            </div>
         </dl>
     </div>
 

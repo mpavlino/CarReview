@@ -2,13 +2,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Review.Model.Interfaces;
+using Review.Models.Car;
 
-namespace Review.Model {
+namespace Review.Validation {
     [AttributeUsage( AttributeTargets.Property, AllowMultiple = false )]
     public class UniqueCarModelNameAttribute : ValidationAttribute {
         protected override ValidationResult IsValid( object value, ValidationContext validationContext ) {
             var service = (ICarService) validationContext.GetService( typeof( ICarService ) );
-            var car = (Car) validationContext.ObjectInstance;
+            var car = (CarViewModel) validationContext.ObjectInstance;
 
             if( service != null && value is string carModelName && car.ID == 0 ) {
                 if( !service.IsCarModelNameUnique( carModelName ) ) {

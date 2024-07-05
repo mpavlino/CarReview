@@ -23,6 +23,8 @@ namespace Review.Model.DTO
         public int? ReviewerID { get; set; } 
         public ReviewerDTO Reviewer { get; set; }
         public int Rating { get; set; }
+        public byte[] ImageData { get; set; }
+        public string ImageMimeType { get; set; }
 
         public static Expression<Func<Car, CarDTO>> SelectorExpression { get; } = p => new CarDTO()
         {
@@ -57,7 +59,9 @@ namespace Review.Model.DTO
                 Gender = p.Reviewer.Gender,
                 About = p.Reviewer.About
             },
-            Rating = p.Rating
+            Rating = p.Rating,
+            ImageData = p.ImageData,
+            ImageMimeType = p.ImageMimeType
         };
     }
 }

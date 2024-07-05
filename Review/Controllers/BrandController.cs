@@ -17,6 +17,8 @@ using Microsoft.Extensions.Logging;
 using Review.Models;
 using System.Diagnostics;
 using System;
+using Review.Models.Brand;
+using Review.Translators;
 
 namespace Review.Controllers {
 
@@ -53,7 +55,8 @@ namespace Review.Controllers {
         public async Task<IActionResult> Create() {
             try {
                 ViewBag.PossibleCountries = await _dropdownService.GetCountriesAsync();
-                return View();
+                var brandViewModel = new BrandViewModel();
+                return View( brandViewModel );
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while preparing the create view." );
@@ -62,15 +65,16 @@ namespace Review.Controllers {
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create( Brand brandmodel ) {
+        public async Task<IActionResult> Create( BrandViewModel brandViewModel ) {
             try {
                 ViewBag.PossibleCountries = await _dropdownService.GetCountriesAsync();
 
                 if( ModelState.IsValid ) {
-                    bool isBrandCreated = await _brandService.CreateBrandAsync( brandmodel );
+                    var brandModel = BrandTranslator.TranslateViewModelToModel( brandViewModel );
+                    bool isBrandCreated = await _brandService.CreateBrandAsync( brandModel );
                     return RedirectToAction( nameof( Index ) );
                 }
-                return View( brandmodel );
+                return View( brandViewModel );
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while creating a brand." );
@@ -86,7 +90,8 @@ namespace Review.Controllers {
                 if( brand == null ) {
                     return NotFound();
                 }
-                return View( brand );
+                BrandViewModel brandViewModel = new BrandViewModel(brand);
+                return View( brandViewModel );
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while preparing the edit view." );
@@ -95,15 +100,16 @@ namespace Review.Controllers {
         }
 
         [HttpPost, ActionName( "Edit" )]
-        public async Task<IActionResult> Edit( int id, Brand brand ) {
+        public async Task<IActionResult> Edit( int id, BrandViewModel brandViewModel ) {
             try {
                 ViewBag.PossibleCountries = await _dropdownService.GetCountriesAsync();
 
                 if( ModelState.IsValid ) {
+                    Brand brand = BrandTranslator.TranslateViewModelToModel( brandViewModel );
                     var updatedBrand = await _brandService.UpdateBrandAsync( id, brand );
                     return RedirectToAction( nameof( Index ) );
                 }
-                return View( brand );
+                return View( brandViewModel );
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while editing a brand." );

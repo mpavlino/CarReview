@@ -15,7 +15,6 @@ namespace Review.Model
         public Brand Brand { get; set; }
 
         [Required( ErrorMessage = "Car name is required." )]
-        [UniqueCarModelName( ErrorMessage = "A car with this model name already exists." )]
         [StringLength(200)]
         public string Model { get; set; }
 
@@ -35,5 +34,7 @@ namespace Review.Model
         public int? ReviewerID { get; set; }
         public Reviewer Reviewer { get; set; }
         public int Rating { get; set; }
+        public byte[] ImageData { get; set; } 
+        public string ImageMimeType { get; set; }
     }
 }

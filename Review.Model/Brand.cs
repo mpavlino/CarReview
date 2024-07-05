@@ -12,7 +12,6 @@ namespace Review.Model
         public int ID { get; set; }
 
         [Required( ErrorMessage = "Brand name is required." )]
-        [UniqueBrandName( ErrorMessage = "A brand with this name already exists." )]
         public string Name { get; set; }
 
         [ForeignKey( nameof( Country ) )]

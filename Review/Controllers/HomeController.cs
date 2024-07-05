@@ -4,15 +4,31 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Review.Model.Interfaces;
 using Review.Models;
+using Review.Models.Car;
 
 namespace Review.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ICarService _carService;
+        private readonly ILogger<CarController> _logger;
+
+        public HomeController(ICarService carService, ILogger<CarController> logger ) {
+            _carService = carService;
+            _logger = logger;
+        }   
+
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var cars = await _carService.GetAllCarsAsync();
+            var carsViewModelList = new List<CarViewModel>();
+            foreach( var car in cars.Where( x => x.ImageData != null ) ) {
+                carsViewModelList.Add( new CarViewModel( car ) );
+            }
+            return View( carsViewModelList );
         }
 
         public IActionResult About()

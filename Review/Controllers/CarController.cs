@@ -7,10 +7,13 @@ using Review.Model;
 using Review.Model.DTO;
 using Review.Model.Interfaces;
 using Review.Models;
+using Review.Models.Car;
+using Review.Translators;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -60,7 +63,9 @@ namespace Review.Controllers {
             try {
                 ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
                 ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
-                return View();
+
+                CarViewModel carView = new CarViewModel();
+                return View( carView );
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while preparing the create view." );
@@ -69,17 +74,32 @@ namespace Review.Controllers {
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create( Car carModel ) {
+        public async Task<IActionResult> Create( CarViewModel carViewModel ) {
             try {
                 ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
                 ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
 
                 if( ModelState.IsValid ) {
+                    byte[] imageData = null;
+                    string imageMimeType = null;
+
+                    if( carViewModel.ImageFile != null ) {
+                        using( var memoryStream = new MemoryStream() ) {
+                            await carViewModel.ImageFile.CopyToAsync( memoryStream );
+                            imageData = memoryStream.ToArray();
+                            imageMimeType = carViewModel.ImageFile.ContentType;
+                        }
+                    }
+
+                    Car carModel = CarTranslator.TranslateViewModelToModel( carViewModel );
+                    carModel.ImageData = imageData;
+                    carModel.ImageMimeType = imageMimeType; 
+
                     bool isCarCreated = await _carService.CreateCarAsync( carModel );
                     return RedirectToAction( nameof( Index ) );
                 }
 
-                return View( carModel );
+                return View( carViewModel );
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while creating a car." );
@@ -96,7 +116,9 @@ namespace Review.Controllers {
                 if( car == null ) {
                     return NotFound();
                 }
-                return View( car );
+
+                var carViewModel = new CarViewModel( car );
+                return View( carViewModel );
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while preparing the edit view." );
@@ -105,17 +127,32 @@ namespace Review.Controllers {
         }
 
         [HttpPost, ActionName( "Edit" )]
-        public async Task<IActionResult> Edit( int id, Car car ) {
+        public async Task<IActionResult> Edit( int id, CarViewModel carViewModel ) {
             try {
                 ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
                 ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
 
                 if( ModelState.IsValid ) {
+                    byte[] imageData = null;
+                    string imageMimeType = null;
+
+                    if( carViewModel.ImageFile != null ) {
+                        using( var memoryStream = new MemoryStream() ) {
+                            await carViewModel.ImageFile.CopyToAsync( memoryStream );
+                            imageData = memoryStream.ToArray();
+                            imageMimeType = carViewModel.ImageFile.ContentType;
+                        }
+                    }
+
+                    Car car = CarTranslator.TranslateViewModelToModel( carViewModel );
+                    car.ImageData = imageData;
+                    car.ImageMimeType = imageMimeType;
+
                     var updatedCar = await _carService.UpdateCarAsync( id, car );
                     return RedirectToAction( nameof( Index ) );
                 }
 
-                return View( car );
+                return View( carViewModel );
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while editing a car." );
