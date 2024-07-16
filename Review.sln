@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Review.Model", "Review.Mode
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Review.DAL", "Review.DAL\Review.DAL.csproj", "{EAB613E4-FB7B-4FC1-B7C0-5E5AF5732CB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Review.API", "Review.API\Review.API.csproj", "{E898379C-FDDB-464E-9B9C-0A73D13CC68C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Review.API", "Review.API\Review.API.csproj", "{E898379C-FDDB-464E-9B9C-0A73D13CC68C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

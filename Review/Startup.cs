@@ -19,6 +19,7 @@ using Review.Model.Interfaces;
 using Review.Services;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Identity;
+using Review.Handlers;
 
 namespace Review {
     public class Startup {
@@ -49,10 +50,12 @@ namespace Review {
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<CarManagerDbContext>();
 
+            services.AddHttpContextAccessor();
             services.AddScoped<ICarService, CarService>();
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<IReviewerService, ReviewerService>();
             services.AddScoped<IDropdownService, DropdownService>();
+            services.AddSingleton<TokenHandler>();
 
             services.AddHttpClient<ICarService, CarService>( client => {
                 client.BaseAddress = new Uri( "https://localhost:7235/" );

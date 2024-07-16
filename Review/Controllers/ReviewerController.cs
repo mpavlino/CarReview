@@ -37,7 +37,7 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while getting all reviewers." );
-                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
 
@@ -48,7 +48,7 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while preparing the create view." );
-                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
 
@@ -64,7 +64,7 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while creating a reviewer." );
-                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
 
@@ -79,7 +79,7 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while preparing the edit view." );
-                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
 
@@ -95,7 +95,7 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while editing a reviewer." );
-                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
 
@@ -110,7 +110,7 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while preparing the details view." );
-                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
 
@@ -122,7 +122,7 @@ namespace Review.Controllers {
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while deleting a reviewer." );
                 ModelState.AddModelError( string.Empty, $"Error deleting reviewer: {ex.Message}" );
-                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
     }

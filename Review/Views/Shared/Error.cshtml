@@ -3,20 +3,20 @@
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+@* <h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2> *@
 
-@if (Model.ShowRequestId)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
-}
+<section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+    <h1>Error</h1>
+    <h2>An error occurred while processing your request.</h2>
+    <h5>@Model.Message</h5>
+    <a class="btn" asp-controller="Home" asp-action="Index">Back to home</a>
+    <img src="assets/img/not-found.svg" class="img-fluid py-5" alt="Page Not Found">
+    @if( Model.ShowRequestId ) {
+        <p>
+            <strong>Request ID:</strong> <code>@Model.RequestId</code>
+        </p>
+    }
+</section>
 
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
-</p>
-<p>
-    <strong>Development environment should not be enabled in deployed applications</strong>, as it can result in sensitive information from exceptions being displayed to end users. For local debugging, development environment can be enabled by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>, and restarting the application.
-</p>
+

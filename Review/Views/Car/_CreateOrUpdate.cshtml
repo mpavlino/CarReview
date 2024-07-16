@@ -19,7 +19,7 @@
                 <label class="col-lg-3 col-md-5 col-form-label">Model Date</label>
                 <div class="col-lg-8 col-md-7">
                     <div class="input-group date" id="datepicker" data-provide="datepicker" data-date-format="mm/yyyy">
-                        <input asp-for="ModelYear" type="text" class="form-control">
+                        <input asp-for="ModelYear" type="text" class="form-control" value="@((Model.ModelYear == DateTime.MinValue) ? string.Empty : Model.ModelYear.ToString("MM/yyyy"))" />
                         <div class="input-group-addon">
                             <span class="glyphicon glyphicon-th"></span>
                         </div>

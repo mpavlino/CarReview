@@ -43,7 +43,7 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while getting all cars." );
-                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
 
@@ -54,7 +54,7 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while searching cars." );
-                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
 
@@ -69,7 +69,7 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while preparing the create view." );
-                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
 
@@ -103,7 +103,7 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while creating a car." );
-                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
 
@@ -122,7 +122,7 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while preparing the edit view." );
-                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
 
@@ -156,7 +156,7 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while editing a car." );
-                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
 
@@ -171,7 +171,7 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while preparing the details view." );
-                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
 
@@ -186,7 +186,7 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while preparing the details view." );
-                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
 
@@ -198,7 +198,7 @@ namespace Review.Controllers {
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while deleting a car." );
                 ModelState.AddModelError( string.Empty, $"Error deleting car: {ex.Message}" );
-                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier } );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
     }

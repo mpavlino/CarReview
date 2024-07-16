@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Review.Model;
 using Review.Model.Interfaces;
 using Review.Models;
 using Review.Models.Car;
@@ -14,19 +16,23 @@ namespace Review.Controllers
     public class HomeController : Controller
     {
         private readonly ICarService _carService;
-        private readonly ILogger<CarController> _logger;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ICarService carService, ILogger<CarController> logger ) {
+        public HomeController(ICarService carService, SignInManager<AppUser> signInManager, ILogger<HomeController> logger ) {
             _carService = carService;
+            _signInManager = signInManager;
             _logger = logger;
         }   
 
         public async Task<IActionResult> Index()
         {
-            var cars = await _carService.GetAllCarsAsync();
             var carsViewModelList = new List<CarViewModel>();
-            foreach( var car in cars.Where( x => x.ImageData != null ) ) {
-                carsViewModelList.Add( new CarViewModel( car ) );
+            if( _signInManager.IsSignedIn(User)) {
+                var cars = await _carService.GetAllCarsAsync();
+                foreach( var car in cars.Where( x => x.ImageData != null ) ) {
+                    carsViewModelList.Add( new CarViewModel( car ) );
+                }
             }
             return View( carsViewModelList );
         }

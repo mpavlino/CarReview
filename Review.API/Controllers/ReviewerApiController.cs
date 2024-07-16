@@ -6,8 +6,10 @@ using Review.Model.DTO;
 using Review.Model;
 using Review.DAL;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Review.API.Controllers {
+    [Authorize]
     [Route( "api/reviewers" )]
     [ApiController]
     public class ReviewerApiController : ControllerBase {

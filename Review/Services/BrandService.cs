@@ -9,17 +9,19 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using System;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Review.Handlers;
 
 namespace Review.Services {
-    public class BrandService : IBrandService {
+    public class BrandService : BaseService, IBrandService {
 
         private readonly CarManagerDbContext _dbContext;
-        private readonly HttpClient _httpClient;
         private readonly ILogger<BrandService> _logger;
 
-        public BrandService( CarManagerDbContext dbContext, HttpClient httpClient, ILogger<BrandService> logger ) {
+        public BrandService( CarManagerDbContext dbContext, HttpClient httpClient, TokenHandler tokenHandler, ILogger<BrandService> logger, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor )
+            : base( httpClient, userManager, httpContextAccessor, tokenHandler ) {
             _dbContext = dbContext;
-            _httpClient = httpClient;
             _logger = logger;
         }
 
@@ -35,6 +37,7 @@ namespace Review.Services {
 
         public async Task<IEnumerable<Brand>> GetAllBrandsAsync() {
             try {
+                await SetAuthorizationHeaderAsync();
                 var response = await _httpClient.GetAsync( "api/brands" );
                 response.EnsureSuccessStatusCode();
 
@@ -49,6 +52,7 @@ namespace Review.Services {
 
         public async Task<Brand> GetBrandByIdAsync( int id ) {
             try {
+                await SetAuthorizationHeaderAsync();
                 var response = await _httpClient.GetAsync( $"api/brands/{id}" );
                 response.EnsureSuccessStatusCode();
 
@@ -63,6 +67,7 @@ namespace Review.Services {
 
         public async Task<bool> CreateBrandAsync( Brand brand ) {
             try {
+                await SetAuthorizationHeaderAsync();
                 var response = await _httpClient.PostAsJsonAsync( "api/brands/", brand );
                 response.EnsureSuccessStatusCode();
 
@@ -76,6 +81,7 @@ namespace Review.Services {
 
         public async Task<Brand> UpdateBrandAsync( int id, Brand brand ) {
             try {
+                await SetAuthorizationHeaderAsync();
                 var response = await _httpClient.PutAsJsonAsync( $"api/brands/{id}", brand );
                 response.EnsureSuccessStatusCode();
 
@@ -90,6 +96,7 @@ namespace Review.Services {
 
         public async Task DeleteBrandAsync( int id ) {
             try {
+                await SetAuthorizationHeaderAsync();
                 var response = await _httpClient.DeleteAsync( $"api/brands/{id}" );
                 response.EnsureSuccessStatusCode();
             }

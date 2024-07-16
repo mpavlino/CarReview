@@ -12,17 +12,20 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Review.Models;
+using System.Net.Http.Headers;
+using Review.Handlers;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace Review.Services {
-    public class CarService : ICarService {
+    public class CarService : BaseService, ICarService {
 
         private CarManagerDbContext _dbContext;
-        private readonly HttpClient _httpClient;
         private readonly ILogger<CarService> _logger;
 
-        public CarService( CarManagerDbContext dbContext, HttpClient httpClient, ILogger<CarService> logger ) {
-            _dbContext = dbContext;
-            _httpClient = httpClient ?? throw new ArgumentNullException( nameof( httpClient ) );
+        public CarService( CarManagerDbContext dbContext, HttpClient httpClient, TokenHandler tokenHandler, ILogger<CarService> logger, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor )
+            : base( httpClient, userManager, httpContextAccessor, tokenHandler ) {
+            _dbContext = dbContext ?? throw new ArgumentNullException( nameof( dbContext ) );
             _logger = logger ?? throw new ArgumentNullException( nameof( logger ) );
         }
 
@@ -32,6 +35,7 @@ namespace Review.Services {
 
         public async Task<IEnumerable<Car>> GetAllCarsAsync() {
             try {
+                await SetAuthorizationHeaderAsync();
                 var response = await _httpClient.GetAsync( "api/cars" );
                 response.EnsureSuccessStatusCode();
 
@@ -45,6 +49,7 @@ namespace Review.Services {
 
         public async Task<Car> GetCarByIdAsync( int id ) {
             try {
+                await SetAuthorizationHeaderAsync();
                 var response = await _httpClient.GetAsync( $"api/cars/{id}" );
                 response.EnsureSuccessStatusCode();
 
@@ -58,6 +63,7 @@ namespace Review.Services {
 
         public async Task<IEnumerable<Car>> SearchCarsAsync( CarFilterModel filter ) {
             try {
+                await SetAuthorizationHeaderAsync();
                 var response = await _httpClient.PostAsJsonAsync( $"api/cars/search", filter );
                 response.EnsureSuccessStatusCode();
 
@@ -71,6 +77,7 @@ namespace Review.Services {
 
         public async Task<bool> CreateCarAsync( Car car ) {
             try {
+                await SetAuthorizationHeaderAsync();
                 var response = await _httpClient.PostAsJsonAsync( "api/cars", car );
                 response.EnsureSuccessStatusCode();
 
@@ -84,6 +91,7 @@ namespace Review.Services {
 
         public async Task<Car> UpdateCarAsync( int id, Car model ) {
             try {
+                await SetAuthorizationHeaderAsync();
                 var response = await _httpClient.PutAsJsonAsync( $"api/cars/{id}", model );
                 response.EnsureSuccessStatusCode();
 
@@ -97,6 +105,7 @@ namespace Review.Services {
 
         public async Task DeleteCarAsync( int id ) {
             try {
+                await SetAuthorizationHeaderAsync();
                 var response = await _httpClient.DeleteAsync( $"api/cars/{id}" );
                 response.EnsureSuccessStatusCode();
             }
