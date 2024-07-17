@@ -27,6 +27,12 @@
                 @Html.DisplayFor(model => model.Model)
             </dd>
             <dt>
+                Generation
+            </dt>
+            <dd>
+                @Html.DisplayFor( model => model.Generation )
+            </dd>
+            <dt>
                 Model Year
             </dt>
             <dd>
@@ -71,12 +77,6 @@
         </dl>
         <dl class="col-6 dl-horizontal">
             <dt>
-                Summary (About)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-            <dt>
                 Country
             </dt>
             <dd>
@@ -99,6 +99,16 @@
                     <img src="data:@Model.ImageMimeType;base64,@Convert.ToBase64String(Model.ImageData)" class="img-fluid" alt="Car Image" />
                 }
             </div>
+        </dl>
+    </div>
+    <div class="row">
+        <dl class="col-12 dl-horizontal">
+            <dt>
+                Summary (About)
+            </dt>
+            <dd>
+                @Html.DisplayFor( model => model.Description )
+            </dd>
         </dl>
     </div>
 

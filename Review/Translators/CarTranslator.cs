@@ -9,6 +9,7 @@ namespace Review.Translators {
                 ID = carViewModel.ID,
                 BrandID = carViewModel.BrandID,
                 Model = carViewModel.Model,
+                Generation = carViewModel.Generation,
                 Engine = carViewModel.Engine,
                 EnginePower = carViewModel.EnginePower,
                 Torque = carViewModel.Torque,

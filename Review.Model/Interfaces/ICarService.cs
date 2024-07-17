@@ -12,6 +12,7 @@ namespace Review.Model.Interfaces {
         Task<IEnumerable<Car>> GetAllCarsAsync();
         Task<Car> GetCarByIdAsync( int id );
         Task<IEnumerable<Car>> SearchCarsAsync( CarFilterModel filter );
+        Task<IEnumerable<Car>> SearchCarsByTextAsync( string query );
         Task<bool> CreateCarAsync( Car car );
         Task<Car> UpdateCarAsync( int id, Car model );
         Task DeleteCarAsync( int id );

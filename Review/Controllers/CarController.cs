@@ -145,8 +145,8 @@ namespace Review.Controllers {
                     }
 
                     Car car = CarTranslator.TranslateViewModelToModel( carViewModel );
-                    car.ImageData = imageData;
-                    car.ImageMimeType = imageMimeType;
+                    car.ImageData = imageData ?? car.ImageData;
+                    car.ImageMimeType = imageMimeType ?? car.ImageMimeType;
 
                     var updatedCar = await _carService.UpdateCarAsync( id, car );
                     return RedirectToAction( nameof( Index ) );

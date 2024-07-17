@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Review.Controllers {
     [Authorize]
@@ -86,6 +87,33 @@ namespace Review.Controllers {
                 return StatusCode( 500, new { message = ex.Message } );
             }
         }
+
+        [HttpPost( "query" )]
+        public ActionResult<IEnumerable<CarDTO>> SearchCarsByText( [FromBody] string query ) {
+            try {
+                var carQuery = this._dbContext.Cars
+                                .Include( c => c.Brand )
+                                .ThenInclude( c => c.Country )
+                                .Include( c => c.Reviewer )
+                                .AsQueryable();
+
+                if( !string.IsNullOrWhiteSpace( query ) ) {
+                    var loweredQuery = query.ToLower();
+                    carQuery = carQuery.Where( p => (p.Brand.Name != null && p.Brand.Name.ToLower().Contains( loweredQuery )) ||
+                                                    p.Model.ToLower().Contains( loweredQuery ) ||
+                                                    p.Generation.ToLower().Contains( loweredQuery ) ||
+                                                    (p.Brand.Country.Name != null && p.Brand.Country.Name.ToLower().Contains( loweredQuery )) );
+                }
+
+                var cars = carQuery.Select( CarDTO.SelectorExpression ).ToList();
+
+                return Ok( cars );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+
 
         [HttpPost]
         public ActionResult<CarDTO> CreateCar( [FromBody] Car c ) {

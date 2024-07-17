@@ -18,6 +18,8 @@ namespace Review.Model
         [StringLength(200)]
         public string Model { get; set; }
 
+        public string Generation { get; set; }
+
         public string Engine { get; set; }
         public string EnginePower { get; set; }
         public string Torque { get; set; }

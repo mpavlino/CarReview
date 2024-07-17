@@ -88,6 +88,10 @@ body {
     transform: scale(1.02) !important;
 }
 
+.container {
+    max-width: 1620px !important;
+}
+
 
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {

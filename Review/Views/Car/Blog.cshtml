@@ -1,6 +1,7 @@
 ﻿@model Review.Model.Car
 @{
     ViewData["Title"] = "Blog";
+    string generation = Model.Generation != "" ? String.Format("({0})", Model.Generation) : "";
 }
 <ol class="breadcrumb">
     <li><a asp-action="Index">Cars list /</a></li>
@@ -14,7 +15,7 @@
     <div class="row">
         <hr />
         <div class="col-md-10">
-            <h2>@Model.Brand?.Name @Model.Model</h2>
+            <h2>@Model.Brand?.Name @Model.Model @generation</h2>
             <ul>
                 <li>Engine of this car is: @Model.Engine</li>
                 <li>It has top speed of: @Model.TopSpeed km/h</li>

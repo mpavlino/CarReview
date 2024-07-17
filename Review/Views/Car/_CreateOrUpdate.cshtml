@@ -16,6 +16,13 @@
                 </div>
             </div>
             <div class="form-group row mb-3">
+                <label class="col-lg-3 col-md-5 col-form-label">Generation</label>
+                <div class="col-lg-8 col-md-7">
+                    <input asp-for="Generation" class="form-control" />
+                    <span asp-validation-for="Generation" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
                 <label class="col-lg-3 col-md-5 col-form-label">Model Date</label>
                 <div class="col-lg-8 col-md-7">
                     <div class="input-group date" id="datepicker" data-provide="datepicker" data-date-format="mm/yyyy">
@@ -71,13 +78,6 @@
             </div>
         </div>
         <div class="col-6">
-            <div class="form-group row mb-3">
-                <label class="col-lg-3 col-md-5 col-form-label">Description</label>
-                <div class="col-lg-8 col-md-7">
-                    <textarea asp-for="Description" class="form-control" rows="8" cols="70"></textarea>
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-            </div>
             @*     <div class="form-group row mb-3">
             <label class="col-lg-3 col-md-5 col-form-label">Country</label>
             <div class="col-lg-8 col-md-7">
@@ -116,8 +116,17 @@
             </div>
         </div>
     </div>
+    <div class="form-group row col-12">
+        <div class="form-group row mb-3">
+            <label class="col-lg-12 col-md-12 col-form-label">Description</label>
+            <div class="col-lg-12 col-md-12">
+                <textarea asp-for="Description" class="form-control" rows="4" cols="70"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
     <div class="form-group row col-6">
-        <div class="col-lg-8 offset-lg-3 col-md-7 offset-md-5">
+        <div class="col-lg-8 col-md-7">
             <input type="submit" value="Save" class="btn btn-outline-primary" />
             <button type="reset" class="btn btn-outline-secondary">Reset</button>
         </div>

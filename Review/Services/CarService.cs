@@ -75,6 +75,20 @@ namespace Review.Services {
             }
         }
 
+        public async Task<IEnumerable<Car>> SearchCarsByTextAsync( string query ) {
+            try {
+                await SetAuthorizationHeaderAsync();
+                var response = await _httpClient.PostAsJsonAsync( $"api/cars/query", query );
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<IEnumerable<Car>>();
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, $"An error occurred while searching cars with text query." );
+                throw;
+            }
+        }
+
         public async Task<bool> CreateCarAsync( Car car ) {
             try {
                 await SetAuthorizationHeaderAsync();

@@ -10,26 +10,28 @@
 </div>
 <div class="card">
     <div class="card-body">
-        <table style="margin-top: 20px;" class="table datatable" id="tbl-brands">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Country</th>
-                    <th data-sortable="false"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach( var item in Model ) {
+        <div class="table-responsive" style="margin-top: 20px;">
+            <table class="table datatable" id="tbl-brands">
+                <thead>
                     <tr>
-                        <td>@item.Name</td>
-                        <td>@item.Country?.Name</td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit brand </a>
-                            <a asp-action="DeleteBrand" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm"><i class="bi-trash"></i> Delete brand</a>
-                        </td>
+                        <th>Name</th>
+                        <th>Country</th>
+                        <th data-sortable="false"></th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach( var item in Model ) {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Country?.Name</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit brand </a>
+                                <a asp-action="DeleteBrand" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm"><i class="bi-trash"></i> Delete brand</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

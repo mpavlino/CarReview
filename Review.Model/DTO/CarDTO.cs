@@ -10,6 +10,7 @@ namespace Review.Model.DTO
         public int ID { get; set; }
         public string BrandName { get; set; }
         public string Model { get; set; }
+        public string Generation { get; set; }
         public int? BrandID { get; set; }
         public BrandDTO Brand { get; set; }
         public string Engine { get; set; }
@@ -31,6 +32,7 @@ namespace Review.Model.DTO
             ID = p.ID,
             BrandName = p.Brand.Name,
             Model = p.Model,
+            Generation = p.Generation,
             BrandID = p.BrandID,
             Brand = p.Brand.ID == null ? null : new BrandDTO()
             {

@@ -23,13 +23,18 @@ namespace Review.Controllers
             _carService = carService;
             _signInManager = signInManager;
             _logger = logger;
-        }   
+        }
 
-        public async Task<IActionResult> Index()
-        {
+        public async Task<IActionResult> Index( string query = null ) {
             var carsViewModelList = new List<CarViewModel>();
-            if( _signInManager.IsSignedIn(User)) {
-                var cars = await _carService.GetAllCarsAsync();
+            IEnumerable<Car> cars = new List<Car>();
+            if( _signInManager.IsSignedIn( User ) ) {
+                if( query == null ) {
+                    cars = await _carService.GetAllCarsAsync();
+                }
+                else {
+                    cars = await _carService.SearchCarsByTextAsync( query );
+                }
                 foreach( var car in cars.Where( x => x.ImageData != null ) ) {
                     carsViewModelList.Add( new CarViewModel( car ) );
                 }
