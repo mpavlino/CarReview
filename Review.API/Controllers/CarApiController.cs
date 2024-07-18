@@ -77,7 +77,7 @@ namespace Review.Controllers {
                     carQuery = carQuery.Where( p => p.Brand.CountryID != null && p.Brand.Country.Name.ToLower().Contains( filter.Country.ToLower() ) );
 
                 if( !string.IsNullOrWhiteSpace( filter.Reviewer ) )
-                    carQuery = carQuery.Where( p => p.ReviewerID != null && p.Reviewer.FullName.ToLower().Contains( filter.Reviewer.ToLower() ) );
+                    carQuery = carQuery.Where( p => p.ReviewerID != null && ( p.Reviewer.FirstName + " " + p.Reviewer.LastName ).ToLower().Contains( filter.Reviewer.ToLower() ) );
 
                 var cars = carQuery.Select( CarDTO.SelectorExpression ).ToList();
 

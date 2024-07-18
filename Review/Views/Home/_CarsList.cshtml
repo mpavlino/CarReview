@@ -9,6 +9,7 @@
                         <a href="@Url.Action("Details", "Car", new { id = car.ID })" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@car.BrandName @car.Model">
                             <img class="card-img-top img-fluid" src="data:@car.ImageMimeType;base64,@Convert.ToBase64String(car.ImageData)" alt="Car Image" />
                         </a>
+                        <span class="img-title">@car.BrandName @car.Model</span>
                     }
                     else {
                         <a href="@Url.Action("Details", "Car", new { id = car.ID })">

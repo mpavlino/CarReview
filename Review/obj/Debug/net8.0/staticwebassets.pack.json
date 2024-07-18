@@ -2001,8 +2001,32 @@
       "PackagePath": "staticwebassets\\images\\banner3.svg"
     },
     {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\images\\car-neon-lamborghini.jpg",
+      "PackagePath": "staticwebassets\\images\\car-neon-lamborghini.jpg"
+    },
+    {
       "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\images\\cars.jpg",
       "PackagePath": "staticwebassets\\images\\cars.jpg"
+    },
+    {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\images\\digital-art-home.jpg",
+      "PackagePath": "staticwebassets\\images\\digital-art-home.jpg"
+    },
+    {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\images\\neon-car.png",
+      "PackagePath": "staticwebassets\\images\\neon-car.png"
+    },
+    {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\images\\purple-bmw.jpg",
+      "PackagePath": "staticwebassets\\images\\purple-bmw.jpg"
+    },
+    {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\images\\purple_retro_wave.jpg",
+      "PackagePath": "staticwebassets\\images\\purple_retro_wave.jpg"
+    },
+    {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\images\\retro-car.png",
+      "PackagePath": "staticwebassets\\images\\retro-car.png"
     },
     {
       "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\js\\site.js",

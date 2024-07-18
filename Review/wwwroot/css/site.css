@@ -89,9 +89,28 @@ body {
 }
 
 .container {
-    max-width: 1620px !important;
+    max-width: 1600px !important;
 }
 
+.verticaltext {
+    width: 1px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.home-title {
+    font-size: 38px;
+    font-weight: 700;
+    color: #012970;
+    font-family: "Nunito", sans-serif;
+}
+
+.img-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #012970;
+    font-family: "Nunito", sans-serif;
+}
 
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {

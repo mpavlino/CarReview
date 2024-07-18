@@ -415,8 +415,14 @@ h6 {
   }*/
 
     .header .search-bar {
-        min-width: 240px;
+        min-width: 170px;
         padding: 0 10px;
+    }
+    .login-button {
+        padding: .25rem .5rem;
+        font-size: .875rem;
+        line-height: 1.5;
+        border-radius: .2rem;
     }
 
   .header .search-bar-show {

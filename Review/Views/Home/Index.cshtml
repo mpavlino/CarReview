@@ -11,20 +11,32 @@
     </div>
 </div> *@
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
 
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            @* <img src="~/images/cars.jpg" alt="ASP.NET" class="img-responsive" /> *@
-            @if( SignInManager.IsSignedIn( User ) ) {
+@* <img src="~/images/cars.jpg" alt="ASP.NET" class="img-responsive" /> *@
+@if( SignInManager.IsSignedIn( User ) ) {
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+        <div class="carousel-inner" role="listbox">
+            <div class="carousel-item active">
                 <partial name="_CarsList" model="Model" />
-            }
-            else {
-                <img src="~/images/cars.jpg" alt="ASP.NET" class="img-responsive" />
-            }
+            </div>
         </div>
     </div>
-</div>
+}
+else {
+    <div class="row">
+        <div class="col-md-1 d-flex flex-column align-items-center justify-content-center">
+            <img src="~/assets/img/logo.png" alt="" class="mb-4 ms-4">
+            <span class="home-title verticaltext">Car</span>
+        </div>
+        <div class="col-md-10 d-flex justify-content-center">
+            <img src="~/images/city-car.webp" alt="CarReview" class="img-fluid shadow mb-5 bg-body rounded">
+        </div>
+        <div class="col-md-1 d-flex flex-column align-items-center justify-content-center">
+            <span class="home-title verticaltext me-5">Review</span>
+        </div>
+    </div>
+}
+
 @* <div class="text-center mt-2" role="option">
     <h2><b><i>Car review portal</i></b></h2>
 </div> *@

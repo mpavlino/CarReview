@@ -69,10 +69,10 @@
                 @Html.DisplayFor(model => model.TopSpeed) km/h
             </dd>
             <dt>
-                Acceleration
+                Acceleration (0-100km/h)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Acceleration) sec
+                @Html.DisplayFor( model => model.Acceleration ) sec
             </dd>
         </dl>
         <dl class="col-6 dl-horizontal">
@@ -104,7 +104,7 @@
     <div class="row">
         <dl class="col-12 dl-horizontal">
             <dt>
-                Summary (About)
+                Review (About)
             </dt>
             <dd>
                 @Html.DisplayFor( model => model.Description )
