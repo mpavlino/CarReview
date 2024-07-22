@@ -112,6 +112,57 @@ body {
     font-family: "Nunito", sans-serif;
 }
 
+.car-img {
+    width: 320px;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+    border-radius: 2px;
+}
+
+.upload-files {
+    min-height: 100px !important;
+    border: 1px solid rgba(0, 0, 0, .3);
+    border-radius: 2px;
+}
+
+/*Generate image css*/
+#search-form {
+    margin: 20px;
+    text-align: center;
+}
+
+#search-input {
+    padding: 5px;
+    font-size: 16px;
+    width: 300px;
+    margin-right: 10px;
+}
+
+#search-button {
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#image-container {
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.image {
+    margin: 10px;
+}
+
+    .image img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+    }
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */

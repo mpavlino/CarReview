@@ -945,6 +945,14 @@
       "PackagePath": "staticwebassets\\assets\\vendor\\chart.js\\types\\utils.d.ts"
     },
     {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\assets\\vendor\\dropzone\\css\\dropzone.min.css",
+      "PackagePath": "staticwebassets\\assets\\vendor\\dropzone\\css\\dropzone.min.css"
+    },
+    {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\assets\\vendor\\dropzone\\js\\dropzone.min.js",
+      "PackagePath": "staticwebassets\\assets\\vendor\\dropzone\\js\\dropzone.min.js"
+    },
+    {
       "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\assets\\vendor\\echarts\\echarts.common.js",
       "PackagePath": "staticwebassets\\assets\\vendor\\echarts\\echarts.common.js"
     },
@@ -1099,6 +1107,18 @@
     {
       "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\assets\\vendor\\remixicon\\remixicon.woff2",
       "PackagePath": "staticwebassets\\assets\\vendor\\remixicon\\remixicon.woff2"
+    },
+    {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\assets\\vendor\\select2\\css\\_mixins.scss",
+      "PackagePath": "staticwebassets\\assets\\vendor\\select2\\css\\_mixins.scss"
+    },
+    {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\assets\\vendor\\select2\\css\\select2.min.css",
+      "PackagePath": "staticwebassets\\assets\\vendor\\select2\\css\\select2.min.css"
+    },
+    {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\assets\\vendor\\select2\\js\\select2.min.js",
+      "PackagePath": "staticwebassets\\assets\\vendor\\select2\\js\\select2.min.js"
     },
     {
       "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\assets\\vendor\\simple-datatables\\simple-datatables.js",
@@ -2009,6 +2029,10 @@
       "PackagePath": "staticwebassets\\images\\cars.jpg"
     },
     {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\images\\city-car.webp",
+      "PackagePath": "staticwebassets\\images\\city-car.webp"
+    },
+    {
       "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\images\\digital-art-home.jpg",
       "PackagePath": "staticwebassets\\images\\digital-art-home.jpg"
     },
@@ -2027,6 +2051,10 @@
     {
       "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\images\\retro-car.png",
       "PackagePath": "staticwebassets\\images\\retro-car.png"
+    },
+    {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\js\\Car\\Dropzone.js",
+      "PackagePath": "staticwebassets\\js\\Car\\Dropzone.js"
     },
     {
       "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\js\\site.js",

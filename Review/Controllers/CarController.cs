@@ -201,5 +201,9 @@ namespace Review.Controllers {
                 return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }
+
+        public IActionResult GenerateImage() {
+            return View();
+        }
     }
 }

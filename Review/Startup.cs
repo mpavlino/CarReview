@@ -71,6 +71,13 @@ namespace Review {
                 client.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "application/json" ) );
             } );
 
+            services.AddCors( options =>
+            {
+                options.AddPolicy( "AllowAllOrigins",
+                    builder => builder.AllowAnyOrigin()
+                                      .AllowAnyMethod()
+                                      .AllowAnyHeader() );
+            } );
             services.AddLogging();
             services.AddMvc();
             services.AddRazorPages();
@@ -119,6 +126,8 @@ namespace Review {
                 endpoints.MapControllerRoute( "default", "{controller=Home}/{action=Index}" );
                 endpoints.MapRazorPages();
             } );
+
+            app.UseCors( "AllowAllOrigins" );
         }
     }
 }
