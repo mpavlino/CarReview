@@ -4,7 +4,7 @@
 <form asp-action="IndexAjax" method="post" class="form-inline">
     <div class="row mb-2">
         <div class="form-group col-4">
-            <input asp-for="Brand" class="form-control" type="text" placeholder="Brand" />
+            <select asp-for="Brand" asp-items="ViewBag.PossibleBrands" class="form-control select2-input"></select>
         </div>
         <div class="form-group col-4">
             <input asp-for="Model" class="form-control" type="text" placeholder="Model" />
@@ -15,7 +15,7 @@
     </div>
     <div class="row">
         <div class="form-group col-4">
-            <input asp-for="Country" class="form-control" type="text" placeholder="Country" />
+            <select asp-for="Country" asp-items="ViewBag.PossibleCountries" class="form-control select2-input"></select>
         </div>
         <div class="form-group col-4">
             <input asp-for="Reviewer" class="form-control" type="text" placeholder="Reviewer" />

@@ -11,7 +11,7 @@
 </div>
 @if( Model != null ) {
     <div class="row mb-4">
-        <div class="col-md-5">
+        <div class="col-md-6">
             <dl class="row">
                 <dt class="col-sm-5">Brand</dt>
                 <dd class="col-sm-7">@Html.DisplayFor( model => model.Brand.Name )</dd>
@@ -35,22 +35,28 @@
                 <dd class="col-sm-7">@Html.DisplayFor( model => model.Acceleration ) sec</dd>
             </dl>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <dl class="row">
                 <dt class="col-sm-4">Country</dt>
                 <dd class="col-sm-8">@Model?.Brand.Country?.Name</dd>
                 <dt class="col-sm-4">Reviewer</dt>
                 <dd class="col-sm-8">@Model?.Reviewer?.FullName</dd>
                 <dt class="col-sm-4">Rating</dt>
-                <dd class="col-sm-8">@Model.Rating ★</dd>
+                <dd class="col-sm-8">
+                    <div class="star-rating read-only">
+                        <input asp-for="Rating" class="form-check-input" type="radio" id="star5" name="rating" value="5" disabled /><label for="star5" title="5 stars">★</label>
+                        <input asp-for="Rating" class="form-check-input" type="radio" id="star4" name="rating" value="4" disabled /><label for="star4" title="4 stars">★</label>
+                        <input asp-for="Rating" class="form-check-input" type="radio" id="star3" name="rating" value="3" disabled /><label for="star3" title="3 stars">★</label>
+                        <input asp-for="Rating" class="form-check-input" type="radio" id="star2" name="rating" value="2" disabled /><label for="star2" title="2 stars">★</label>
+                        <input asp-for="Rating" class="form-check-input" type="radio" id="star1" name="rating" value="1" disabled /><label for="star1" title="1 star">★</label>
+                    </div>
+                </dd>
             </dl>
-        </div>
-        <div class="col-md-3">
-            <div class="col-sm-12 text-center">
-                @if( Model.ImageData != null ) {
-                    <img src="data:@Model.ImageMimeType;base64,@Convert.ToBase64String(Model.ImageData)" class="car-img img-fluid" alt="Car Image" />
-                }
-            </div>
+                <div class="col-sm-12">
+                    @if( Model.ImageData != null ) {
+                        <img src="data:@Model.ImageMimeType;base64,@Convert.ToBase64String(Model.ImageData)" class="car-img img-fluid" alt="Car Image" />
+                    }
+                </div>
         </div>
     </div>
     <div class="row">

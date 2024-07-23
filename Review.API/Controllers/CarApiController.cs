@@ -9,6 +9,7 @@ using Review.Model.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -65,7 +66,7 @@ namespace Review.Controllers {
                 //Primjer iterativnog građenja upita - dodaje se "where clause" samo u slučaju da je parametar doista proslijeđen.
                 //To rezultira optimalnijim stablom izraza koje se kvalitetnije potencijalno prevodi u SQL
                 if( !string.IsNullOrWhiteSpace( filter.Brand ) )
-                    carQuery = carQuery.Where( p => p.BrandID != null && p.Brand.Name.ToLower().Contains( filter.Brand.ToLower() ) );
+                    carQuery = carQuery.Where( p => p.BrandID != null && p.Brand.ID.ToString() == filter.Brand );
 
                 if( !string.IsNullOrWhiteSpace( filter.Model ) )
                     carQuery = carQuery.Where( p => p.Model.ToLower().Contains( filter.Model.ToLower() ) );
@@ -74,7 +75,7 @@ namespace Review.Controllers {
                     carQuery = carQuery.Where( p => p.Engine.ToLower().Contains( filter.Engine.ToLower() ) );
 
                 if( !string.IsNullOrWhiteSpace( filter.Country ) )
-                    carQuery = carQuery.Where( p => p.Brand.CountryID != null && p.Brand.Country.Name.ToLower().Contains( filter.Country.ToLower() ) );
+                    carQuery = carQuery.Where( p => p.Brand.CountryID != null && p.Brand.Country.ID.ToString() == filter.Country );
 
                 if( !string.IsNullOrWhiteSpace( filter.Reviewer ) )
                     carQuery = carQuery.Where( p => p.ReviewerID != null && ( p.Reviewer.FirstName + " " + p.Reviewer.LastName ).ToLower().Contains( filter.Reviewer.ToLower() ) );

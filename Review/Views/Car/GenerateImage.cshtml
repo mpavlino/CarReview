@@ -1,5 +1,4 @@
-﻿
-<center>
+﻿<center>
     <h1>AI Image Generator</h1>
     <p>
         The generator will take around one minute to generate nine images.
@@ -9,8 +8,7 @@
 </center>
 
 <div id="search-form">
-    <input onkeydown="if (event.keyCode == 13)
-                            document.getElementById('search-button').click()"
+    <input onkeydown="if (event.keyCode == 13) document.getElementById('search-button').click()"
            id="search-input" type="text" placeholder="Enter a prompt...">
     <button id="search-button" type="button" onclick="searchImages()">Search</button>
 </div>
@@ -29,25 +27,29 @@
         }
 
         const prompt = document.getElementById('search-input').value;
-        fetch(`https://craiyon.ajaysinghusesgi.repl.co/api?prompt=${prompt}`)
+        fetch(`/api/proxy/generate?prompt=${prompt}`)
             .then(response => response.json())
             .then(data => {
-                const images = data.images.map(image => `${image}`);
-                const imageContainer = document.getElementById('image-container');
-                imageContainer.innerHTML = '';
-                images.forEach(image => {
-                    console.log("image - " + image)
-                    const imageWrapper = document.createElement('div');
-                    imageWrapper.classList.add('image');
-                    const img = document.createElement('img');
-                    img.src = image;
-                    imageWrapper.appendChild(img);
-                    imageContainer.appendChild(imageWrapper);
-                });
+                if (data.images && Array.isArray(data.images)) {
+                    const images = data.images.map(image => `${image}`);
+                    const imageContainer = document.getElementById('image-container');
+                    imageContainer.innerHTML = '';
+                    images.forEach(image => {
+                        console.log("image - " + image);
+                        const imageWrapper = document.createElement('div');
+                        imageWrapper.classList.add('image');
+                        const img = document.createElement('img');
+                        img.src = image;
+                        imageWrapper.appendChild(img);
+                        imageContainer.appendChild(imageWrapper);
+                    });
+                } else {
+                    throw new Error("Invalid image data");
+                }
             })
             .catch(error => {
                 console.error(error);
-                alert(error.toString());
+                alert("Error: " + error.toString());
             });
     }
 </script>

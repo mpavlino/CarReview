@@ -38,6 +38,8 @@ namespace Review.Controllers {
 
         public async Task<IActionResult> Index() {
             try {
+                ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
+                ViewBag.PossibleCountries = await _dropdownService.GetCountriesAsync();
                 IEnumerable<Car> cars = await _carService.GetAllCarsAsync();
                 return View( cars.ToList() );
             }
