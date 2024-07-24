@@ -1129,6 +1129,34 @@
       "PackagePath": "staticwebassets\\assets\\vendor\\simple-datatables\\style.css"
     },
     {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\assets\\vendor\\sweetalert2\\sweetalert2.all.js",
+      "PackagePath": "staticwebassets\\assets\\vendor\\sweetalert2\\sweetalert2.all.js"
+    },
+    {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\assets\\vendor\\sweetalert2\\sweetalert2.all.min.js",
+      "PackagePath": "staticwebassets\\assets\\vendor\\sweetalert2\\sweetalert2.all.min.js"
+    },
+    {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\assets\\vendor\\sweetalert2\\sweetalert2.css",
+      "PackagePath": "staticwebassets\\assets\\vendor\\sweetalert2\\sweetalert2.css"
+    },
+    {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\assets\\vendor\\sweetalert2\\sweetalert2.d.ts",
+      "PackagePath": "staticwebassets\\assets\\vendor\\sweetalert2\\sweetalert2.d.ts"
+    },
+    {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\assets\\vendor\\sweetalert2\\sweetalert2.js",
+      "PackagePath": "staticwebassets\\assets\\vendor\\sweetalert2\\sweetalert2.js"
+    },
+    {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\assets\\vendor\\sweetalert2\\sweetalert2.min.css",
+      "PackagePath": "staticwebassets\\assets\\vendor\\sweetalert2\\sweetalert2.min.css"
+    },
+    {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\assets\\vendor\\sweetalert2\\sweetalert2.min.js",
+      "PackagePath": "staticwebassets\\assets\\vendor\\sweetalert2\\sweetalert2.min.js"
+    },
+    {
       "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\assets\\vendor\\tinymce\\CHANGELOG.md",
       "PackagePath": "staticwebassets\\assets\\vendor\\tinymce\\CHANGELOG.md"
     },

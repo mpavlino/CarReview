@@ -4,13 +4,13 @@
         <thead>
             <tr>
                 <th>Brand</th>
-                <th>Model</th>
-                <th>Generation</th>
-                <th>Country</th>
-                <th>Engine</th>
-                <th>Reviewer</th>
-                @* <th>Description</th> *@
-                <th>Rating</th>
+                <th class="d-none d-md-table-cell">Model</th>
+                <th class="d-none d-md-table-cell">Generation</th>
+                <th class="d-table-cell d-md-none">Model (Generation)</th>
+                <th class="d-none d-md-table-cell">Country</th>
+                <th class="d-none d-md-table-cell">Engine</th>
+                <th class="d-none d-md-table-cell">Reviewer</th>
+                <th class="d-none d-md-table-cell">Rating</th>
                 <th data-sortable="false"></th>
             </tr>
         </thead>
@@ -20,22 +20,34 @@
                     <td>
                         <a asp-action="Details" asp-route-id="@item.ID">@item.Brand?.Name</a>
                     </td>
-                    <td>
+                    <td class="d-none d-md-table-cell">
                         <a asp-action="Blog" asp-route-id="@item.ID">@item.Model</a>
                     </td>
-                    <td>@item.Generation (@item.ModelYear.Year)</td>
-                    <td>@item.Brand.Country?.Name</td>
-                    <td>@item.Engine</td>
-                    <td>
+                    <td class="d-none d-md-table-cell">@item.Generation (@item.ModelYear.Year)</td>
+                    <td class="d-table-cell d-md-none">
+                        <a asp-action="Blog" asp-route-id="@item.ID">@item.Model (@item.Generation)</a>
+                    </td>
+                    <td class="d-none d-md-table-cell">@item.Brand.Country?.Name</td>
+                    <td class="d-none d-md-table-cell">@item.Engine</td>
+                    <td class="d-none d-md-table-cell">
                         <a asp-controller="Reviewer" asp-action="Details" asp-route-id="@item.ReviewerID">@item.Reviewer?.FullName</a>
                     </td>
-                    @* <td>@Truncate( item.Description, 32 )</td> <!-- Truncate to 32 characters --> *@
-                    <td>@item.Rating ★</td>
+                    <td class="d-none d-md-table-cell">
+                        <div class="star-rating small-stars read-only">
+                            @{
+                                var ratingName = $"rating_{item.ID}";
+                            }
+                            <input asp-for="@item.Rating" class="form-check-input" type="radio" id="star5_@item.ID" name="@ratingName" value="5" disabled /><label for="star5_@item.ID" title="5 stars">★</label>
+                            <input asp-for="@item.Rating" class="form-check-input" type="radio" id="star4_@item.ID" name="@ratingName" value="4" disabled /><label for="star4_@item.ID" title="4 stars">★</label>
+                            <input asp-for="@item.Rating" class="form-check-input" type="radio" id="star3_@item.ID" name="@ratingName" value="3" disabled /><label for="star3_@item.ID" title="3 stars">★</label>
+                            <input asp-for="@item.Rating" class="form-check-input" type="radio" id="star2_@item.ID" name="@ratingName" value="2" disabled /><label for="star2_@item.ID" title="2 stars">★</label>
+                            <input asp-for="@item.Rating" class="form-check-input" type="radio" id="star1_@item.ID" name="@ratingName" value="1" disabled /><label for="star1_@item.ID" title="1 star">★</label>
+                        </div>
+                    </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-box-arrow-up-right"></i> Details</a>
-                        @* <a asp-action="EditReviewer" asp-route-id="@item.ReviewerID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit reviewer</a> *@
-                        <a asp-action="DeleteCar" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm"><i class="bi-trash"></i> Delete</a>
+                        <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi-pencil-square"></i></a>
+                        <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Details"><i class="bi-box-arrow-up-right"></i></a>
+                        <a href="javascript:void(0)" class="btn btn-outline-danger btn-sm delete-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" onclick="confirmDelete('@item.ID')"><i class="bi-trash"></i></a>
                     </td>
                 </tr>
             }

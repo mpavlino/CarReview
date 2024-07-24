@@ -25,8 +25,8 @@
                             <td>@item.Name</td>
                             <td>@item.Country?.Name</td>
                             <td>
-                                <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm"><i class="bi-pencil-square"></i> Edit brand </a>
-                                <a asp-action="DeleteBrand" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm"><i class="bi-trash"></i> Delete brand</a>
+                                <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi-pencil-square"></i></a>
+                                <a asp-action="DeleteBrand" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm delete-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><i class="bi-trash"></i></a>
                             </td>
                         </tr>
                     }

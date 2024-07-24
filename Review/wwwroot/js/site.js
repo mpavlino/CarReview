@@ -67,4 +67,51 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector("#cookieConsent").classList.add("d-none");
         }, false);
     }
+
+
+    $("#datepicker").datepicker({
+        format: "mm/yyyy",
+        viewMode: "months",
+        minViewMode: "months",
+        orientation: "bottom auto"
+    });
+    $('.select2-input').each(function () {
+        var placeholder = $(this).attr('placeholder') || 'Select an option'; // Default placeholder if none provided
+        $(this).select2({
+            placeholder: placeholder,
+            allowClear: true,
+            width: 'resolve' // Ensure it takes the width of the parent container
+        });
+    });
+
+    // Initialize Bootstrap tooltips
+    function initializeTooltips() {
+        $('[data-bs-toggle="tooltip"]').tooltip();
+    }
+
+    // Call the function on page load
+    initializeTooltips();
+
+    // SweetAlert2 confirmation for delete buttons
+    $(document).on('click', '.delete-btn', function (event) {
+        event.preventDefault(); // Prevent the default action
+
+        var deleteUrl = $(this).attr('href');
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect to the delete URL
+                window.location.href = deleteUrl;
+            }
+        });
+    });
+
 });
