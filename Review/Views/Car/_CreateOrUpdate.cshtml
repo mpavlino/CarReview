@@ -1,30 +1,32 @@
 ﻿@model Review.Models.Car.CarViewModel
+
 <form>
     <div class="row">
-        <div class="col-6">
-            <div class="form-group row mb-3">
-                <label class="col-lg-3 col-md-5 col-form-label">Brand</label>
-                <div class="col-lg-8 col-md-7">
+        <div class="col-12 col-md-6">
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Brand</label>
+                <div class="col-12 col-lg-8 col-md-7">
                     <select asp-for="BrandID" asp-items="ViewBag.PossibleBrands" class="form-control select2-input"></select>
+                    <span asp-validation-for="BrandID" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-group row mb-3">
-                <label class="col-lg-3 col-md-5 col-form-label">Model</label>
-                <div class="col-lg-8 col-md-7">
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Model</label>
+                <div class="col-12 col-lg-8 col-md-7">
                     <input asp-for="Model" class="form-control" />
                     <span asp-validation-for="Model" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-group row mb-3">
-                <label class="col-lg-3 col-md-5 col-form-label">Generation</label>
-                <div class="col-lg-8 col-md-7">
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Generation</label>
+                <div class="col-12 col-lg-8 col-md-7">
                     <input asp-for="Generation" class="form-control" />
                     <span asp-validation-for="Generation" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-group row mb-3">
-                <label class="col-lg-3 col-md-5 col-form-label">Model Date</label>
-                <div class="col-lg-8 col-md-7">
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Model Date</label>
+                <div class="col-12 col-lg-8 col-md-7">
                     <div class="input-group date" id="datepicker" data-provide="datepicker" data-date-format="mm/yyyy">
                         <input asp-for="ModelYear" type="text" class="form-control" value="@((Model.ModelYear == DateTime.MinValue) ? string.Empty : Model.ModelYear.ToString("MM/yyyy"))" />
                         <div class="input-group-addon">
@@ -34,65 +36,65 @@
                     <span asp-validation-for="ModelYear" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-group row mb-3">
-                <label class="col-lg-3 col-md-5 col-form-label" asp-for="Engine"></label>
-                <div class="col-lg-8 col-md-7 d-flex align-items-center">
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Engine</label>
+                <div class="col-12 col-lg-8 col-md-7 d-flex align-items-center">
                     <input asp-for="Engine" class="form-control mr-2" />
                     <span asp-validation-for="Engine" class="text-danger ml-2"></span>
                 </div>
             </div>
-            <div class="form-group row mb-3">
-                <label class="col-lg-3 col-md-5 col-form-label">Power</label>
-                <div class="col-lg-8 col-md-7 d-flex align-items-center">
-                    <input asp-for="EnginePower" class="form-control mr-2" />&nbsp;hp
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Power</label>
+                <div class="col-12 col-lg-8 col-md-7 d-flex align-items-center">
+                    <input asp-for="EnginePower" class="form-control mr-2" />
+                    <span class="text-nowrap ms-2">hp</span>
                     <span asp-validation-for="EnginePower" class="text-danger ml-2"></span>
                 </div>
             </div>
-            <div class="form-group row mb-3">
-                <label class="col-lg-3 col-md-5 col-form-label">Torque</label>
-                <div class="col-lg-8 col-md-7 d-flex align-items-center">
-                    <input asp-for="Torque" class="form-control mr-2" />&nbsp;Nm
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Torque</label>
+                <div class="col-12 col-lg-8 col-md-7 d-flex align-items-center">
+                    <input asp-for="Torque" class="form-control mr-2" />
+                    <span class="text-nowrap ms-2">Nm</span>
                     <span asp-validation-for="Torque" class="text-danger ml-2"></span>
                 </div>
             </div>
-            <div class="form-group row mb-3">
-                <label class="col-lg-3 col-md-5 col-form-label">Displacement</label>
-                <div class="col-lg-8 col-md-7 d-flex align-items-center">
-                    <input asp-for="EngineDisplacement" class="form-control mr-2" />&nbsp;cm<sup>3</sup>
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Displacement</label>
+                <div class="col-12 col-lg-8 col-md-7 d-flex align-items-center">
+                    <input asp-for="EngineDisplacement" class="form-control mr-2" />
+                    <span class="text-nowrap ms-2">cm<sup>3</sup></span>
                     <span asp-validation-for="EngineDisplacement" class="text-danger ml-2"></span>
                 </div>
             </div>
-            <div class="form-group row mb-3">
-                <label class="col-lg-3 col-md-5 col-form-label">Top Speed</label>
-                <div class="col-lg-8 col-md-7 d-flex align-items-center">
-                    <input asp-for="TopSpeed" class="form-control mr-2" />&nbsp;km/h
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Top Speed</label>
+                <div class="col-12 col-lg-8 col-md-7 d-flex align-items-center">
+                    <input asp-for="TopSpeed" class="form-control mr-2" />
+                    <span class="text-nowrap ms-2">km/h</span>
                     <span asp-validation-for="TopSpeed" class="text-danger ml-2"></span>
                 </div>
             </div>
-            <div class="form-group row mb-3">
-                <label class="col-lg-3 col-md-5 col-form-label">Acceleration</label>
-                <div class="col-lg-8 col-md-7 d-flex align-items-center text-nowrap">
-                    <input asp-for="Acceleration" class="form-control mr-2" />&nbsp;sec (0-100km/h)
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Acceleration</label>
+                <div class="col-12 col-lg-8 col-md-7 d-flex align-items-center text-nowrap">
+                    <input asp-for="Acceleration" class="form-control mr-2" />
+                    <span class="text-nowrap ms-2">sec (0-100km/h)</span>
                     <span asp-validation-for="Acceleration" class="text-danger ml-2"></span>
                 </div>
             </div>
         </div>
-        <div class="col-6">
-            @*     <div class="form-group row mb-3">
-            <label class="col-lg-3 col-md-5 col-form-label">Country</label>
-            <div class="col-lg-8 col-md-7">
-            <select asp-for="CountryID" asp-items="ViewBag.PossibleCountries" class="form-control"></select>
-            </div>
-            </div> *@
-            <div class="form-group row mb-3">
-                <label class="col-lg-3 col-md-5 col-form-label">Reviewer</label>
-                <div class="col-lg-8 col-md-7">
+        <div class="col-12 col-md-6">
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Reviewer</label>
+                <div class="col-12 col-lg-8 col-md-7">
                     <select asp-for="ReviewerID" asp-items="ViewBag.PossibleReviewers" class="form-control select2-input"></select>
+                    <span asp-validation-for="ReviewerID" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-group row mb-3">
-                <label class="col-lg-3 col-md-5 col-form-label">Rating</label>
-                <div class="col-lg-8 col-md-7">
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Rating</label>
+                <div class="col-12 col-lg-8 col-md-7">
                     <div class="star-rating">
                         <input asp-for="Rating" class="form-check-input" type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars">★</label>
                         <input asp-for="Rating" class="form-check-input" type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars">★</label>
@@ -100,11 +102,12 @@
                         <input asp-for="Rating" class="form-check-input" type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars">★</label>
                         <input asp-for="Rating" class="form-check-input" type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star">★</label>
                     </div>
+                    <span asp-validation-for="Rating" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-group row mb-3">
-                <label class="col-lg-3 col-md-5 col-form-label">Image</label>
-                <div class="col-lg-8 col-md-7">
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Image</label>
+                <div class="col-12 col-lg-8 col-md-7">
                     <div id="dropzone" class="dropzone upload-files"></div>
                     <input asp-for="ImageFile" type="file" class="form-control-file d-none" />
                     @if( Model.ImageData != null ) {
@@ -117,19 +120,25 @@
             </div>
         </div>
     </div>
-    <div class="form-group row col-12">
-        <div class="form-group row mb-3">
-            <label class="col-lg-12 col-md-12 col-form-label">Description</label>
-            <div class="col-lg-12 col-md-12">
-                <textarea asp-for="Description" class="form-control" rows="4" cols="70"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-form-label">Description</label>
+                <div class="col-12">
+                    <textarea asp-for="Description" class="form-control" rows="4" cols="70"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
             </div>
         </div>
     </div>
-    <div class="form-group row col-6">
-        <div class="col-lg-8 col-md-7">
-            <input type="submit" value="Save" class="btn btn-outline-primary" />
-            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group row">
+                <div class="col-lg-8 col-md-7">
+                    <input type="submit" value="Save" class="btn btn-outline-primary" />
+                    <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                </div>
+            </div>
         </div>
     </div>
 </form>

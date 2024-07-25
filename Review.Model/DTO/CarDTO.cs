@@ -17,8 +17,8 @@ namespace Review.Model.DTO
         public string EnginePower { get; set; }
         public string Torque { get; set; }
         public string EngineDisplacement { get; set; }
-        public int TopSpeed { get; set; }
-        public decimal Acceleration { get; set; }
+        public int? TopSpeed { get; set; }
+        public decimal? Acceleration { get; set; }
         public DateTime ModelYear { get; set; }
         public string Description { get; set; }
         public int? ReviewerID { get; set; } 

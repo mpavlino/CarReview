@@ -24,8 +24,8 @@ namespace Review.Model
         public string EnginePower { get; set; }
         public string Torque { get; set; }
         public string EngineDisplacement { get; set; }
-        public int TopSpeed { get; set; }
-        public decimal Acceleration { get; set; }
+        public int? TopSpeed { get; set; }
+        public decimal? Acceleration { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/yyyy}", ApplyFormatInEditMode = true)]

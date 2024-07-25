@@ -6,7 +6,7 @@
                 <th>Brand</th>
                 <th class="d-none d-md-table-cell">Model</th>
                 <th class="d-none d-md-table-cell">Generation</th>
-                <th class="d-table-cell d-md-none">Model (Generation)</th>
+                <th class="d-table-cell d-md-none">Model</th>
                 <th class="d-none d-md-table-cell">Country</th>
                 <th class="d-none d-md-table-cell">Engine</th>
                 <th class="d-none d-md-table-cell">Reviewer</th>
@@ -46,7 +46,7 @@
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi-pencil-square"></i></a>
-                        <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Details"><i class="bi-box-arrow-up-right"></i></a>
+                        <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm d-none d-md-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="Details"><i class="bi-box-arrow-up-right"></i></a>
                         <a href="javascript:void(0)" class="btn btn-outline-danger btn-sm delete-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" onclick="confirmDelete('@item.ID')"><i class="bi-trash"></i></a>
                     </td>
                 </tr>

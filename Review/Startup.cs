@@ -20,6 +20,7 @@ using Review.Services;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Identity;
 using Review.Handlers;
+using Microsoft.Extensions.Logging;
 
 namespace Review {
     public class Startup {
@@ -93,7 +94,7 @@ namespace Review {
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure( IApplicationBuilder app, IWebHostEnvironment env , CarManagerDbContext context) {
+        public void Configure( IApplicationBuilder app, IWebHostEnvironment env , CarManagerDbContext context ) {
             if( env.IsDevelopment() ) {
                 app.UseDeveloperExceptionPage();
                 context.Database.EnsureCreated();
