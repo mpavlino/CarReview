@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using Review.Model;
 using Review.Model.DTO;
@@ -82,20 +84,13 @@ namespace Review.Controllers {
                 ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
 
                 if( ModelState.IsValid ) {
-                    byte[] imageData = null;
-                    string imageMimeType = null;
-
-                    if( carViewModel.ImageFile != null ) {
-                        using( var memoryStream = new MemoryStream() ) {
-                            await carViewModel.ImageFile.CopyToAsync( memoryStream );
-                            imageData = memoryStream.ToArray();
-                            imageMimeType = carViewModel.ImageFile.ContentType;
-                        }
-                    }
-
                     Car carModel = CarTranslator.TranslateViewModelToModel( carViewModel );
-                    carModel.ImageData = imageData;
-                    carModel.ImageMimeType = imageMimeType; 
+
+                    if( carViewModel.ImageData != null ) {
+                        // Convert base64 string to byte array
+                        carModel.ImageData = carViewModel.ImageData;
+                        carModel.ImageMimeType = carViewModel.ImageMimeType; // Ensure you have the mime type set correctly
+                    }
 
                     bool isCarCreated = await _carService.CreateCarAsync( carModel );
                     return RedirectToAction( nameof( Index ) );
@@ -128,6 +123,22 @@ namespace Review.Controllers {
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UploadImage( IFormFile file ) {
+            if( file != null && file.Length > 0 ) {
+                using( var memoryStream = new MemoryStream() ) {
+                    await file.CopyToAsync( memoryStream );
+                    var fileData = memoryStream.ToArray();
+
+                    return Json( new { imageData = fileData, mimeType = file.ContentType } );
+                }
+            }
+
+            return Json( new { error = "File upload failed." } );
+        }
+
+
+
         [HttpPost, ActionName( "Edit" )]
         public async Task<IActionResult> Edit( int id, CarViewModel carViewModel ) {
             try {
@@ -135,20 +146,15 @@ namespace Review.Controllers {
                 ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
 
                 if( ModelState.IsValid ) {
-                    byte[] imageData = null;
-                    string imageMimeType = null;
-
-                    if( carViewModel.ImageFile != null ) {
-                        using( var memoryStream = new MemoryStream() ) {
-                            await carViewModel.ImageFile.CopyToAsync( memoryStream );
-                            imageData = memoryStream.ToArray();
-                            imageMimeType = carViewModel.ImageFile.ContentType;
-                        }
-                    }
-
                     Car car = CarTranslator.TranslateViewModelToModel( carViewModel );
-                    car.ImageData = imageData ?? car.ImageData;
-                    car.ImageMimeType = imageMimeType ?? car.ImageMimeType;
+
+                    if( carViewModel.ImageData != null ) {
+                        // Convert base64 string to byte array
+                        car.ImageData = carViewModel.ImageData;
+                        car.ImageMimeType = carViewModel.ImageMimeType; // Ensure you have the mime type set correctly
+                    }
+                    //car.ImageData = imageData ?? car.ImageData;
+                    //car.ImageMimeType = imageMimeType ?? car.ImageMimeType;
 
                     var updatedCar = await _carService.UpdateCarAsync( id, car );
                     return RedirectToAction( nameof( Index ) );

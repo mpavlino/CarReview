@@ -8,8 +8,9 @@
 </ol>
 <div class="row">
     <div class="col-lg-12">
-        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <form asp-action="Edit" id="carForm" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
+            <input type="hidden" id="ActionUrl" value="@Url.Action("Edit", "Car")" />
             <input type="hidden" asp-for="ID" />
             <input type="hidden" asp-for="ImageData" />
             <partial name="_CreateOrUpdate" />

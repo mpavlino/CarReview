@@ -1,40 +1,38 @@
-﻿
-// Prevent Dropzone from auto discovering this element
-Dropzone.autoDiscover = false;
+﻿Dropzone.autoDiscover = false;
 
-var url = $('form').attr('action');
+var $form = $('#carForm');
+var $dropzone = $('#dropzone');
+var dropzoneUrl = '/Car/UploadImage'; // Endpoint for file uploads
 
-// Initialize Dropzone
-var myDropzone = new Dropzone("#dropzone", {
-    url: $('form').attr('action'), // Get the form action URL
+var myDropzone = new Dropzone($dropzone[0], {
+    url: dropzoneUrl,
     autoProcessQueue: false,
     addRemoveLinks: true,
-    init: function () {
-        var dz = this;
-
-        // Override the form submit to process Dropzone queue first
-        $('form').on('submit', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            if (dz.getQueuedFiles().length > 0) {
-                dz.processQueue(); // Process Dropzone queue
-            } else {
-                this.submit(); // Submit form if no files are queued
-            }
-        });
-
-        dz.on("success", function (file, response) {
-            // Submit the form after successful upload
-            $('form')[0].submit();
-        });
-
-        dz.on("error", function (file, response) {
-            // Handle the error response
-            alert(response);
-        });
+    uploadMultiple: false,
+    acceptedFiles: 'image/*',
+    success: function (file, response) {
+        // Store the file data in a hidden field
+        $('#ImageData').val(response.imageData); // Change according to your response
     },
-    accept: function (file, done) {
-        done();
+    error: function (file, response) {
+        alert('Upload failed: ' + response);
     }
 });
+
+$form.on('submit', function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    if (myDropzone.getQueuedFiles().length > 0) {
+        myDropzone.processQueue(); // Process files in Dropzone
+    } else {
+        submitForm(); // Submit form if no files are to be uploaded
+    }
+});
+
+myDropzone.on('queuecomplete', function () {
+    submitForm(); // Submit form after files are processed
+});
+
+function submitForm() {
+    $form.off('submit').submit(); // Remove the handler and submit the form
+}
