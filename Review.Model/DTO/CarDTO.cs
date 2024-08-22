@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -26,6 +27,7 @@ namespace Review.Model.DTO
         public int Rating { get; set; }
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }
+        public List<CarReviewDTO> CarReviews { get; set; }
 
         public static Expression<Func<Car, CarDTO>> SelectorExpression { get; } = p => new CarDTO()
         {
@@ -63,7 +65,19 @@ namespace Review.Model.DTO
             },
             Rating = p.Rating,
             ImageData = p.ImageData,
-            ImageMimeType = p.ImageMimeType
+            ImageMimeType = p.ImageMimeType,
+            CarReviews = p.CarReviews.Select( r => new CarReviewDTO {
+                ID = r.ID,
+                Title = r.Title,
+                Description = r.Description,
+                Rating = r.Rating,
+                CreatedOn = r.CreatedOn,
+                Reviewer = new ReviewerDTO {
+                    ID = r.Reviewer.ID,
+                    FirstName = r.Reviewer.FirstName,
+                    LastName = r.Reviewer.LastName
+                }
+            } ).ToList()
         };
     }
 }

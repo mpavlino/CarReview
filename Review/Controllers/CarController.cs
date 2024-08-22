@@ -213,5 +213,65 @@ namespace Review.Controllers {
         public IActionResult GenerateImage() {
             return View();
         }
+
+        #region Car reviews
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> CreateCarReview( int id ) {
+            try {
+                ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
+
+                Car car = await _carService.GetCarByIdAsync( id );
+                CarReviewViewModel carReviewViewModel = new CarReviewViewModel( car );
+                return View( carReviewViewModel );
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while preparing the create view." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCarReview( CarReviewViewModel carReviewViewModel ) {
+            try {
+                ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
+                ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
+
+                if( ModelState.IsValid ) {
+                    CarReview carReviewModel = CarTranslator.TranslateCarReviewViewModelToModel( carReviewViewModel );
+
+                    bool isCarCreated = await _carService.CreateCarReviewAsync( carReviewModel );
+                    return RedirectToAction( nameof( Details ), new { id = carReviewViewModel.CarID } );
+                }
+
+                return View( carReviewViewModel );
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while creating a car." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditCarReview( int id ) {
+            try {
+                ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
+                var car = await _carService.GetCarReviewByIdAsync( id );
+                if( car == null ) {
+                    return NotFound();
+                }
+
+                var carReviewModel = new CarReviewViewModel( car );
+                return View( carReviewModel );
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while preparing the edit view." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
+            }
+        }
+
+        #endregion
     }
 }

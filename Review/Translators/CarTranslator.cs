@@ -26,5 +26,21 @@ namespace Review.Translators {
 
             return carModel;
         }
+
+        public static Model.CarReview TranslateCarReviewViewModelToModel( CarReviewViewModel carReviewViewModel ) {
+            var carReviewModel = new CarReview {
+                ID = carReviewViewModel.Id,
+                Title = carReviewViewModel.Title,
+                Description = carReviewViewModel.Description,
+                CreatedOn = carReviewViewModel.CreatedOn,   
+                Rating = carReviewViewModel.Rating,
+                ReviewerId = carReviewViewModel.ReviewerID,
+                CarID = carReviewViewModel.CarID,
+                ImageData = carReviewViewModel.ImageData,
+                ImageMimeType = carReviewViewModel.ImageMimeType
+            };
+
+            return carReviewModel;
+        }
     }
 }

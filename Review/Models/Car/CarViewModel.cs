@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Review.Model;
+using Review.Models;
 using Review.Validation;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Review.Models.Car {
@@ -33,10 +35,13 @@ namespace Review.Models.Car {
         public int? BrandID { get; set; }
         public string BrandName { get; set; }
         [Required( ErrorMessage = "Car name is required." )]
-        [UniqueCarModelName( ErrorMessage = "A car with this model name already exists." )]
+        //[UniqueCarModelName( ErrorMessage = "A car with this model name already exists." )]
         [StringLength( 200 )]
         public string Model { get; set; }
+        [Required( ErrorMessage = "Generation name is required." )]
+        [UniqueCarGenerationName( ErrorMessage = "A car with this generation name already exists." )]
         public string Generation { get; set; }
+        [Required( ErrorMessage = "Engine is required." )]
         public string Engine { get; set; }
         public string EnginePower { get; set; }
         public string Torque { get; set; }
@@ -52,5 +57,6 @@ namespace Review.Models.Car {
         public IFormFile ImageFile { get; set; }
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }
+        public List<CarReviewViewModel> CarReviews { get; set; }
     }
 }

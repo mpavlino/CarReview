@@ -1,0 +1,35 @@
+﻿@model List<Review.Model.CarReview>
+@{
+}
+
+<div class="reviews-section">
+    @if (Model != null && Model.Any())
+    {
+        <ul class="list-group">
+            @foreach (var review in Model)
+            {
+                <li class="list-group-item">
+                    <div class="review-header">
+                        <h5>@review.Title</h5>
+                        <span class="text-muted">by @review.Reviewer.FullName on @review.CreatedOn.ToShortDateString()</span>
+                    </div>
+                    <div class="review-rating">
+                        <div class="star-rating read-only">
+                            @for( int i = 5; i >= 1; i-- ) {
+                                <input type="radio" id="star@i-@review.ID" name="rating-@review.ID" value="@i" @(review.Rating == i ? "checked" : "") disabled />
+                                <label for="star@i-@review.ID" title="@i stars">★</label>
+                            }
+                        </div>
+                        <span>@review.Rating / 5</span>
+                    </div>
+                    <p>@review.Description</p>
+                    <a asp-action="EditReview" asp-route-id="@review.ID" class="btn btn-outline-primary btn-sm">Edit</a>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No reviews yet. Be the first to review!</p>
+    }
+</div>

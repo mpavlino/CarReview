@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -172,6 +173,88 @@ namespace Review.Controllers {
                 return StatusCode( 500, new { message = ex.Message } );
             }
         }
+        #endregion
+
+        #region CarReview
+
+
+        [HttpGet( "reviews/{id:int}" )]
+        public ActionResult<List<CarReviewDTO>> GetCarReviewsByCarId( int id ) {
+            try {
+                var reviews = _dbContext.CarReviews
+                    .Where( r => r.CarID == id )
+                    .Select( CarReviewDTO.SelectorExpression )
+                    .ToList();
+
+                if( reviews == null || reviews.Count == 0 ) {
+                    return NotFound( new { message = "Reivews were not found" } );
+                }
+
+                return Ok( reviews );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+
+        [HttpGet( "review/{id:int}" )]
+        public ActionResult<CarReviewDTO> GetCarReviewById( int id ) {
+            try {
+                var review = _dbContext.CarReviews
+                    .Where( r => r.ID == id )
+                    .Select( CarReviewDTO.SelectorExpression )
+                    .FirstOrDefault();
+
+                if( review == null ) {
+                    return NotFound( new { message = "Reivews were not found" } );
+                }
+
+                return Ok( review );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+
+        [HttpPost( "review" )]
+        public ActionResult<CarReviewDTO> CreateCarReview( [FromBody] CarReview c ) {
+            try {
+                if( ModelState.IsValid ) {
+                    _dbContext.CarReviews.Add( c );
+                    _dbContext.SaveChanges();
+
+                    return CreatedAtAction( nameof( GetCarReviewById ), new { id = c.ID }, GetCarReviewById( c.ID ).Value );
+                }
+
+                return BadRequest( ModelState );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+
+        [HttpPut( "review/{id:int}" )]
+        public async Task<ActionResult<CarReviewDTO>> UpdateCarReview( int id, [FromBody] CarReview carReview ) {
+            try {
+
+                CarReview existing = _dbContext.CarReviews.FirstOrDefault( p => p.ID == id );
+                if( existing != null && ModelState.IsValid ) {
+                    _dbContext.Entry( existing ).CurrentValues.SetValues( carReview );
+                    await _dbContext.SaveChangesAsync();
+                    return GetCarReviewById( id );
+                }
+
+                if( existing == null ) {
+                    ModelState.AddModelError( "id", "Invalid car review ID" );
+                }
+
+                return BadRequest( ModelState );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+
         #endregion
     }
 

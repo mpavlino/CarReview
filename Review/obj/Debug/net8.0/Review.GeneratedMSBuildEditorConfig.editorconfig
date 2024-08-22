@@ -98,6 +98,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Projects/CarReview/Review/Views/Car/CreateCarReview.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXENyZWF0ZUNhclJldmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Projects/CarReview/Review/Views/Car/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -116,6 +120,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Projects/CarReview/Review/Views/Car/_CarFilter.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXF9DYXJGaWx0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/CarReview/Review/Views/Car/_CarReviewList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXF9DYXJSZXZpZXdMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Projects/CarReview/Review/Views/Car/_CreateOrUpdate.cshtml]

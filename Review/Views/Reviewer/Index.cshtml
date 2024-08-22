@@ -16,7 +16,7 @@
                         <th>Last Name</th>
                         <th class="d-none d-md-table-cell">Date Of Birth</th>
                         <th class="d-none d-md-table-cell">Gender</th>
-                        <th class="d-none d-md-table-cell">About</th>
+                        <th class="d-none d-xxl-table-cell">About</th>
                         <th data-sortable="false"></th>
                     </tr>
                 </thead>
@@ -27,7 +27,7 @@
                             <td>@item.LastName</td>
                             <td class="d-none d-md-table-cell">@item.DateOfBirth.Date.ToString( "dd/MM/yyyy" )</td>
                             <td class="d-none d-md-table-cell">@item.Gender</td>
-                            <td class="d-none d-md-table-cell">@Truncate( item.About, 38 )</td> <!-- Truncate to 38 characters -->
+                            <td class="d-none d-xxl-table-cell">@Truncate( item.About, 38 )</td> <!-- Truncate to 38 characters -->
                             <td>
                                 <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi-pencil-square"></i></a>
                                 <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Details"><i class="bi-box-arrow-up-right"></i></a>

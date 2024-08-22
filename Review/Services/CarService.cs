@@ -33,6 +33,10 @@ namespace Review.Services {
             return !_dbContext.Cars.Any( b => b.Model == name );
         }
 
+        public bool IsCarGenerationNameUnique( string name ) {
+            return !_dbContext.Cars.Any( b => b.Generation == name );
+        }
+
         public async Task<IEnumerable<Car>> GetAllCarsAsync() {
             try {
                 await SetAuthorizationHeaderAsync();
@@ -128,5 +132,66 @@ namespace Review.Services {
                 throw;
             }
         }
+
+
+        #region CarReview
+
+        public async Task<List<Model.CarReview>> GetCarReviewsByCarIdAsync( int id ) {
+            try {
+                await SetAuthorizationHeaderAsync();
+                var response = await _httpClient.GetAsync( $"api/cars/reviews/{id}" );
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<Model.CarReview>>();
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, $"An error occurred while getting reviews with car ID {id}." );
+                throw;
+            }
+        }
+
+        public async Task<CarReview> GetCarReviewByIdAsync( int id ) {
+            try {
+                await SetAuthorizationHeaderAsync();
+                var response = await _httpClient.GetAsync( $"api/cars/review/{id}" );
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<CarReview>();
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, $"An error occurred while getting review with ID {id}." );
+                throw;
+            }
+        }
+
+        public async Task<bool> CreateCarReviewAsync( CarReview carReview ) {
+            try {
+                await SetAuthorizationHeaderAsync();
+                var response = await _httpClient.PostAsJsonAsync( "api/cars/review", carReview );
+                response.EnsureSuccessStatusCode();
+
+                return response.IsSuccessStatusCode;
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while creating a car review." );
+                throw;
+            }
+        }
+
+        public async Task<CarReview> UpdateCarReviewAsync( int id, CarReview model ) {
+            try {
+                await SetAuthorizationHeaderAsync();
+                var response = await _httpClient.PutAsJsonAsync( $"api/cars/review/{id}", model );
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<CarReview>();
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, $"An error occurred while updating car review with ID {id}." );
+                throw;
+            }
+        }
+
+        #endregion
     }
 }
