@@ -114,4 +114,38 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    var itemsPerPage = 5; // Number of items to show per page
+    var $reviewsList = $('#reviews-list');
+    var $paginationControls = $('#pagination-controls');
+    var $items = $reviewsList.children('.review-item');
+
+    function showPage(page) {
+        $items.hide();
+        $items.slice((page - 1) * itemsPerPage, page * itemsPerPage).show();
+    }
+
+    function setupPagination() {
+        var totalPages = Math.ceil($items.length / itemsPerPage);
+        var $pagination = $paginationControls.find('.pagination');
+        $pagination.empty();
+
+        for (var i = 1; i <= totalPages; i++) {
+            var $pageItem = $('<li class="page-item"></li>');
+            var $pageLink = $('<a class="page-link" href="#">' + i + '</a>');
+            if (i === 1) $pageItem.addClass('active');
+            $pageLink.click(function (e) {
+                e.preventDefault();
+                var pageNum = $(this).text();
+                showPage(parseInt(pageNum));
+                $pagination.find('.page-item').removeClass('active');
+                $(this).parent().addClass('active');
+            });
+            $pageItem.append($pageLink);
+            $pagination.append($pageItem);
+        }
+    }
+
+    setupPagination();
+    showPage(1); // Show the first page initially
+
 });
