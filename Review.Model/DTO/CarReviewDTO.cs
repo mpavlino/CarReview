@@ -14,6 +14,8 @@ namespace Review.Model.DTO {
         public DateTime CreatedOn { get; set; }
         public int ReviewerID { get; set; }
         public ReviewerDTO Reviewer { get; set; }
+        public int CarID { get; set; }
+        public CarDTO Car { get; set; }
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }
 
@@ -28,6 +30,24 @@ namespace Review.Model.DTO {
                 ID = p.Reviewer.ID,
                 FirstName = p.Reviewer.FirstName,
                 LastName = p.Reviewer.LastName
+            },
+            CarID = p.CarID,
+            Car = new CarDTO() {
+                ID = p.Car.ID,
+                BrandID = p.Car.BrandID,
+                Brand = p.Car.Brand.ID == null ? null : new BrandDTO() {
+                    ID = p.Car.Brand.ID,
+                    Name = p.Car.Brand.Name,
+                    CountryID = p.Car.Brand.CountryID,
+                    Country = p.Car.Brand.CountryID == null ? null : new CountryDTO() {
+                        ID = p.Car.Brand.Country.ID,
+                        Name = p.Car.Brand.Country.Name
+                    }
+                },
+                Model = p.Car.Model,
+                Generation = p.Car.Generation,
+                ModelYear = p.Car.ModelYear,
+                Engine = p.Car.Engine
             },
             ImageData = p.ImageData,
             ImageMimeType = p.ImageMimeType

@@ -1,16 +1,17 @@
 ﻿@model Review.Models.Car.CarReviewViewModel
 @{
-    ViewData["Title"] = "Adding a new car review";
+    ViewData["Title"] = "Car review edit";
 }
 <ol class="breadcrumb">
     <li><a asp-action="Details" asp-route-id="@Model.CarID">@Model.CarName /</a></li>
-    <li class="active">&nbsp;New car review</li>
+    <li class="active">&nbsp;Car review customization</li>
 </ol>
 <div class="row">
     <div class="col-lg-12">
-        <form asp-action="CreateCarReview" id="carForm" method="post" enctype="multipart/form-data">
+        <form asp-action="EditCarReview" id="carForm" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
-            <input type="hidden" id="ActionUrl" value="@Url.Action("CreateCarReview", "Car")" />
+            <input type="hidden" id="ActionUrl" value="@Url.Action("EditCarReview", "Car")" />
+            <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="CarID" />
             <input type="hidden" asp-for="CreatedOn" />
             <input type="hidden" asp-for="ImageData" />

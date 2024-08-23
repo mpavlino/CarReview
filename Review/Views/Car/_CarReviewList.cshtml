@@ -23,7 +23,8 @@
                         <span>@review.Rating / 5</span>
                     </div>
                     <p>@review.Description</p>
-                    <a asp-action="EditReview" asp-route-id="@review.ID" class="btn btn-outline-primary btn-sm">Edit</a>
+                    <a asp-action="EditCarReview" asp-route-id="@review.ID" class="btn btn-outline-primary btn-sm">Edit</a>
+                    <a asp-action="DeleteCarReview" asp-route-id="@review.ID" class="btn btn-outline-danger btn-sm delete-btn">Delete</a>
                 </li>
             }
         </ul>

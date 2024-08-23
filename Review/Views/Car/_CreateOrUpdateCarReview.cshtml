@@ -1,0 +1,72 @@
+﻿@model Review.Models.Car.CarReviewViewModel
+
+<form>
+    <input type="hidden" name="ImageFile" id="ImageFile" />
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Title</label>
+                <div class="col-12 col-lg-8 col-md-7">
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Reviewer</label>
+                <div class="col-12 col-lg-8 col-md-7">
+                    <select asp-for="ReviewerID" asp-items="ViewBag.PossibleReviewers" class="form-control select2-input"></select>
+                    <span asp-validation-for="ReviewerID" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Rating</label>
+                <div class="col-12 col-lg-8 col-md-7">
+                    <div class="star-rating">
+                        <input asp-for="Rating" class="form-check-input" type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars">★</label>
+                        <input asp-for="Rating" class="form-check-input" type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars">★</label>
+                        <input asp-for="Rating" class="form-check-input" type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars">★</label>
+                        <input asp-for="Rating" class="form-check-input" type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars">★</label>
+                        <input asp-for="Rating" class="form-check-input" type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star">★</label>
+                    </div>
+                    <span asp-validation-for="Rating" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Image</label>
+                <div class="col-12 col-lg-8 col-md-7">
+                    <div id="dropzone" class="dropzone upload-files"></div>
+                    @* <input asp-for="ImageFile" type="file" class="form-control-file d-none" /> *@
+                    @if( Model.ImageData != null ) {
+                        <div class="mt-2">
+                            <img src="data:@Model.ImageMimeType;base64,@Convert.ToBase64String(Model.ImageData)" class="img-fluid" alt="Car Image" />
+                            <p>Current Image</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-form-label">Description</label>
+                <div class="col-12">
+                    <textarea asp-for="Description" class="form-control" rows="4" cols="70"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group row">
+                <div class="col-lg-8 col-md-7">
+                    <input type="submit" value="Save" class="btn btn-outline-primary" />
+                    <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

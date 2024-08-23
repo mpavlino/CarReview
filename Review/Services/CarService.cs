@@ -192,6 +192,18 @@ namespace Review.Services {
             }
         }
 
+        public async Task DeleteCarReviewAsync( int id ) {
+            try {
+                await SetAuthorizationHeaderAsync();
+                var response = await _httpClient.DeleteAsync( $"api/cars/review/{id}" );
+                response.EnsureSuccessStatusCode();
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, $"An error occurred while deleting car review with ID {id}." );
+                throw;
+            }
+        }
+
         #endregion
     }
 }

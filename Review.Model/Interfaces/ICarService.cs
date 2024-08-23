@@ -21,5 +21,6 @@ namespace Review.Model.Interfaces {
         Task<CarReview> GetCarReviewByIdAsync( int id );
         Task<bool> CreateCarReviewAsync( CarReview carReview );
         Task<CarReview> UpdateCarReviewAsync( int id, CarReview model );
+        Task DeleteCarReviewAsync( int id );
     }
 }

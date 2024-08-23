@@ -19,6 +19,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 
 namespace Review.Controllers {
     [Authorize]
@@ -198,7 +199,7 @@ namespace Review.Controllers {
             }
         }
 
-        public async Task<IActionResult> DeleteCar( int id ) {
+        public async Task<IActionResult> Delete( int id ) {
             try {
                 await _carService.DeleteCarAsync( id );
                 return RedirectToAction( "Index" );
@@ -242,6 +243,12 @@ namespace Review.Controllers {
                 if( ModelState.IsValid ) {
                     CarReview carReviewModel = CarTranslator.TranslateCarReviewViewModelToModel( carReviewViewModel );
 
+                    if( carReviewModel.ImageData != null ) {
+                        // Convert base64 string to byte array
+                        carReviewModel.ImageData = carReviewViewModel.ImageData;
+                        carReviewModel.ImageMimeType = carReviewViewModel.ImageMimeType; // Ensure you have the mime type set correctly
+                    }
+
                     bool isCarCreated = await _carService.CreateCarReviewAsync( carReviewModel );
                     return RedirectToAction( nameof( Details ), new { id = carReviewViewModel.CarID } );
                 }
@@ -268,6 +275,49 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while preparing the edit view." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditCarReview( int id, CarReviewViewModel carReviewViewModel ) {
+            try {
+                ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
+                ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
+
+                if( ModelState.IsValid ) {
+                    CarReview carReview = CarTranslator.TranslateCarReviewViewModelToModel( carReviewViewModel );
+
+                    if( carReviewViewModel.ImageData != null ) {
+                        // Convert base64 string to byte array
+                        carReview.ImageData = carReviewViewModel.ImageData;
+                        carReview.ImageMimeType = carReviewViewModel.ImageMimeType; // Ensure you have the mime type set correctly
+                    }
+                    //car.ImageData = imageData ?? car.ImageData;
+                    //car.ImageMimeType = imageMimeType ?? car.ImageMimeType;
+
+                    var updatedCar = await _carService.UpdateCarReviewAsync( id, carReview );
+                    return RedirectToAction( nameof( Details ), new { id = carReviewViewModel.CarID } );
+                }
+
+                return View( carReviewViewModel );
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while editing a car review." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
+            }
+        }
+
+        public async Task<IActionResult> DeleteCarReview( int id ) {
+            try {
+                CarReview carReview = await _carService.GetCarReviewByIdAsync( id );
+                int carID = carReview.CarID;
+                await _carService.DeleteCarReviewAsync( id );
+                return RedirectToAction( nameof( Details ), new { id = carID } );
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while deleting a car review." );
+                ModelState.AddModelError( string.Empty, $"Error deleting car review: {ex.Message}" );
                 return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }

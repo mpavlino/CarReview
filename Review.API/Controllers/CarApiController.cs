@@ -255,6 +255,24 @@ namespace Review.Controllers {
             }
         }
 
+        [HttpDelete( "review/{id:int}" )]
+        public IActionResult DeleteCarReview( int id ) {
+            try {
+                var existing = _dbContext.CarReviews.FirstOrDefault( p => p.ID == id );
+                if( existing != null ) {
+                    _dbContext.Entry( existing ).State = EntityState.Deleted;
+                    _dbContext.SaveChanges();
+                    return Ok();
+                }
+                else {
+                    return NotFound( new { error = "Car review not found", providedID = id } );
+                }
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+
         #endregion
     }
 
