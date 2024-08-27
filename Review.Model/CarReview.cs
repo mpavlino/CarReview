@@ -25,7 +25,6 @@ namespace Review.Model {
         [ForeignKey( nameof( Car ) )]
         public int CarID { get; set; }
         public Car Car { get; set; }
-        public byte[] ImageData { get; set; }
-        public string ImageMimeType { get; set; }
+        public virtual ICollection<Image> Images { get; set; } = new List<Image>();
     }
 }

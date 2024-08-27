@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TextTemplating;
 using Review.Model;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Review.Models.Car {
@@ -22,8 +23,13 @@ namespace Review.Models.Car {
             CarID = carReview.CarID;
             CarName = String.Format( "{0} {1}", carReview.Car.Brand.Name, carReview.Car.Model );
             ReviewerID = carReview.ReviewerId;
-            ImageData = carReview.ImageData;
-            ImageMimeType = carReview.ImageMimeType;
+            Images = carReview.Images;
+            //if( carReview.Images != null || carReview.Images.Count > 0 ) {
+            //    Images = carReview.Images;
+            //    //foreach( var image in carReview.Images ) {
+            //    //    Images.Add( image );
+            //    //}
+            //}
         }
 
         public int Id { get; set; }
@@ -39,8 +45,8 @@ namespace Review.Models.Car {
         public int Rating { get; set; }
         public int ReviewerID { get; set; }
         public int CarID { get; set; }
-        public string CarName { get; set; } 
-        public byte[] ImageData { get; set; }
-        public string ImageMimeType { get; set; }
+        public string CarName { get; set; }
+        public ICollection<Image> Images { get; set; } = new List<Image>();
+        public string UploadedImages { get; set; }
     }
 }

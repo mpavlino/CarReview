@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Review.DAL;
@@ -11,9 +12,11 @@ using Review.DAL;
 namespace Review.DAL.Migrations
 {
     [DbContext(typeof(CarManagerDbContext))]
-    partial class CarManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240827073424_ImagesUpload")]
+    partial class ImagesUpload
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,16 +226,16 @@ namespace Review.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2ad03bf3-6b71-4d42-aa84-637e08aaa46b",
+                            Id = "812af401-dbaa-4a06-9b14-ac2461c33394",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a609adca-1d63-40c5-a7cf-cdae89b94aca",
+                            ConcurrencyStamp = "d42f96be-be81-412e-8e25-18e0558ac8b5",
                             Email = "korisnik@test.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "KORISNIK@TEST.COM",
                             NormalizedUserName = "KORISNIK@TEST.COM",
                             OIB = "84858742558",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIlcgE7vMcCyhWiOGqXsEogNrUIT4aK1wCnPDMzt9ybymkjnFH1/5f+SxPLEtEplTA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEE2L/mRui9tcWZJtV+DB5mli8CD5/GgYMHQ70N7PMHnljU9bK39pGkiDeGimsnry2w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -654,7 +657,7 @@ namespace Review.DAL.Migrations
 
                     b.HasIndex("CarReviewId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("Review.Model.Reviewer", b =>

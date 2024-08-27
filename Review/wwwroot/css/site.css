@@ -195,6 +195,20 @@ body {
     width: 100% !important; /* Force Select2 container to take up full width */
 }
 
+/* Position the button absolutely at the top center */
+.btn-remove-image {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10; /* Ensure the button is on top of the image */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */

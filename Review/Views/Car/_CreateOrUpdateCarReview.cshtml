@@ -38,12 +38,34 @@
                 <div class="col-12 col-lg-8 col-md-7">
                     <div id="dropzone" class="dropzone upload-files"></div>
                     @* <input asp-for="ImageFile" type="file" class="form-control-file d-none" /> *@
-                    @if( Model.ImageData != null ) {
-                        <div class="mt-2">
-                            <img src="data:@Model.ImageMimeType;base64,@Convert.ToBase64String(Model.ImageData)" class="img-fluid" alt="Car Image" />
-                            <p>Current Image</p>
+                    <!-- Carousel Container -->
+                    <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            @if( Model.Images != null && Model.Images.Any() ) {
+                                int i = 0;
+                                foreach( var image in Model.Images ) {
+                                    var isActive = i == 0 ? "active" : "";
+                                    <div class="carousel-item @isActive">
+                                        <div class="position-relative">
+                                            <img src="data:@image.ImageMimeType;base64,@Convert.ToBase64String(image.ImageData)" class="d-block w-100 car-img img-fluid" alt="Car Image" />
+                                            <!-- Remove Button -->
+                                            <button type="button" class="btn btn-danger btn-sm btn-remove-image" data-image-id="@image.ID"><i class="bi-trash"></i></button>
+                                        </div>
+                                    </div>
+                                    i++;
+                                }
+                            }
                         </div>
-                    }
+                        <!-- Controls -->
+                        <a class="carousel-control-prev" href="#imageCarousel" role="button" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#imageCarousel" role="button" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -14,12 +14,12 @@
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="CarID" />
             <input type="hidden" asp-for="CreatedOn" />
-            <input type="hidden" asp-for="ImageData" />
+            <input type="hidden" id="uploadedImages" name="UploadedImages" />
             <partial name="_CreateOrUpdateCarReview" />
         </form>
     </div>
 </div>
 
 @section Scripts {
-    <script src="~/js/Car/Dropzone.js"></script>
+    <script src="~/js/Car/DropzoneCarReview.js"></script>
 }

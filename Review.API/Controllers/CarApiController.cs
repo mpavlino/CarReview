@@ -221,6 +221,9 @@ namespace Review.Controllers {
             try {
                 if( ModelState.IsValid ) {
                     _dbContext.CarReviews.Add( c );
+                    foreach( var image in c.Images ) {
+                        _dbContext.Images.Add( image );
+                    }
                     _dbContext.SaveChanges();
 
                     return CreatedAtAction( nameof( GetCarReviewById ), new { id = c.ID }, GetCarReviewById( c.ID ).Value );
@@ -237,9 +240,33 @@ namespace Review.Controllers {
         public async Task<ActionResult<CarReviewDTO>> UpdateCarReview( int id, [FromBody] CarReview carReview ) {
             try {
 
-                CarReview existing = _dbContext.CarReviews.FirstOrDefault( p => p.ID == id );
+                CarReview existing = _dbContext.CarReviews.Include(c => c.Images).FirstOrDefault( p => p.ID == id );
                 if( existing != null && ModelState.IsValid ) {
+                    // Update the properties of the existing CarReview
                     _dbContext.Entry( existing ).CurrentValues.SetValues( carReview );
+
+                    // Handle Images
+                    if( carReview.Images != null && carReview.Images.Any() ) {
+                        // Remove images that are no longer present
+                        var imagesToRemove = existing.Images.Where( ei => !carReview.Images.Any( ci => ci.ID == ei.ID ) ).ToList();
+                        foreach( var image in imagesToRemove ) {
+                            existing.Images.Remove( image );
+                        }
+
+                        // Add or update images
+                        foreach( var newImage in carReview.Images ) {
+                            var existingImage = existing.Images.FirstOrDefault( ei => ei.ID == newImage.ID );
+                            if( existingImage != null && existingImage.ID > 0 ) {
+                                // Update existing image
+                                _dbContext.Entry( existingImage ).CurrentValues.SetValues( newImage );
+                            }
+                            else {
+                                // Add new image
+                                existing.Images.Add( newImage );
+                            }
+                        }
+                    }
+
                     await _dbContext.SaveChangesAsync();
                     return GetCarReviewById( id );
                 }

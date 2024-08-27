@@ -17,6 +17,7 @@ namespace Review.DAL
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Reviewer> Reviewers { get; set; }
         public DbSet<Model.CarReview> CarReviews { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

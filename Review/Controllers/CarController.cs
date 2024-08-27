@@ -138,6 +138,32 @@ namespace Review.Controllers {
             return Json( new { error = "File upload failed." } );
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UploadImageCarReview( IFormFile data ) {
+            var files = HttpContext.Request.Form.Files;
+            if( files != null && files.Count > 0 ) {
+                var uploadedImages = new List<object>();
+
+                foreach( var file in files ) {
+                    if( file.Length > 0 ) {
+                        using( var memoryStream = new MemoryStream() ) {
+                            await file.CopyToAsync( memoryStream );
+                            var fileData = memoryStream.ToArray();
+
+                            uploadedImages.Add( new {
+                                imageData = fileData,
+                                mimeType = file.ContentType
+                            } );
+                        }
+                    }
+                }
+
+                return Json( uploadedImages );
+            }
+
+            return Json( new { error = "File upload failed." } );
+        }
+
 
 
         [HttpPost, ActionName( "Edit" )]
@@ -243,10 +269,26 @@ namespace Review.Controllers {
                 if( ModelState.IsValid ) {
                     CarReview carReviewModel = CarTranslator.TranslateCarReviewViewModelToModel( carReviewViewModel );
 
-                    if( carReviewModel.ImageData != null ) {
-                        // Convert base64 string to byte array
-                        carReviewModel.ImageData = carReviewViewModel.ImageData;
-                        carReviewModel.ImageMimeType = carReviewViewModel.ImageMimeType; // Ensure you have the mime type set correctly
+                    //if( carReviewViewModel.Images != null || carReviewViewModel.Images.Count > 0 ) {
+                    //    // Convert base64 string to byte array
+                    //    foreach( var image in carReviewViewModel.Images ) {
+                    //        carReviewModel.Images.Add( image ); // Ensure you have the mime type set correctly
+                    //    }
+                    //}
+
+                    if( !string.IsNullOrEmpty( carReviewViewModel.UploadedImages ) ) {
+                        var imageStrings = carReviewViewModel.UploadedImages.Split( new[] { ';' }, StringSplitOptions.RemoveEmptyEntries );
+
+                        foreach( var imageString in imageStrings ) {
+                            // Extract the Base64 part of the string
+                            var base64Data = imageString.Substring( imageString.IndexOf( "," ) + 1 );
+                            // Convert Base64 string to byte array
+                            byte[] imageBytes = Convert.FromBase64String( base64Data );
+                            carReviewModel.Images.Add( new Image {
+                                ImageData = imageBytes,
+                                CarReviewId = carReviewModel.ID
+                            } );
+                        }
                     }
 
                     bool isCarCreated = await _carService.CreateCarReviewAsync( carReviewModel );
@@ -288,13 +330,26 @@ namespace Review.Controllers {
                 if( ModelState.IsValid ) {
                     CarReview carReview = CarTranslator.TranslateCarReviewViewModelToModel( carReviewViewModel );
 
-                    if( carReviewViewModel.ImageData != null ) {
-                        // Convert base64 string to byte array
-                        carReview.ImageData = carReviewViewModel.ImageData;
-                        carReview.ImageMimeType = carReviewViewModel.ImageMimeType; // Ensure you have the mime type set correctly
+                    //if( carReviewViewModel.Images != null || carReviewViewModel.Images.Count > 0 ) {
+                    //    // Convert base64 string to byte array
+                    //    foreach( var image in carReviewViewModel.Images ) {
+                    //        carReview.Images.Add( image ); // Ensure you have the mime type set correctly
+                    //    }
+                    //}
+                    if( !string.IsNullOrEmpty( carReviewViewModel.UploadedImages ) ) {
+                        var imageStrings = carReviewViewModel.UploadedImages.Split( new[] { ';' }, StringSplitOptions.RemoveEmptyEntries );
+
+                        foreach( var imageString in imageStrings ) {
+                            // Extract the Base64 part of the string
+                            var base64Data = imageString.Substring( imageString.IndexOf( "," ) + 1 );
+                            // Convert Base64 string to byte array
+                            byte[] imageBytes = Convert.FromBase64String( base64Data );
+                            carReview.Images.Add( new Image {
+                                ImageData = imageBytes,
+                                CarReviewId = carReview.ID
+                            } );
+                        }
                     }
-                    //car.ImageData = imageData ?? car.ImageData;
-                    //car.ImageMimeType = imageMimeType ?? car.ImageMimeType;
 
                     var updatedCar = await _carService.UpdateCarReviewAsync( id, carReview );
                     return RedirectToAction( nameof( Details ), new { id = carReviewViewModel.CarID } );

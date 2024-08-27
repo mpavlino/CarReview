@@ -16,8 +16,7 @@ namespace Review.Model.DTO {
         public ReviewerDTO Reviewer { get; set; }
         public int CarID { get; set; }
         public CarDTO Car { get; set; }
-        public byte[] ImageData { get; set; }
-        public string ImageMimeType { get; set; }
+        public List<ImageDTO> Images { get; set; }
 
         public static Expression<Func<CarReview, CarReviewDTO>> SelectorExpression { get; } = p => new CarReviewDTO() {
             ID = p.ID,
@@ -49,8 +48,12 @@ namespace Review.Model.DTO {
                 ModelYear = p.Car.ModelYear,
                 Engine = p.Car.Engine
             },
-            ImageData = p.ImageData,
-            ImageMimeType = p.ImageMimeType
+            Images = p.Images.Select( r => new ImageDTO {
+                ID = r.ID,
+                ImageData = r.ImageData,
+                ImageMimeType = r.ImageMimeType,
+                CarReviewId = r.CarReviewId
+            } ).ToList()
         };
     }
 
