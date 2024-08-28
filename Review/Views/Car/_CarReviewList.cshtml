@@ -4,23 +4,65 @@
     @if( Model != null && Model.Any() ) {
         <ul id="reviews-list" class="list-group">
             @foreach( var review in Model ) {
-                <li class="list-group-item review-item">
-                    <div class="review-header">
-                        <h5>@review.Title</h5>
-                        <span class="text-muted">by @review.Reviewer.FullName on @review.CreatedOn.ToShortDateString()</span>
-                    </div>
-                    <div class="review-rating">
-                        <div class="star-rating read-only">
-                            @for( int i = 5; i >= 1; i-- ) {
-                                <input type="radio" id="star@i-@review.ID" name="rating-@review.ID" value="@i" @(review.Rating == i ? "checked" : "") disabled />
-                                <label for="star@i-@review.ID" title="@i stars">★</label>
-                            }
+                <li class="list-group-item review-item d-flex justify-content-between align-items-start">
+                    <!-- Review Content -->
+                    <div class="review-content flex-grow-1 d-flex flex-column">
+                        <div class="review-header mb-2">
+                            <div class="float-start">
+                                <h5>@review.Title</h5>
+                                <span class="text-muted">by @review.Reviewer.FullName on @review.CreatedOn.ToShortDateString()</span>
+                            </div>
+                            <div class="float-end">
+                                <!-- Button Container to stick buttons at the bottom -->
+                                @if (User.IsInRole("Administrator"))
+                                {
+                                    <div>
+                                        <a asp-action="EditCarReview" asp-route-id="@review.ID" class="btn btn-outline-primary btn-sm">Edit</a>
+                                        <a asp-action="DeleteCarReview" asp-route-id="@review.ID" class="btn btn-outline-danger btn-sm delete-btn">Delete</a>
+                                    </div>
+                                }
+                            </div>
                         </div>
-                        <span>@review.Rating / 5</span>
+                        <div class="review-rating mb-2">
+                            <div class="star-rating read-only">
+                                @for( int i = 5; i >= 1; i-- ) {
+                                    <input type="radio" id="star@i-@review.ID" name="rating-@review.ID" value="@i" @(review.Rating == i ? "checked" : "") disabled />
+                                    <label for="star@i-@review.ID" title="@i stars">★</label>
+                                }
+                            </div>
+                            <span>@review.Rating / 5</span>
+                        </div>
+                        <p class="flex-grow-1">@review.Description</p>
                     </div>
-                    <p>@review.Description</p>
-                    <a asp-action="EditCarReview" asp-route-id="@review.ID" class="btn btn-outline-primary btn-sm">Edit</a>
-                    <a asp-action="DeleteCarReview" asp-route-id="@review.ID" class="btn btn-outline-danger btn-sm delete-btn">Delete</a>
+
+                    <!-- Images Carousel Section -->
+                    <div class="review-images ms-3">
+                        @if( review.Images != null && review.Images.Any() ) {
+                            <div id="carousel-@review.ID" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    @for( var i = 0; i < review.Images.Count; i++ ) {
+                                        var image = review.Images.ElementAt( i );
+                                        var base64ImageString = Convert.ToBase64String( image.ImageData );
+                                        <div class="carousel-item @(i == 0 ? "active" : "")">
+                                            <!-- Image Clickable to Open in Modal -->
+                                            <img src="data:@image.ImageMimeType;base64,@base64ImageString" class="d-block w-100 img-thumbnail" alt="Review Image" style="cursor: pointer;" />
+                                        </div>
+                                    }
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-@review.ID" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carousel-@review.ID" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        }
+                        else {
+                            <p class="text-muted">No images</p>
+                        }
+                    </div>
                 </li>
             }
         </ul>
@@ -31,9 +73,22 @@
             </ul>
         </nav>
     }
-
     else {
         <p>No reviews yet. Be the first to review!</p>
     }
 </div>
 
+<!-- Modal for Enlarged Image -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalImage" src="" class="img-fluid" alt="Large View">
+            </div>
+        </div>
+    </div>
+</div>

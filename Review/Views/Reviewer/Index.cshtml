@@ -2,10 +2,12 @@
 <div class="pagetitle">
     <h1>Reviewers</h1>
 </div>
-
-<div class="col-4" style="margin-top: 30px; margin-bottom: 30px; width: 200px;">
-    <a asp-action="Create" class="btn btn-outline-primary" style="display: inline-block; width: 100%;"><i class="bi-plus-circle"></i> New reviewer</a>
-</div>
+@if (User.IsInRole("Administrator"))
+{
+    <div class="col-4" style="margin-top: 30px; margin-bottom: 30px; width: 200px;">
+        <a asp-action="Create" class="btn btn-outline-primary" style="display: inline-block; width: 100%;"><i class="bi-plus-circle"></i> New reviewer</a>
+    </div>
+}
 <div class="card">
     <div class="card-body">
         <div class="table-responsive" style="margin-top: 20px;">
@@ -29,9 +31,12 @@
                             <td class="d-none d-md-table-cell">@item.Gender</td>
                             <td class="d-none d-xxl-table-cell">@Truncate( item.About, 38 )</td> <!-- Truncate to 38 characters -->
                             <td>
-                                <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi-pencil-square"></i></a>
                                 <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Details"><i class="bi-box-arrow-up-right"></i></a>
-                                <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm delete-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><i class="bi-trash"></i></a>
+                                @if (User.IsInRole("Administrator"))
+                                {
+                                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi-pencil-square"></i></a>                               
+                                    <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm delete-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><i class="bi-trash"></i></a>
+                                }
                             </td>
                         </tr>
                     }

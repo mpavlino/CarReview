@@ -42,6 +42,7 @@ namespace Review.Controllers {
         }
 
         [HttpGet]
+        [Authorize( Roles = "Administrator" )]
         public IActionResult Create() {
             try {
                 return View();
@@ -53,6 +54,7 @@ namespace Review.Controllers {
         }
 
         [HttpPost]
+        [Authorize( Roles = "Administrator" )]
         public async Task<IActionResult> Create( Reviewer reviewer ) {
             try {
                 if( ModelState.IsValid ) {
@@ -69,6 +71,7 @@ namespace Review.Controllers {
         }
 
         [HttpGet, ActionName( "Edit" )]
+        [Authorize( Roles = "Administrator" )]
         public async Task<IActionResult> Edit( int id ) {
             try {
                 var reviewer = await _reviewerService.GetReviewerByIdAsync( id );
@@ -84,6 +87,7 @@ namespace Review.Controllers {
         }
 
         [HttpPost, ActionName( "Edit" )]
+        [Authorize( Roles = "Administrator" )]
         public async Task<IActionResult> Edit( int id, Reviewer reviewer ) {
             try {
                 if( ModelState.IsValid ) {

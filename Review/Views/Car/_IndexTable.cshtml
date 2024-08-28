@@ -1,20 +1,27 @@
 ﻿@model List<Review.Model.Car>
-<div class="table-responsive" style="margin-top: 20px;">
-    <table class="table datatable" id="tbl-cars">
-        <thead>
+
+<table class="table datatable" id="tbl-cars">
+    <thead>
+        <tr>
+            <th>Brand</th>
+            <th class="d-none d-md-table-cell">Model</th>
+            <th class="d-none d-md-table-cell">Generation</th>
+            <th class="d-table-cell d-md-none">Model</th>
+            <th class="d-none d-xxl-table-cell">Country</th>
+            <th class="d-none d-xxl-table-cell">Engine</th>
+            <th class="d-none d-md-table-cell">Reviewer</th>
+            <th class="d-none d-md-table-cell">Rating</th>
+            <th data-sortable="false"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if( Model == null || !Model.Any() ) {
+            <!-- Row for no results -->
             <tr>
-                <th>Brand</th>
-                <th class="d-none d-md-table-cell">Model</th>
-                <th class="d-none d-md-table-cell">Generation</th>
-                <th class="d-table-cell d-md-none">Model</th>
-                <th class="d-none d-xxl-table-cell">Country</th>
-                <th class="d-none d-xxl-table-cell">Engine</th>
-                <th class="d-none d-md-table-cell">Reviewer</th>
-                <th class="d-none d-md-table-cell">Rating</th>
-                <th data-sortable="false"></th>
+                <td colspan="9" class="text-center">No cars found.</td>
             </tr>
-        </thead>
-        <tbody>
+        }
+        else {
             @foreach( var item in Model ) {
                 <tr>
                     <td>
@@ -45,15 +52,17 @@
                         </div>
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi-pencil-square"></i></a>
                         <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm d-none d-md-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="Details"><i class="bi-box-arrow-up-right"></i></a>
-                        <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm delete-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><i class="bi-trash"></i></a>
+                        @if( User.IsInRole( "Administrator" ) ) {
+                            <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi-pencil-square"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm delete-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><i class="bi-trash"></i></a>
+                        }
                     </td>
                 </tr>
             }
-        </tbody>
-    </table>
-</div>
+        }
+    </tbody>
+</table>
 
 @functions {
     public string Truncate( string value, int maxLength ) {

@@ -64,6 +64,7 @@ namespace Review.Controllers {
         }
 
         [HttpGet]
+        [Authorize( Roles = "Administrator" )]
         public async Task<IActionResult> Create() {
             try {
                 ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
@@ -79,6 +80,7 @@ namespace Review.Controllers {
         }
 
         [HttpPost]
+        [Authorize( Roles = "Administrator" )]
         public async Task<IActionResult> Create( CarViewModel carViewModel ) {
             try {
                 ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
@@ -106,6 +108,7 @@ namespace Review.Controllers {
         }
 
         [HttpGet, ActionName( "Edit" )]
+        [Authorize( Roles = "Administrator" )]
         public async Task<IActionResult> Edit( int id ) {
             try {
                 ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
@@ -167,6 +170,7 @@ namespace Review.Controllers {
 
 
         [HttpPost, ActionName( "Edit" )]
+        [Authorize( Roles = "Administrator" )]
         public async Task<IActionResult> Edit( int id, CarViewModel carViewModel ) {
             try {
                 ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();

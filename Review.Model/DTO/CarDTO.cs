@@ -4,10 +4,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace Review.Model.DTO
-{
-    public class CarDTO
-    {
+namespace Review.Model.DTO {
+    public class CarDTO {
         public int ID { get; set; }
         public string BrandName { get; set; }
         public string Model { get; set; }
@@ -22,22 +20,20 @@ namespace Review.Model.DTO
         public decimal? Acceleration { get; set; }
         public DateTime ModelYear { get; set; }
         public string Description { get; set; }
-        public int? ReviewerID { get; set; } 
+        public int? ReviewerID { get; set; }
         public ReviewerDTO Reviewer { get; set; }
         public int Rating { get; set; }
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }
         public List<CarReviewDTO> CarReviews { get; set; }
 
-        public static Expression<Func<Car, CarDTO>> SelectorExpression { get; } = p => new CarDTO()
-        {
+        public static Expression<Func<Car, CarDTO>> SelectorExpression { get; } = p => new CarDTO() {
             ID = p.ID,
             BrandName = p.Brand.Name,
             Model = p.Model,
             Generation = p.Generation,
             BrandID = p.BrandID,
-            Brand = p.Brand.ID == null ? null : new BrandDTO()
-            {
+            Brand = p.Brand.ID == null ? null : new BrandDTO() {
                 ID = p.Brand.ID,
                 Name = p.Brand.Name,
                 CountryID = p.Brand.CountryID,
@@ -76,7 +72,12 @@ namespace Review.Model.DTO
                     ID = r.Reviewer.ID,
                     FirstName = r.Reviewer.FirstName,
                     LastName = r.Reviewer.LastName
-                }
+                },
+                Images = r.Images.Select( i => new ImageDTO {
+                    ID = i.ID,
+                    ImageData = i.ImageData,
+                    ImageMimeType = i.ImageMimeType
+                } ).ToList()
             } ).ToList()
         };
     }
