@@ -5,17 +5,22 @@
 <div class="pagetitle">
     <h1>Brands</h1>
 </div>
-<div class="col-4" style="margin-top: 30px; margin-bottom: 30px; width: 200px;">
-    <a asp-action="Create" class="btn btn-outline-primary" style="display: inline-block; width: 100%;"><i class="bi-plus-circle"></i> New Brand</a>
-</div>
+@if( User.IsInRole( "Administrator" ) ) {
+    <div class="col-4" style="margin-top: 30px; margin-bottom: 30px; width: 200px;">
+        <a asp-action="Create" class="btn btn-outline-primary" style="display: inline-block; width: 100%;"><i class="bi-plus-circle"></i> New brand</a>
+    </div>
+}
 <div class="card">
     <div class="card-body">
         <div class="table-responsive" style="margin-top: 20px;">
-            <table class="table datatable" id="tbl-brands">
+            <table class="table datatable" id="tbl-brandssss">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Country</th>
+                        <th>Make</th>
+                        <!-- Add hidden columns -->
+                        <th style="display: none;"></th>
+                        <th style="display: none;"></th>
+                        <th style="display: none;"></th>
                         <th data-sortable="false"></th>
                     </tr>
                 </thead>
@@ -23,10 +28,15 @@
                     @foreach( var item in Model ) {
                         <tr>
                             <td>@item.Name</td>
-                            <td>@item.Country?.Name</td>
+                            <!-- Add hidden columns in each row -->
+                            <td style="display: none;"></td>
+                            <td style="display: none;"></td>
+                            <td style="display: none;"></td>
                             <td>
-                                <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi-pencil-square"></i></a>
-                                <a asp-action="DeleteBrand" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm delete-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><i class="bi-trash"></i></a>
+                                @if( User.IsInRole( "Administrator" ) ) {
+                                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi-pencil-square"></i></a>
+                                    <a asp-action="DeleteBrand" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm delete-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><i class="bi-trash"></i></a>
+                                }
                             </td>
                         </tr>
                     }
@@ -35,3 +45,11 @@
         </div>
     </div>
 </div>
+
+@functions {
+    public string Truncate( string value, int maxLength ) {
+        if( string.IsNullOrEmpty( value ) ) return value;
+        return value.Length <= maxLength ? value : value.Substring( 0, maxLength ) + "...";
+    }
+}
+

@@ -12,6 +12,7 @@ using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Review.Handlers;
+using Review.Model.DTO;
 
 namespace Review.Services {
     public class BrandService : BaseService, IBrandService {
@@ -38,11 +39,24 @@ namespace Review.Services {
         public async Task<IEnumerable<Brand>> GetAllBrandsAsync() {
             try {
                 await SetAuthorizationHeaderAsync();
-                var response = await _httpClient.GetAsync( "api/brands" );
+                var response = await _httpClient.GetAsync( "https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json" );
                 response.EnsureSuccessStatusCode();
 
-                IEnumerable<Brand> brands = await response.Content.ReadFromJsonAsync<IEnumerable<Brand>>();
-                return brands;
+                //IEnumerable<Brand> brands = await response.Content.ReadFromJsonAsync<IEnumerable<Brand>>();
+                NhtsaResponseDTO responseDto = await response.Content.ReadFromJsonAsync<NhtsaResponseDTO>();
+                if( responseDto?.Results != null ) {
+                    // Map the DTO to your Brand class
+                    var brands = responseDto.Results.Select( make => new Brand {
+                        ID = make.Make_ID, // Assuming Make_ID is the Brand ID
+                        Name = make.Make_Name,
+                        CountryID = 0, // Set default or fetch from other data source
+                        Country = null, // Set default or fetch from other data source
+                        Cars = new List<Car>() // Initialize empty list or fetch from other data source
+                    } ).ToList();
+
+                    return brands;
+                }
+                return new List<Brand>();
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while getting all brands." );

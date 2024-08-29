@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "egVsxlFPfppmxwDcisgR6dDr/x+asn5J8e8webT5tSo=",
+  "Hash": "hOhWLLJ7shk/daBs8GhnF4IOvagcqmv6h8KURtQBt+Q=",
   "Source": "Review",
   "BasePath": "_content/Review",
   "Mode": "Default",
@@ -9895,6 +9895,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\retro-car.png"
+    },
+    {
+      "Identity": "C:\\Projects\\CarReview\\Review\\wwwroot\\js\\Car\\CarDetails.js",
+      "SourceId": "Review",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projects\\CarReview\\Review\\wwwroot\\",
+      "BasePath": "_content/Review",
+      "RelativePath": "js/Car/CarDetails.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Car\\CarDetails.js"
     },
     {
       "Identity": "C:\\Projects\\CarReview\\Review\\wwwroot\\js\\Car\\Dropzone.js",

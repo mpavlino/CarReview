@@ -2081,6 +2081,10 @@
       "PackagePath": "staticwebassets\\images\\retro-car.png"
     },
     {
+      "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\js\\Car\\CarDetails.js",
+      "PackagePath": "staticwebassets\\js\\Car\\CarDetails.js"
+    },
+    {
       "Id": "C:\\Projects\\CarReview\\Review\\wwwroot\\js\\Car\\Dropzone.js",
       "PackagePath": "staticwebassets\\js\\Car\\Dropzone.js"
     },

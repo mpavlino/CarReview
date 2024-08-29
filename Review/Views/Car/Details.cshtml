@@ -77,7 +77,7 @@
                 <h1>User reviews</h1>
             </div>
 
-            <div class="col-2 mb-2">
+            <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2 mb-2">
                 <a asp-action="CreateCarReview" asp-route-id="@Model.ID" class="btn btn-outline-primary" style="display: inline-block; width: 100%;"><i class="bi-plus-circle"></i> Add car review</a>
             </div>
             @await Html.PartialAsync( "_CarReviewList", Model.CarReviews )
@@ -93,4 +93,9 @@ else {
         Nije odabran ispravni ID automobila.
     </div>
 
+}
+
+
+@section Scripts {
+    <script src="~/js/Car/CarDetails.js"></script>
 }

@@ -198,15 +198,4 @@
         }
     }
 
-    // Image modal opening logic
-    function openImageModal(imageSrc) {
-        document.getElementById('modalImage').src = imageSrc;
-        var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
-        imageModal.show();
-    }
-
-    $(document).on('click', '.carousel-item img', function () {
-        openImageModal($(this).attr('src'));
-    });
-
 });
