@@ -36,7 +36,32 @@ namespace Review.Services {
             }
         }
 
-        public async Task<IEnumerable<Brand>> GetAllBrandsAsync() {
+        public async Task<bool> SyncBrandsAsync() {
+            try {
+                // Fetch brands from the external API
+                IEnumerable<Brand> externalBrands = await GetAllBrandsFromApiAsync(); // This calls the external API
+
+                // Prepare the data for the sync API
+                var syncData = externalBrands.Select( brand => new Brand {
+                    ID = brand.ID,
+                    Name = brand.Name,
+                    CountryID = null // Adjust if needed
+                } ).ToList();
+
+                // Call your API controller's sync endpoint
+                await SetAuthorizationHeaderAsync();
+                var response = await _httpClient.PostAsJsonAsync( "api/brands/sync", syncData );
+
+                response.EnsureSuccessStatusCode();
+                return response.IsSuccessStatusCode;
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, ex.InnerException?.Message );
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Brand>> GetAllBrandsFromApiAsync() {
             try {
                 await SetAuthorizationHeaderAsync();
                 var response = await _httpClient.GetAsync( "https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json" );
@@ -57,6 +82,21 @@ namespace Review.Services {
                     return brands;
                 }
                 return new List<Brand>();
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while getting all brands." );
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Brand>> GetAllBrandsAsync() {
+            try {
+                await SetAuthorizationHeaderAsync();
+                var response = await _httpClient.GetAsync( "api/brands" );
+                response.EnsureSuccessStatusCode();
+
+                IEnumerable<Brand> brands = await response.Content.ReadFromJsonAsync<IEnumerable<Brand>>();
+                return brands;
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while getting all brands." );

@@ -9,14 +9,14 @@ namespace Review.Model.DTO {
     public class BrandDTO {
         public int ID { get; set; }
         public string Name { get; set; }
-        public int CountryID { get; set; }
+        public int? CountryID { get; set; }
         public CountryDTO Country { get; set; }
 
         public static Expression<Func<Brand, BrandDTO>> SelectorExpression { get; } = p => new BrandDTO() {
             ID = p.ID,
             Name = p.Name,
             CountryID = p.CountryID,
-            Country = new CountryDTO() {
+            Country = p.CountryID == null ? null : new CountryDTO() {
                 ID = p.Country.ID,
                 Name = p.Country.Name
             },

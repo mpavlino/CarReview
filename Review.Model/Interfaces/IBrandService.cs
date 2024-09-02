@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Review.Model.Interfaces {
     public interface IBrandService {
+        Task<bool> SyncBrandsAsync();
         bool IsBrandNameUnique( string name );
         Task<IEnumerable<Brand>> GetAllBrandsAsync();
         Task<Brand> GetBrandByIdAsync( int id );

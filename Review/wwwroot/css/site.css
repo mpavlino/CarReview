@@ -244,6 +244,42 @@ body {
 #imageModalLabel {
     color: #012970 !important;
 }
+
+/* Loader CSS */
+.loader {
+    border: 8px solid #f3f3f3;  /*Light grey */
+    border-top: 8px solid #4154f1;  
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;  Ensure it appears on top of other content 
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/*.spinner {
+    position: fixed;
+    left: 50%;
+    top: 40px;
+    margin-left: -32px;*/ /* -1 * image width / 2 */
+    /*margin-top: -32px;*/ /* -1 * image height / 2 */
+    /*z-index: 99999999;
+}*/
+
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */

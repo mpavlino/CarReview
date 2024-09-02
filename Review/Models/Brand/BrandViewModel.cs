@@ -15,6 +15,6 @@ namespace Review.Models.Brand {
         [Required( ErrorMessage = "Brand name is required." )]
         [UniqueBrandName( ErrorMessage = "A brand with this name already exists." )]
         public string Name { get; set; }
-        public int CountryID { get; set; }
+        public int? CountryID { get; set; }
     }
 }

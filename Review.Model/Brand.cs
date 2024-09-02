@@ -15,7 +15,7 @@ namespace Review.Model
         public string Name { get; set; }
 
         [ForeignKey( nameof( Country ) )]
-        public int CountryID { get; set; }
+        public int? CountryID { get; set; }
         public Country Country { get; set; }
 
         public virtual ICollection<Car> Cars { get; set; }

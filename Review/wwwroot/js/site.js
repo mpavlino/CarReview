@@ -1,5 +1,7 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
-    "use strict";
+﻿"use strict";
+
+var SiteModule = (function () {
+document.addEventListener('DOMContentLoaded', function () {
 
     // Load the saved selected link from sessionStorage
     const savedLink = sessionStorage.getItem('selectedNavLink');
@@ -198,4 +200,46 @@
         }
     }
 
+    const loader = document.getElementById('page-loader');
+
+    // Show loader when the page starts loading
+    function showLoader() {
+        loader.style.display = 'block';
+    }
+
+    // Hide loader when the page has fully loaded
+    function hideLoader() {
+        loader.style.display = 'none';
+    }
+
+    //// Show the loader immediately
+    //showLoader();
+
+    //// Hide the loader when the window fully loads
+    //window.addEventListener('load', function () {
+    //    hideLoader();
+    //});
+
+
+
 });
+
+    function bindAjax () {
+        // Show / Hide loader on AJAX requests
+        $(document).bind("ajaxStart.mine", function (e) {
+            showLoader();
+        }).bind("ajaxComplete.mine", function () {
+            hideLoader();
+        }).bind("ajaxError.mine", function () {
+            hideLoader();
+        });
+    }
+
+    bindAjax();
+
+    return ({
+        showLoader: showLoader,
+        hideLoader: hideLoader
+    });
+
+})();

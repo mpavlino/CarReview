@@ -51,6 +51,15 @@ namespace Review.Controllers {
             }
         }
 
+        public IActionResult Test() {
+            try {
+                return View( "Test" );
+            }
+            catch( Exception ex ) {
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> Create() {
             try {
@@ -125,6 +134,17 @@ namespace Review.Controllers {
             catch( HttpRequestException ex ) {
                 _logger.LogError( ex, "An error occurred while deleting a brand." );
                 ModelState.AddModelError( string.Empty, $"Error deleting brand: {ex.Message}" );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
+            }
+        }
+
+        public async Task<IActionResult> SyncBrands() {
+            try {
+                await _brandService.SyncBrandsAsync();
+                return RedirectToAction( "Index" );
+            }
+            catch( HttpRequestException ex ) {
+                _logger.LogError( ex, "An error occurred while syncing brands." );
                 return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }

@@ -9,6 +9,7 @@ using Review.Model.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.ConstrainedExecution;
 
 namespace Review.API.Controllers {
@@ -20,6 +21,36 @@ namespace Review.API.Controllers {
 
         public BrandApiController( CarManagerDbContext dbContext ) {
             _dbContext = dbContext;
+        }
+
+        [HttpPost( "sync" )]
+        public async Task<IActionResult> SyncBrands( [FromBody] List<Brand> brands ) {
+            try {
+                if( brands == null || !brands.Any() ) {
+                    return BadRequest( new { message = "No brands to sync." } );
+                }
+
+                foreach( var brand in brands ) {
+                    var existingBrand = await _dbContext.Brands.FirstOrDefaultAsync( b => b.ID == brand.ID && b.Name == brand.Name );
+
+                    if( existingBrand == null ) {
+                        // Add new brand
+                        _dbContext.Brands.Add( brand );
+                    }
+                    else {
+                        // Update existing brand
+                        existingBrand.Name = brand.Name;
+                        //existingBrand.CountryID = brand.CountryID;
+                        // Update other fields if necessary
+                    }
+                }
+
+                await _dbContext.SaveChangesAsync();
+                return Ok( new { message = "Sync completed successfully." } );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
         }
 
         [HttpGet]

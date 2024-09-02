@@ -223,16 +223,16 @@ namespace Review.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2ad03bf3-6b71-4d42-aa84-637e08aaa46b",
+                            Id = "e0c10371-a585-4d33-b383-f60aeb7cb83e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a609adca-1d63-40c5-a7cf-cdae89b94aca",
+                            ConcurrencyStamp = "45e43bdc-308f-42b5-8173-9a96115d68fc",
                             Email = "korisnik@test.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "KORISNIK@TEST.COM",
                             NormalizedUserName = "KORISNIK@TEST.COM",
                             OIB = "84858742558",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIlcgE7vMcCyhWiOGqXsEogNrUIT4aK1wCnPDMzt9ybymkjnFH1/5f+SxPLEtEplTA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKFuTn2mkUHysJjfkisaJJNj13vZTnEJIuxYbPpyeeaeo23NIqIYIvsldl2CUjQyfw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -248,7 +248,7 @@ namespace Review.DAL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("CountryID")
+                    b.Property<int?>("CountryID")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
@@ -744,9 +744,7 @@ namespace Review.DAL.Migrations
                 {
                     b.HasOne("Review.Model.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("CountryID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CountryID");
 
                     b.Navigation("Country");
                 });

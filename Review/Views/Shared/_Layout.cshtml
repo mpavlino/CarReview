@@ -28,6 +28,7 @@
     <link href="~/assets/vendor/dropzone/css/dropzone.min.css" rel="stylesheet">
     <link href="~/assets/vendor/select2/css/select2.min.css" rel="stylesheet">
     <link href="~/assets/vendor/sweetalert2/sweetalert2.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/spin.js/spin.min.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
     <link href="~/assets/css/style.css" rel="stylesheet">
@@ -95,7 +96,7 @@
             </li><!-- End Reviewers Nav -->
             @if( User.IsInRole( "Administrator" ) ) {
                 <li class="nav-item">
-                    <a asp-controller="Brand" asp-action="Index" class="nav-link collapsed">
+                    <a asp-controller="Brand" asp-action="Index" class="nav-link collapsed" onclick="SiteModule.showLoader()">
                         <i class="bi-car-front"></i>
                         <span>Brands</span>
                     </a>
@@ -112,6 +113,7 @@
 
         <div class="container body-content">
             @RenderBody()
+            <div id="page-loader" class="loader" style="display: none;"></div>
         </div>
 
     </main><!-- End #main -->
@@ -124,17 +126,6 @@
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Vendor JS Files -->
-    <script src="~/assets/vendor/apexcharts/apexcharts.min.js"></script>
-    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/assets/vendor/chart.js/chart.umd.js"></script>
-    <script src="~/assets/vendor/echarts/echarts.min.js"></script>
-    <script src="~/assets/vendor/quill/quill.min.js"></script>
-    <script src="~/assets/vendor/simple-datatables/simple-datatables.js"></script>
-    <script src="~/assets/vendor/tinymce/tinymce.min.js"></script>
-    <script src="~/assets/vendor/php-email-form/validate.js"></script>
-    <script src="~/assets/vendor/dropzone/js/dropzone.min.js"></script>
-    <script src="~/assets/vendor/sweetalert2/sweetalert2.min.js"></script>
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
@@ -142,7 +133,6 @@
         @*  <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script> *@
         <script src="~/lib/bootstrap-datepicker.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet" />
-        <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
@@ -159,12 +149,24 @@
         crossorigin="anonymous"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script> *@
-        <script src="~/lib/bootstrap-datepicker.min.js"></script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap-datepicker.min.js"></script>    
     </environment>
+    <!-- Vendor JS Files -->
+    <script src="~/assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/vendor/chart.js/chart.umd.js"></script>
+    <script src="~/assets/vendor/echarts/echarts.min.js"></script>
+    <script src="~/assets/vendor/quill/quill.min.js"></script>
+    <script src="~/assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="~/assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="~/assets/vendor/php-email-form/validate.js"></script>
+    <script src="~/assets/vendor/dropzone/js/dropzone.min.js"></script>
+    <script src="~/assets/vendor/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/assets/vendor/spin.js/spin.min.js"></script>
     <script src="~/assets/vendor/select2/js/select2.min.js"></script>
     <!-- Template Main JS File -->
     <script src="~/assets/js/main.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection( "Scripts", required: false )
 </body>
 
