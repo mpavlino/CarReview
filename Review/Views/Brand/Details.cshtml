@@ -1,0 +1,60 @@
+﻿@model Review.Models.Brand.BrandViewModel
+@{
+    ViewData["Title"] = "Brand details";
+}
+<ol class="breadcrumb">
+    <li><a asp-action="Index">Brands list /</a></li>
+    <li class="active">&nbsp;Brand customization</li>
+</ol>
+@if( Model != null ) {
+    <div class="card">
+        <div class="card-body pb-0">
+            <dl class="row pt-4">
+                <dt class="col-sm-5">Brand</dt>
+                <dd class="col-sm-7 bold">@Html.DisplayFor( model => model.Name )</dd>
+            </dl>
+        </div>
+    </div>
+    if( Model.Models.Count > 0 ) {
+        <div class="pagetitle mb-2">
+            <h1>Models</h1>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive" style="margin-top: 20px;">
+                    <table id="tbl-models" class="table datatable" @* style="display: none;" *@>
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <!-- Add hidden columns -->
+                                <th style="display: none;"></th>
+                                <th style="display: none;"></th>
+                                <th style="display: none;"></th>
+                                <th style="display: none;"></th>
+                                @* <th data-sortable="false"></th> *@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach( var item in Model.Models ) {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <!-- Add hidden columns in each row -->
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                    @*                                    <td>
+                        @if( User.IsInRole( "Administrator" ) ) {
+                        <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi-pencil-square"></i></a>
+                        <a asp-action="DeleteBrand" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm delete-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><i class="bi-trash"></i></a>
+                        }
+                        </td> *@
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+}

@@ -1,6 +1,18 @@
 ﻿"use strict";
 
 var SiteModule = (function () {
+
+    const loader = document.getElementById('page-loader');
+
+    // Show loader when the page starts loading
+    function showLoader() {
+        loader.style.display = 'block';
+    }
+
+    // Hide loader when the page has fully loaded
+    function hideLoader() {
+        loader.style.display = 'none';
+    }
 document.addEventListener('DOMContentLoaded', function () {
 
     // Load the saved selected link from sessionStorage
@@ -198,18 +210,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             uploadedImagesInput.value = base64Strings.join(';');
         }
-    }
-
-    const loader = document.getElementById('page-loader');
-
-    // Show loader when the page starts loading
-    function showLoader() {
-        loader.style.display = 'block';
-    }
-
-    // Hide loader when the page has fully loaded
-    function hideLoader() {
-        loader.style.display = 'none';
     }
 
     //// Show the loader immediately

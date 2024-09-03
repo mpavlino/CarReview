@@ -141,6 +141,24 @@ namespace Review.API.Controllers {
                 return StatusCode( 500, new { message = ex.Message } );
             }
         }
+
+        #region Model
+
+        [HttpGet( "{id:int}/models" )]
+        public async Task<IActionResult> GetModelsByBrandId( int id ) {
+            try {
+                var model = await _dbContext.Models.Where( m => m.BrandId == id ).ToListAsync();
+                if( model != null ) {
+                    return Ok( model );
+                }
+                return BadRequest( new { error = "There was an error while retrieving models with provided brand ID", providedID = id } );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+
+        #endregion
     }
 
     public class ObjectSourceValueProvider : IValueProvider {

@@ -1,4 +1,5 @@
 ﻿using Review.Validation;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Review.Models.Brand {
@@ -16,5 +17,6 @@ namespace Review.Models.Brand {
         [UniqueBrandName( ErrorMessage = "A brand with this name already exists." )]
         public string Name { get; set; }
         public int? CountryID { get; set; }
+        public List<ModelViewModel> Models { get; set; } = new List<ModelViewModel>();
     }
 }

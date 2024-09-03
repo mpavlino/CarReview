@@ -22,7 +22,7 @@ using Review.Translators;
 
 namespace Review.Controllers {
 
-    [Authorize(Roles = "Administrator")]
+    [Authorize( Roles = "Administrator" )]
     public class BrandController : Controller {
 
         private readonly IBrandService _brandService;
@@ -99,7 +99,7 @@ namespace Review.Controllers {
                 if( brand == null ) {
                     return NotFound();
                 }
-                BrandViewModel brandViewModel = new BrandViewModel(brand);
+                BrandViewModel brandViewModel = new BrandViewModel( brand );
                 return View( brandViewModel );
             }
             catch( Exception ex ) {
@@ -122,6 +122,26 @@ namespace Review.Controllers {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while editing a brand." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
+            }
+        }
+
+        [HttpGet, ActionName( "Details" )]
+        public async Task<IActionResult> Details( int id ) {
+            try {
+                var brand = await _brandService.GetBrandByIdAsync( id );
+                if( brand == null ) {
+                    return NotFound();
+                }
+                BrandViewModel brandViewModel = new BrandViewModel( brand );
+                var models = await _brandService.GetModelsForBrandApiAsync( id );
+                foreach( var model in models ) {
+                    brandViewModel.Models.Add( new ModelViewModel( model ) );
+                }
+                return View( brandViewModel );
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while preparing the edit view." );
                 return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
         }

@@ -64,7 +64,7 @@ namespace Review.Services {
         public async Task<IEnumerable<Brand>> GetAllBrandsFromApiAsync() {
             try {
                 await SetAuthorizationHeaderAsync();
-                var response = await _httpClient.GetAsync( "https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json" );
+                var response = await _httpClient.GetAsync( "https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json" );
                 response.EnsureSuccessStatusCode();
 
                 //IEnumerable<Brand> brands = await response.Content.ReadFromJsonAsync<IEnumerable<Brand>>();
@@ -72,8 +72,8 @@ namespace Review.Services {
                 if( responseDto?.Results != null ) {
                     // Map the DTO to your Brand class
                     var brands = responseDto.Results.Select( make => new Brand {
-                        ID = make.Make_ID, // Assuming Make_ID is the Brand ID
-                        Name = make.Make_Name,
+                        ID = make.MakeId, // Assuming Make_ID is the Brand ID
+                        Name = make.MakeName,
                         CountryID = 0, // Set default or fetch from other data source
                         Country = null, // Set default or fetch from other data source
                         Cars = new List<Car>() // Initialize empty list or fetch from other data source
@@ -159,5 +159,35 @@ namespace Review.Services {
                 throw;
             }
         }
+
+        #region Model
+
+        public async Task<IEnumerable<Model.Model>> GetModelsForBrandApiAsync( int brandId ) {
+            try {
+                await SetAuthorizationHeaderAsync();
+                var response = await _httpClient.GetAsync( $"https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeIdYear/makeId/{brandId}/vehicletype/car?format=json" );
+                response.EnsureSuccessStatusCode();
+
+                //IEnumerable<Brand> brands = await response.Content.ReadFromJsonAsync<IEnumerable<Brand>>();
+                NhtsaResponseDTO responseDto = await response.Content.ReadFromJsonAsync<NhtsaResponseDTO>();
+                if( responseDto?.Results != null ) {
+                    // Map the DTO to your Brand class
+                    var models = responseDto.Results.Select( make => new Model.Model {
+                        Id = make.Model_ID ?? 0, // Assuming Make_ID is the Brand ID
+                        Name = make.Model_Name,
+                        BrandId = make.MakeId
+                    } ).ToList();
+
+                    return models;
+                }
+                return new List<Model.Model>();
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while getting models for brand." );
+                throw;
+            }
+        }
+
+        #endregion
     }
 }

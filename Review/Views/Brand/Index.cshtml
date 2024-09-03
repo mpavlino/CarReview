@@ -22,8 +22,9 @@
                 <span class="visually-hidden">Loading...</span>
             </div>
         </div> *@
+        <div id="table-loader" class="loader"></div>
         <div class="table-responsive" style="margin-top: 20px;">
-            <table id="tbl-brands">
+            <table id="tbl-brands" class="table" @* style="display: none;" *@>
                 <thead>
                     <tr>
                         <th>Make</th>
@@ -44,6 +45,7 @@
                             <td style="display: none;"></td>
                             <td>
                                 @if( User.IsInRole( "Administrator" ) ) {
+                                    <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Details"><i class="bi-box-arrow-up-right"></i></a>
                                     <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi-pencil-square"></i></a>
                                     <a asp-action="DeleteBrand" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm delete-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><i class="bi-trash"></i></a>
                                 }
