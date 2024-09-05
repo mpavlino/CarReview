@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Review.Handlers;
 using Review.Model.DTO;
+using HtmlAgilityPack;
 
 namespace Review.Services {
     public class BrandService : BaseService, IBrandService {
@@ -88,6 +89,123 @@ namespace Review.Services {
                 throw;
             }
         }
+
+        public async Task<IEnumerable<Brand>> GetAllBrandsFromWebAsync() {
+            try {
+                await SetAuthorizationHeaderAsync();
+                var brands = new List<Brand>();
+                string baseUrl = "https://www.autoevolution.com/cars/";
+
+                // Fetch the main cars page
+                var mainPageContent = await _httpClient.GetStringAsync( baseUrl );
+                var htmlDocument = new HtmlDocument();
+                htmlDocument.LoadHtml( mainPageContent );
+
+                // Print the HTML content for debugging
+                // Console.WriteLine(htmlDocument.DocumentNode.OuterHtml);
+
+                // Updated XPath to find divs with class 'carman' and then all 'a' tags within them
+                var makeNodes = htmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'carman')]//a" );
+
+                if( makeNodes != null ) {
+                    foreach( var makeNode in makeNodes ) {
+                        // Extract the car make's name from the title attribute
+                        var makeName = makeNode.GetAttributeValue( "title", string.Empty ).Trim();
+
+                        // Create a new Brand instance and add it to the list
+                        var brand = new Brand {
+                            Name = makeName,
+                            // Assuming CountryID can be null or set to a default value
+                            CountryID = null
+                        };
+                        brands.Add( brand );
+                    }
+                }
+
+                return brands;
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while getting all brands." );
+                throw;
+            }
+        }
+
+
+
+        public async Task<IEnumerable<Model.Model>> GetAllModelsFromWebAsync() {
+            try {
+                await SetAuthorizationHeaderAsync();
+                var models = new List<Model.Model>();
+                string baseUrl = "https://www.autoevolution.com/cars/";
+
+                // Fetch the main cars page
+                var mainPageContent = await _httpClient.GetStringAsync( baseUrl );
+                var htmlDocument = new HtmlDocument();
+                htmlDocument.LoadHtml( mainPageContent );
+
+                // XPath to find divs with class 'carman' and then all 'a' tags within them
+                var makeNodes = htmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'carman')]//a" );
+
+                if( makeNodes != null ) {
+                    foreach( var makeNode in makeNodes ) {
+                        // Extract the car make's name from the title attribute
+                        var makeName = makeNode.GetAttributeValue( "title", string.Empty ).Trim();
+                        var makeUrl = makeNode.GetAttributeValue( "href", string.Empty );
+
+                        // Ensure the URL is absolute
+                        if( !makeUrl.StartsWith( "http" ) ) {
+                            makeUrl = new Uri( new Uri( baseUrl ), makeUrl ).AbsoluteUri;
+                        }
+
+                        // Fetch the make's page to get models
+                        var makePageContent = await _httpClient.GetStringAsync( makeUrl );
+                        var makeHtmlDocument = new HtmlDocument();
+                        makeHtmlDocument.LoadHtml( makePageContent );
+
+                        // XPath to find all model names inside <h4> tags within <div> with class 'carmod'
+                        var modelNodes = makeHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'carmod')]//h4" );
+
+                        if( modelNodes != null ) {
+                            foreach( var modelNode in modelNodes ) {
+                                var modelName = modelNode.InnerText.Trim();
+
+                                // Create a new Model instance and add it to the list
+                                var model = new Model.Model {
+                                    Name = modelName,
+                                    BrandId = await GetBrandIdByNameAsync( makeName ) // Method to get BrandId by makeName
+                                };
+                                models.Add( model );
+                            }
+                        }
+
+                        // Optional: Add a delay to prevent overloading the server
+                        await Task.Delay( 300 ); // Adjust the delay as necessary
+                    }
+                }
+
+                return models;
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while getting all models." );
+                throw;
+            }
+        }
+
+        // Helper method to get BrandId by makeName
+        private async Task<int> GetBrandIdByNameAsync( string makeName ) {
+            try {
+                var response = await _httpClient.GetAsync( $"api/brands?name={Uri.EscapeDataString( makeName )}" );
+                response.EnsureSuccessStatusCode();
+
+                var brand = await response.Content.ReadFromJsonAsync<Brand>();
+                return brand?.ID ?? 0;
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while getting brand ID by name." );
+                throw;
+            }
+        }
+
 
         public async Task<IEnumerable<Brand>> GetAllBrandsAsync() {
             try {

@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Review.DAL", "Review.DAL\Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Review.API", "Review.API\Review.API.csproj", "{E898379C-FDDB-464E-9B9C-0A73D13CC68C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Review.Test", "Review.Test\Review.Test.csproj", "{9978DB24-0825-4824-B8B6-6FBA368F9127}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{E898379C-FDDB-464E-9B9C-0A73D13CC68C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E898379C-FDDB-464E-9B9C-0A73D13CC68C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E898379C-FDDB-464E-9B9C-0A73D13CC68C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9978DB24-0825-4824-B8B6-6FBA368F9127}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9978DB24-0825-4824-B8B6-6FBA368F9127}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9978DB24-0825-4824-B8B6-6FBA368F9127}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9978DB24-0825-4824-B8B6-6FBA368F9127}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

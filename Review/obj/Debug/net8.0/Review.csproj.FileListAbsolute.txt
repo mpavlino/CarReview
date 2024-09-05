@@ -294,3 +294,4 @@ C:\Projects\CarReview\Review\obj\Debug\net8.0\refint\Review.dll
 C:\Projects\CarReview\Review\obj\Debug\net8.0\Review.pdb
 C:\Projects\CarReview\Review\obj\Debug\net8.0\Review.genruntimeconfig.cache
 C:\Projects\CarReview\Review\obj\Debug\net8.0\ref\Review.dll
+C:\Projects\CarReview\Review\bin\Debug\net8.0\HtmlAgilityPack.dll
