@@ -14,6 +14,25 @@ namespace Review.Services {
             _dbContext = dbContext;
         }
 
+        public async Task<IEnumerable<SelectListItem>> GetModelsAsync( int id ) {
+            var models = new List<SelectListItem>
+            {
+                new SelectListItem { Text = "- select -", Value = "" }
+            };
+
+            var modelsList = await _dbContext.Models
+                .Where( x => x.BrandId == id )
+                .OrderBy( c => c.Name )
+                .Select( c => new SelectListItem {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                } ).ToListAsync();
+
+            models.AddRange( modelsList );
+
+            return models;
+        }
+
         public async Task<IEnumerable<SelectListItem>> GetCountriesAsync() {
             var countries = new List<SelectListItem>
             {

@@ -14,9 +14,9 @@ namespace Review.Model
         public int? BrandID { get; set; }
         public Brand Brand { get; set; }
 
-        [Required( ErrorMessage = "Car name is required." )]
-        [StringLength(200)]
-        public string Model { get; set; }
+        [ForeignKey( nameof( Model ) )]
+        public int? ModelID { get; set; }
+        public Model Model { get; set; }
 
         public string Generation { get; set; }
 

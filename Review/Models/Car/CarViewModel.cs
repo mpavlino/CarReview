@@ -14,7 +14,8 @@ namespace Review.Models.Car {
             ID = car.ID;
             BrandID = car.BrandID;
             BrandName = car.Brand?.Name;
-            Model = car.Model;
+            ModelID = car.ModelID;
+            ModelName = car.Model?.Name;
             Generation = car.Generation;
             Engine = car.Engine;
             EnginePower = car.EnginePower;
@@ -36,8 +37,8 @@ namespace Review.Models.Car {
         public string BrandName { get; set; }
         [Required( ErrorMessage = "Car name is required." )]
         //[UniqueCarModelName( ErrorMessage = "A car with this model name already exists." )]
-        [StringLength( 200 )]
-        public string Model { get; set; }
+        public int? ModelID { get; set; }
+        public string ModelName { get; set; }
         [Required( ErrorMessage = "Generation name is required." )]
         [UniqueCarGenerationName( ErrorMessage = "A car with this generation name already exists." )]
         public string Generation { get; set; }

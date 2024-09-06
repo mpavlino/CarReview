@@ -29,9 +29,9 @@ namespace Review.Services {
             _logger = logger ?? throw new ArgumentNullException( nameof( logger ) );
         }
 
-        public bool IsCarModelNameUnique( string name ) {
-            return !_dbContext.Cars.Any( b => b.Model == name );
-        }
+        //public bool IsCarModelNameUnique( string name ) {
+        //    return !_dbContext.Cars.Any( b => b.Model == name );
+        //}
 
         public bool IsCarGenerationNameUnique( string name ) {
             return !_dbContext.Cars.Any( b => b.Generation == name );

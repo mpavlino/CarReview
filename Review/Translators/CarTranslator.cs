@@ -8,7 +8,7 @@ namespace Review.Translators {
             var carModel = new Car {
                 ID = carViewModel.ID,
                 BrandID = carViewModel.BrandID,
-                Model = carViewModel.Model,
+                ModelID = carViewModel.ModelID,
                 Generation = carViewModel.Generation,
                 Engine = carViewModel.Engine,
                 EnginePower = carViewModel.EnginePower,

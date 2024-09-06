@@ -67,6 +67,7 @@ namespace Review.Controllers {
         [Authorize( Roles = "Administrator" )]
         public async Task<IActionResult> Create() {
             try {
+                //ViewBag.PossibleModels = await _dropdownService.GetModelsAsync( int id ); 
                 ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
                 ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
 
@@ -83,6 +84,7 @@ namespace Review.Controllers {
         [Authorize( Roles = "Administrator" )]
         public async Task<IActionResult> Create( CarViewModel carViewModel ) {
             try {
+                //ViewBag.PossibleModels = await _dropdownService.GetModelsAsync();
                 ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
                 ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
 
@@ -111,6 +113,7 @@ namespace Review.Controllers {
         [Authorize( Roles = "Administrator" )]
         public async Task<IActionResult> Edit( int id ) {
             try {
+                //ViewBag.PossibleModels = await _dropdownService.GetModelsAsync();
                 ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
                 ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
                 var car = await _carService.GetCarByIdAsync( id );
@@ -173,6 +176,7 @@ namespace Review.Controllers {
         [Authorize( Roles = "Administrator" )]
         public async Task<IActionResult> Edit( int id, CarViewModel carViewModel ) {
             try {
+                //ViewBag.PossibleModels = await _dropdownService.GetModelsAsync();
                 ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
                 ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
 
@@ -379,6 +383,20 @@ namespace Review.Controllers {
                 ModelState.AddModelError( string.Empty, $"Error deleting car review: {ex.Message}" );
                 return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
             }
+        }
+
+        #endregion
+
+        #region Helper actions
+
+        [HttpGet]
+        public async Task<IActionResult> GetModelsByBrand( int brandId ) {
+            if( brandId == 0 ) {
+                return Json( new List<SelectListItem>() );
+            }
+
+            var models = await _dropdownService.GetModelsAsync( brandId );
+            return Json( models );
         }
 
         #endregion

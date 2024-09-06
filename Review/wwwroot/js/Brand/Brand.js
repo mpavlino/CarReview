@@ -5,24 +5,24 @@ var BrandsModule = (function () {
 
     const loader = document.getElementById('page-loader');
     const tableLoader = document.getElementById('table-loader');
-    //const overlay = document.getElementById('page-overlay');
+    const overlay = document.getElementById('page-overlay');
     const datatable = document.getElementById('tbl-brands');
     function showLoader() {
         if (loader) {
             loader.style.display = 'block';
         }
-        //if (overlay) {
-        //    overlay.style.display = 'block'; // Show overlay to disable UI
-        //}
+        if (overlay) {
+            overlay.style.display = 'block'; // Show overlay to disable UI
+        }
     }
 
     function hideLoader() {
         if (loader) {
             loader.style.display = 'none';
         }
-        //if (overlay) {
-        //    overlay.style.display = 'none'; // Hide overlay to enable UI
-        //}
+        if (overlay) {
+            overlay.style.display = 'none'; // Hide overlay to enable UI
+        }
     }
 
     //if (overlay) {

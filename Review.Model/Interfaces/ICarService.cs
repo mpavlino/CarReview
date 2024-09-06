@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Review.Model.Interfaces {
     public interface ICarService {
-        bool IsCarModelNameUnique( string name );
+        //bool IsCarModelNameUnique( string name );
         bool IsCarGenerationNameUnique( string name );
         Task<IEnumerable<Car>> GetAllCarsAsync();
         Task<Car> GetCarByIdAsync( int id );

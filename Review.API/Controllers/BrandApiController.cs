@@ -31,7 +31,7 @@ namespace Review.API.Controllers {
                 }
 
                 foreach( var brand in brands ) {
-                    var existingBrand = await _dbContext.Brands.FirstOrDefaultAsync( b => b.ID == brand.ID && b.Name == brand.Name );
+                    var existingBrand = await _dbContext.Brands.FirstOrDefaultAsync( b => b.Name == brand.Name );
 
                     if( existingBrand == null ) {
                         // Add new brand
@@ -61,6 +61,25 @@ namespace Review.API.Controllers {
                     .ToList();
 
                 return brands;
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+
+        [HttpGet( "{name}" )]
+        public ActionResult<BrandDTO> GetBrandByName( string name ) {
+            try {
+                var brand = _dbContext.Brands
+                    .Where( c => c.Name == name )
+                    .Select( BrandDTO.SelectorExpression )
+                    .FirstOrDefault();
+
+                if( brand == null ) {
+                    return NotFound( new { message = "Brand not found" } );
+                }
+
+                return brand;
             }
             catch( Exception ex ) {
                 return StatusCode( 500, new { message = ex.Message } );
@@ -144,7 +163,7 @@ namespace Review.API.Controllers {
 
         #region Model
 
-        [HttpGet( "{id:int}/models" )]
+        [HttpGet( "models/{id:int}" )]
         public async Task<IActionResult> GetModelsByBrandId( int id ) {
             try {
                 var model = await _dbContext.Models.Where( m => m.BrandId == id ).ToListAsync();
@@ -152,6 +171,35 @@ namespace Review.API.Controllers {
                     return Ok( model );
                 }
                 return BadRequest( new { error = "There was an error while retrieving models with provided brand ID", providedID = id } );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+
+        [HttpPost( "models/sync" )]
+        public async Task<IActionResult> SyncModels( [FromBody] List<Model.Model> models ) {
+            try {
+                if( models == null || !models.Any() ) {
+                    return BadRequest( new { message = "No models to sync." } );
+                }
+
+                foreach( var model in models ) {
+                    var existingModel = await _dbContext.Models.FirstOrDefaultAsync( m => m.Name == model.Name && m.BrandId == model.BrandId );
+
+                    if( existingModel == null ) {
+                        // Add new brand
+                        _dbContext.Models.Add( model );
+                    }
+                    else {
+                        // Update existing brand
+                        existingModel.Name = model.Name;
+                        // Update other fields if necessary
+                    }
+                }
+
+                await _dbContext.SaveChangesAsync();
+                return Ok( new { message = "Sync completed successfully." } );
             }
             catch( Exception ex ) {
                 return StatusCode( 500, new { message = ex.Message } );

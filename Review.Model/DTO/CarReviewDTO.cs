@@ -43,7 +43,12 @@ namespace Review.Model.DTO {
                         Name = p.Car.Brand.Country.Name
                     }
                 },
-                Model = p.Car.Model,
+                ModelID = p.Car.ModelID,
+                Model = p.Car.ModelID == null ? null : new ModelDTO() {
+                    Id = p.Car.Model.Id,
+                    Name = p.Car.Model.Name,
+                    BrandId = p.Car.Model.Brand.ID
+                },
                 Generation = p.Car.Generation,
                 ModelYear = p.Car.ModelYear,
                 Engine = p.Car.Engine

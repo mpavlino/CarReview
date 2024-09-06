@@ -8,7 +8,8 @@ namespace Review.Model.DTO {
     public class CarDTO {
         public int ID { get; set; }
         public string BrandName { get; set; }
-        public string Model { get; set; }
+        public int? ModelID { get; set; }
+        public ModelDTO Model { get; set; }
         public string Generation { get; set; }
         public int? BrandID { get; set; }
         public BrandDTO Brand { get; set; }
@@ -30,7 +31,12 @@ namespace Review.Model.DTO {
         public static Expression<Func<Car, CarDTO>> SelectorExpression { get; } = p => new CarDTO() {
             ID = p.ID,
             BrandName = p.Brand.Name,
-            Model = p.Model,
+            ModelID = p.ModelID,
+            Model = p.Model.Id == null ? null : new ModelDTO {
+                Id = p.Model.Id,
+                Name = p.Model.Name,
+                BrandId = p.Model.BrandId
+            },
             Generation = p.Generation,
             BrandID = p.BrandID,
             Brand = p.Brand.ID == null ? null : new BrandDTO() {

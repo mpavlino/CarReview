@@ -6,10 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\Car\Car.js" />
     <Content Remove="wwwroot\js\Car\DropzoneCarReview.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\Car\Car.js" />
     <_ContentIncludedByDefault Remove="wwwroot\js\Car\DropzoneCarReview.js" />
   </ItemGroup>
 
@@ -22,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\Car\Car.js" />
     <None Include="wwwroot\js\Car\DropzoneCarReview.js" />
   </ItemGroup>
 

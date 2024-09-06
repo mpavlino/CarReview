@@ -15,6 +15,8 @@ namespace Review.Model.Interfaces {
         Task<Brand> UpdateBrandAsync( int id, Brand brand );
         Task DeleteBrandAsync( int id );
         Task<IEnumerable<Model>> GetModelsForBrandApiAsync( int brandId );
+        Task<IEnumerable<Model>> GetAllModelsFromWebAsync();
+        Task<IEnumerable<Model>> GetModelsByBrandId( int brandId );
     }
 
 }

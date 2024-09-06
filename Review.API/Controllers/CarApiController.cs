@@ -70,7 +70,7 @@ namespace Review.Controllers {
                     carQuery = carQuery.Where( p => p.BrandID != null && p.Brand.ID.ToString() == filter.Brand );
 
                 if( !string.IsNullOrWhiteSpace( filter.Model ) )
-                    carQuery = carQuery.Where( p => p.Model.ToLower().Contains( filter.Model.ToLower() ) );
+                    carQuery = carQuery.Where( p => p.ModelID != null && p.Model.Id.ToString() == filter.Model );
 
                 if( !string.IsNullOrWhiteSpace( filter.Engine ) )
                     carQuery = carQuery.Where( p => p.Engine.ToLower().Contains( filter.Engine.ToLower() ) );
@@ -102,7 +102,7 @@ namespace Review.Controllers {
                 if( !string.IsNullOrWhiteSpace( query ) ) {
                     var loweredQuery = query.ToLower();
                     carQuery = carQuery.Where( p => (p.Brand.Name != null && p.Brand.Name.ToLower().Contains( loweredQuery )) ||
-                                                    p.Model.ToLower().Contains( loweredQuery ) ||
+                                                    (p.Model.Name != null && p.Model.Name.ToLower().Contains( loweredQuery )) ||
                                                     p.Generation.ToLower().Contains( loweredQuery ) ||
                                                     (p.Brand.Country.Name != null && p.Brand.Country.Name.ToLower().Contains( loweredQuery )) );
                 }

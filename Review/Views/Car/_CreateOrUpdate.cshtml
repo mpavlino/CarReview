@@ -1,4 +1,6 @@
-﻿@model Review.Models.Car.CarViewModel
+﻿@using Review.Model.Interfaces
+@model Review.Models.Car.CarViewModel
+@inject IDropdownService _dropdownService
 
 <form>
     <input type="hidden" name="ImageFile" id="ImageFile" />
@@ -14,8 +16,8 @@
             <div class="form-group row mb-1 mb-md-3">
                 <label class="col-12 col-lg-3 col-md-5 col-form-label">Model</label>
                 <div class="col-12 col-lg-8 col-md-7">
-                    <input asp-for="Model" class="form-control" />
-                    <span asp-validation-for="Model" class="text-danger"></span>
+                    <select asp-for="ModelID" class="form-control select2-input"></select>
+                    <span asp-validation-for="ModelID" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row mb-1 mb-md-3">

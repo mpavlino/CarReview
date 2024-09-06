@@ -129,12 +129,12 @@ namespace Review.Controllers {
         [HttpGet, ActionName( "Details" )]
         public async Task<IActionResult> Details( int id ) {
             try {
-                var brand = await _brandService.GetBrandByIdAsync( id );
+                Brand brand = await _brandService.GetBrandByIdAsync( id );
                 if( brand == null ) {
                     return NotFound();
                 }
                 BrandViewModel brandViewModel = new BrandViewModel( brand );
-                var models = await _brandService.GetModelsForBrandApiAsync( id );
+                IEnumerable<Model.Model> models = await _brandService.GetModelsByBrandId( id );
                 foreach( var model in models ) {
                     brandViewModel.Models.Add( new ModelViewModel( model ) );
                 }
