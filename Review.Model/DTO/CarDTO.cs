@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Review.Model.DTO {
     public class CarDTO {
@@ -13,13 +12,8 @@ namespace Review.Model.DTO {
         public string Generation { get; set; }
         public int? BrandID { get; set; }
         public BrandDTO Brand { get; set; }
-        public string Engine { get; set; }
-        public string EnginePower { get; set; }
-        public string Torque { get; set; }
-        public string EngineDisplacement { get; set; }
-        public int? TopSpeed { get; set; }
-        public decimal? Acceleration { get; set; }
-        public DateTime ModelYear { get; set; }
+        public DateTime ModelYearFrom { get; set; }
+        public DateTime? ModelYearTo { get; set; }
         public string Description { get; set; }
         public int? ReviewerID { get; set; }
         public ReviewerDTO Reviewer { get; set; }
@@ -27,6 +21,9 @@ namespace Review.Model.DTO {
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }
         public List<CarReviewDTO> CarReviews { get; set; }
+
+        // New property for engines
+        public List<EngineDTO> Engines { get; set; }
 
         public static Expression<Func<Car, CarDTO>> SelectorExpression { get; } = p => new CarDTO() {
             ID = p.ID,
@@ -48,13 +45,8 @@ namespace Review.Model.DTO {
                     Name = p.Brand.Country.Name
                 }
             },
-            Engine = p.Engine,
-            EnginePower = p.EnginePower,
-            Torque = p.Torque,
-            EngineDisplacement = p.EngineDisplacement,
-            TopSpeed = p.TopSpeed,
-            Acceleration = p.Acceleration,
-            ModelYear = p.ModelYear,
+            ModelYearFrom = p.ModelYearFrom, // Adjusted for proper handling
+            ModelYearTo = p.ModelYearTo, // Adjusted for proper handling
             Description = p.Description,
             ReviewerID = p.ReviewerID,
             Reviewer = p.Reviewer.ID == null ? null : new ReviewerDTO() {
@@ -84,6 +76,37 @@ namespace Review.Model.DTO {
                     ImageData = i.ImageData,
                     ImageMimeType = i.ImageMimeType
                 } ).ToList()
+            } ).ToList(),
+            // Mapping Engines
+            Engines = p.Engines.Select( e => new EngineDTO {
+                ID = e.ID,
+                Cylinders = e.Cylinders,
+                Displacement = e.Displacement,
+                Power = e.Power,
+                Torque = e.Torque,
+                FuelSystem = e.FuelSystem,
+                FuelType = e.FuelType,
+                FuelCapacity = e.FuelCapacity,
+                TopSpeed = e.TopSpeed,
+                Acceleration = e.Acceleration,
+                DriveType = e.DriveType,
+                Gearbox = e.Gearbox,
+                FrontBrakes = e.FrontBrakes,
+                RearBrakes = e.RearBrakes,
+                TireSize = e.TireSize,
+                Length = e.Length,
+                Width = e.Width,
+                Height = e.Height,
+                FrontRearTrack = e.FrontRearTrack,
+                Wheelbase = e.Wheelbase,
+                GroundClearance = e.GroundClearance,
+                CargoVolume = e.CargoVolume,
+                UnladenWeight = e.UnladenWeight,
+                GrossWeightLimit = e.GrossWeightLimit,
+                FuelEconomyCity = e.FuelEconomyCity,
+                FuelEconomyHighway = e.FuelEconomyHighway,
+                FuelEconomyCombined = e.FuelEconomyCombined,
+                CO2Emissions = e.CO2Emissions
             } ).ToList()
         };
     }
