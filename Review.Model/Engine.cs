@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Review.Model {
     public class Engine {
         public int ID { get; set; }
+        public string Name { get; set; }
 
         // Engine specifications
         public string Cylinders { get; set; }

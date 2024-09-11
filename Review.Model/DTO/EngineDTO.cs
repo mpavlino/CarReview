@@ -8,6 +8,7 @@ namespace Review.Model.DTO {
         // Property to connect Engine to Car
         public int CarID { get; set; }
 
+        public string Name { get; set; }
         public string Cylinders { get; set; }
         public string Displacement { get; set; }
         public string Power { get; set; } // KW, HP, BHP combined
@@ -39,6 +40,7 @@ namespace Review.Model.DTO {
         // SelectorExpression for mapping Engine to EngineDTO
         public static Expression<Func<Engine, EngineDTO>> SelectorExpression { get; } = e => new EngineDTO {
             ID = e.ID,
+            Name = e.Name,
             CarID = e.CarID, // Include CarID to link Engine to Car
             Cylinders = e.Cylinders,
             Displacement = e.Displacement,

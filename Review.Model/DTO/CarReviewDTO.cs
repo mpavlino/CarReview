@@ -50,8 +50,8 @@ namespace Review.Model.DTO {
                     BrandId = p.Car.Model.Brand.ID
                 },
                 Generation = p.Car.Generation,
-                ModelYear = p.Car.ModelYear,
-                Engine = p.Car.Engine
+                ModelYearFrom = p.Car.ModelYearFrom,
+                ModelYearTo = p.Car.ModelYearTo
             },
             Images = p.Images.Select( r => new ImageDTO {
                 ID = r.ID,
