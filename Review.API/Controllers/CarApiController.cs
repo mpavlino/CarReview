@@ -72,8 +72,8 @@ namespace Review.Controllers {
                 if( !string.IsNullOrWhiteSpace( filter.Model ) )
                     carQuery = carQuery.Where( p => p.ModelID != null && p.Model.Id.ToString() == filter.Model );
 
-                if( !string.IsNullOrWhiteSpace( filter.Engine ) )
-                    carQuery = carQuery.Where( p => p.Engine.ToLower().Contains( filter.Engine.ToLower() ) );
+                //if( !string.IsNullOrWhiteSpace( filter.Engine ) )
+                //    carQuery = carQuery.Where( p => p.Engine.ToLower().Contains( filter.Engine.ToLower() ) );
 
                 if( !string.IsNullOrWhiteSpace( filter.Country ) )
                     carQuery = carQuery.Where( p => p.Brand.CountryID != null && p.Brand.Country.ID.ToString() == filter.Country );
@@ -122,6 +122,12 @@ namespace Review.Controllers {
             try {
                 if( ModelState.IsValid ) {
                     _dbContext.Cars.Add( c );
+
+                    if( c.Engines != null && c.Engines.Count > 0 ) {
+                        foreach( var engine in c.Engines ) {
+                            _dbContext.Engines.Add( engine );
+                        }
+                    }
                     _dbContext.SaveChanges();
 
                     return CreatedAtAction( nameof( GetCarById ), new { id = c.ID }, GetCarById( c.ID ).Value );

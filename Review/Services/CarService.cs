@@ -16,17 +16,22 @@ using System.Net.Http.Headers;
 using Review.Handlers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
+using HtmlAgilityPack;
+using Microsoft.VisualStudio.TextTemplating;
 
 namespace Review.Services {
     public class CarService : BaseService, ICarService {
 
         private CarManagerDbContext _dbContext;
         private readonly ILogger<CarService> _logger;
+        private readonly IBrandService _brandService;
 
-        public CarService( CarManagerDbContext dbContext, HttpClient httpClient, TokenHandler tokenHandler, ILogger<CarService> logger, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor )
+        public CarService( CarManagerDbContext dbContext, HttpClient httpClient, TokenHandler tokenHandler, ILogger<CarService> logger, 
+            UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor, IBrandService brandService )
             : base( httpClient, userManager, httpContextAccessor, tokenHandler ) {
             _dbContext = dbContext ?? throw new ArgumentNullException( nameof( dbContext ) );
             _logger = logger ?? throw new ArgumentNullException( nameof( logger ) );
+            _brandService = brandService;
         }
 
         //public bool IsCarModelNameUnique( string name ) {
@@ -131,6 +136,247 @@ namespace Review.Services {
                 _logger.LogError( ex, $"An error occurred while deleting car with ID {id}." );
                 throw;
             }
+        }
+
+
+        public async Task<bool> SyncCarsAsync() {
+            try {
+                var cars = await GetAllCarsFromWebAsync();
+                foreach( var car in cars ) {
+                    await CreateCarAsync( car );
+                }
+                return true;
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, $"An error occurred while syncing cars. { ex.Message }" );
+                throw;
+            }
+        }
+
+
+        public async Task<IEnumerable<Car>> GetAllCarsFromWebAsync() {
+            try {
+                await SetAuthorizationHeaderAsync();
+                var cars = new List<Car>();
+                string baseUrl = "https://www.autoevolution.com/cars/";
+
+                var brands = await _brandService.GetAllBrandsAsync();
+                foreach( var brand in brands ) {
+                    var models = await _brandService.GetModelsByBrandId( brand.ID );
+                    foreach( var model in models ) {
+                        var car = new Car();    
+                        car.BrandID = brand.ID;
+                        car.ModelID = model.Id;
+                        var modelUrl = $"https://www.autoevolution.com/cars/{brand.Name.ToLower()}/{model.Name.ToLower()}";
+                        // Fetch the make's page to get models
+                        var modelPageContent = await _httpClient.GetStringAsync( modelUrl );
+                        var modelHtmlDocument = new HtmlDocument();
+                        modelHtmlDocument.LoadHtml( modelPageContent );
+
+                        var generationUrlNodes = modelHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'carmodel')]//a[1]" );
+                        foreach( var generationUrlNode in generationUrlNodes ) {
+                            var generationUrl = generationUrlNode.GetAttributeValue( "href", string.Empty );
+
+                            // Ensure the URL is absolute
+                            if( !generationUrl.StartsWith( "http" ) ) {
+                                generationUrl = new Uri( new Uri( baseUrl ), generationUrl ).AbsoluteUri;
+                            }
+
+                            // Fetch the generation page to get models
+                            var generationPageContent = await _httpClient.GetStringAsync( generationUrl );
+                            var generationHtmlDocument = new HtmlDocument();
+                            generationHtmlDocument.LoadHtml( generationPageContent );
+
+
+                            var generationNameNode = generationHtmlDocument.DocumentNode.SelectSingleNode( "//h1/a[1]" );
+                            car.Generation = generationNameNode.InnerText;
+
+                            // XPath to find all model names inside <h4> tags within <div> with class 'carmod'
+                            var generationDataNodes = generationHtmlDocument.DocumentNode.SelectSingleNode( "//div[contains(@class, 'modelbox')]//p" );
+                            var modelGenerationData = generationDataNodes.InnerText.Trim(); //description
+
+                            var yearNodes = generationHtmlDocument.DocumentNode.SelectSingleNode( "//span[contains(@class, 'motlisthead_years')]" );
+                            var generationYears = yearNodes.InnerText.Split(',');
+                            car.ModelYearFrom = new DateTime( 1, 1, Convert.ToInt32( generationYears.First() ) );
+                            car.ModelYearTo = new DateTime( 1, 1, Convert.ToInt32( generationYears.Last() ) );
+                            //var engineTypeNodes = generationHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'sbox10')]//div[contains(@class, 'tt')]" );
+                            //var engineTypes = new List<string>();
+                            //foreach( var engineTypeNode in engineTypeNodes ) {
+                            //    engineTypes.Add( engineTypeNode.InnerText.Trim() );
+                            //}
+
+                            var engineNodes = generationHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'sbox10')]//ul" );
+                            var engineList = new List<string>();
+                            foreach( var engine in engineNodes ) {
+                                var carEngine = new Model.Engine();
+                                var engineListNodes = engine.SelectNodes( ".//li[contains(@class, 'ellip')]" );
+                                foreach( var engineNode in engineListNodes ) {
+                                    engineList.Add( engineNode.InnerText.Trim() );
+                                    var engineFragment = engineNode.GetAttributeValue( "id", string.Empty );
+
+                                    // Construct the correct engine URL format
+                                    if( !string.IsNullOrEmpty( engineFragment ) ) {
+                                        var baseGenerationUrl = generationUrl.Split( '#' )[0]; // Remove any existing fragment
+                                        var formattedEngineUrl = $"{baseGenerationUrl}#aeng_{engineFragment}";
+
+                                        // Fetch the engine page to get engine data
+                                        var enginePageContent = await _httpClient.GetStringAsync( formattedEngineUrl );
+                                        var engineHtmlDocument = new HtmlDocument();
+                                        engineHtmlDocument.LoadHtml( enginePageContent );
+                                        //var engineDataNodes = engineHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'enginedata')]//table[contains(@class, 'techdata')]" );
+                                        //foreach( var engineDataNode in engineDataNodes ) {
+                                        //    var textDiv = engineDataNode.SelectSingleNode( ".//th//div" );
+                                        //    var text = textDiv?.InnerText;
+                                        //    // Further processing of the engine data
+                                        //}
+
+                                        // Assuming you have a method to scrape engine data
+                                        var engines = await ScrapeEngineData( formattedEngineUrl );
+                                        car.Engines.AddRange( engines );
+                                    }
+                                }
+                            }
+                        }
+                        //await CreateCarAsync( car );
+                        cars.Add( car );
+                    }                  
+                }
+                return cars;
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, $"An error occurred while syncing cars." );
+                throw;
+            }
+        }
+
+        private async Task<List<Model.Engine>> ScrapeEngineData( string engineUrl ) {
+            var engines = new List<Model.Engine>();
+
+            // Fetch the engine details page
+            var enginePageContent = await _httpClient.GetStringAsync( engineUrl );
+            var engineHtmlDocument = new HtmlDocument();
+            engineHtmlDocument.LoadHtml( enginePageContent );
+
+            // Extracting engine data from tables with class 'techdata'
+            var engineDataNodes = engineHtmlDocument.DocumentNode.SelectNodes( "//table[@class='techdata']" );
+            var engine = new Model.Engine();
+            if( engineDataNodes != null ) {
+                foreach( var engineDataNode in engineDataNodes ) {
+                    // Extract engine specifications
+                    var engineSpecsTitleNode = engineDataNode.SelectSingleNode( ".//th[@class='title']/div" );
+                    if( engineSpecsTitleNode != null ) {
+                        // Extract engine title e.g. "35 TFSI 6MT (150 HP)"
+                        var engineName = engineSpecsTitleNode.SelectSingleNode( ".//span[@class='col-green']" );
+                        if( engineName != null ) {
+                            engine.Name = engineName.InnerText;
+                        }
+                    }
+
+                    // Extract individual specs based on the table rows
+                    var specRows = engineDataNode.SelectNodes( ".//tr" );
+
+                    foreach( var row in specRows ) {
+                        var leftColumn = row.SelectSingleNode( ".//td[@class='left']/strong" );
+                        var rightColumn = row.SelectSingleNode( ".//td[@class='right']" );
+
+                        if( leftColumn != null && rightColumn != null ) {
+                            var specTitle = leftColumn.InnerText.Trim();
+                            var specValue = rightColumn.InnerText.Trim();
+
+                            // Map specs to Model.Engine properties based on the title
+                            switch( specTitle ) {
+                                case "Cylinders:":
+                                    engine.Cylinders = specValue;
+                                    break;
+                                case "Displacement:":
+                                    engine.Displacement = specValue;
+                                    break;
+                                case "Power:":
+                                    engine.Power = specValue;
+                                    break;
+                                case "Torque:":
+                                    engine.Torque = specValue;
+                                    break;
+                                case "Fuel System:":
+                                    engine.FuelSystem = specValue;
+                                    break;
+                                case "Fuel:":
+                                    engine.FuelType = specValue;
+                                    break;
+                                case "Fuel capacity:":
+                                    engine.FuelCapacity = decimal.TryParse( specValue.Split( ' ' )[0], out var capacity ) ? capacity : (decimal?) null;
+                                    break;
+                                case "Top Speed:":
+                                    engine.TopSpeed = int.TryParse( specValue.Split( ' ' )[0], out var topSpeed ) ? topSpeed : (int?) null;
+                                    break;
+                                case "Acceleration 0-62 Mph (0-100 kph):":
+                                    engine.Acceleration = decimal.TryParse( specValue.Split( ' ' )[0], out var acceleration ) ? acceleration : (decimal?) null;
+                                    break;
+                                case "Drive Type:":
+                                    engine.DriveType = specValue;
+                                    break;
+                                case "Gearbox:":
+                                    engine.Gearbox = specValue;
+                                    break;
+                                case "Front Brakes:":
+                                    engine.FrontBrakes = specValue;
+                                    break;
+                                case "Rear Brakes:":
+                                    engine.RearBrakes = specValue;
+                                    break;
+                                case "Tire Size:":
+                                    engine.TireSize = specValue;
+                                    break;
+                                case "Length:":
+                                    engine.Length = specValue;
+                                    break;
+                                case "Width:":
+                                    engine.Width = specValue;
+                                    break;
+                                case "Height:":
+                                    engine.Height = specValue;
+                                    break;
+                                case "Front/Rear Track:":
+                                    engine.FrontRearTrack = specValue;
+                                    break;
+                                case "Wheelbase:":
+                                    engine.Wheelbase = specValue;
+                                    break;
+                                case "Ground Clearance:":
+                                    engine.GroundClearance = specValue;
+                                    break;
+                                case "Cargo Volume:":
+                                    engine.CargoVolume = specValue;
+                                    break;
+                                case "Unladen Weight:":
+                                    engine.UnladenWeight = specValue;
+                                    break;
+                                case "Gross Weight Limit:":
+                                    engine.GrossWeightLimit = specValue;
+                                    break;
+                                case "Fuel Economy (City):":
+                                    engine.FuelEconomyCity = specValue;
+                                    break;
+                                case "Fuel Economy (Highway):":
+                                    engine.FuelEconomyHighway = specValue;
+                                    break;
+                                case "Fuel Economy (Combined):":
+                                    engine.FuelEconomyCombined = specValue;
+                                    break;
+                                case "CO2 Emissions:":
+                                    engine.CO2Emissions = specValue;
+                                    break;
+                                default:
+                                    // Handle any additional specs if necessary
+                                    break;
+                            }
+                        }
+                    }
+                }
+                // Add the constructed Model.Engine to the list
+                engines.Add( engine );
+            }
+            return engines;
         }
 
 

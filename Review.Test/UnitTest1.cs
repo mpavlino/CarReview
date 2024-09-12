@@ -151,7 +151,7 @@ namespace Review.Test {
                                 modelGenerationNames.Add( modelData.InnerText.Trim() );
                             }
                         }
-
+                        //do ovog dijela
                         var generationUrlNodes = modelHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'carmodel')]//a[1]" );
                         foreach( var generationUrlNode in generationUrlNodes ) {
                             var generationUrl = generationUrlNode.GetAttributeValue( "href", string.Empty );
@@ -208,7 +208,7 @@ namespace Review.Test {
                             }
                         }
                         // Optional: Add a delay to prevent overloading the server
-                        await Task.Delay( 1000 ); // Adjust the delay as necessary
+                        await Task.Delay( 500 ); // Adjust the delay as necessary
                     }
                 }
             }

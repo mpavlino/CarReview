@@ -13,6 +13,7 @@ namespace Review.DAL
         }
 
         public DbSet<Car> Cars { get; set; }
+        public DbSet<Engine> Engines { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Model.Model> Models { get; set; }
