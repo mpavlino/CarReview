@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Review.DAL;
@@ -11,9 +12,11 @@ using Review.DAL;
 namespace Review.DAL.Migrations
 {
     [DbContext(typeof(CarManagerDbContext))]
-    partial class CarManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240916085147_CarEngine")]
+    partial class CarEngine
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

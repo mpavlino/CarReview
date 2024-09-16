@@ -161,13 +161,15 @@ namespace Review.Services {
                 string baseUrl = "https://www.autoevolution.com/cars/";
 
                 var brands = await _brandService.GetAllBrandsAsync();
+                brands = brands.Where( b => b.Name.ToLower() == "audi" ).ToList(); 
                 foreach( var brand in brands ) {
                     var models = await _brandService.GetModelsByBrandId( brand.ID );
                     foreach( var model in models ) {
                         var car = new Car();    
                         car.BrandID = brand.ID;
                         car.ModelID = model.Id;
-                        var modelUrl = $"https://www.autoevolution.com/cars/{brand.Name.ToLower()}/{model.Name.ToLower()}";
+                        var modelName = model.Name.Substring( brand.Name.Length + 1 ).Replace(" ", "-");
+                        var modelUrl = $"https://www.autoevolution.com/{brand.Name.ToLower()}/{modelName.ToLower()}";
                         // Fetch the make's page to get models
                         var modelPageContent = await _httpClient.GetStringAsync( modelUrl );
                         var modelHtmlDocument = new HtmlDocument();
@@ -189,16 +191,17 @@ namespace Review.Services {
 
 
                             var generationNameNode = generationHtmlDocument.DocumentNode.SelectSingleNode( "//h1/a[1]" );
-                            car.Generation = generationNameNode.InnerText;
-
+                            if( generationNameNode != null ) {
+                                car.Generation = generationNameNode.InnerText;
+                            }
                             // XPath to find all model names inside <h4> tags within <div> with class 'carmod'
                             var generationDataNodes = generationHtmlDocument.DocumentNode.SelectSingleNode( "//div[contains(@class, 'modelbox')]//p" );
                             var modelGenerationData = generationDataNodes.InnerText.Trim(); //description
 
                             var yearNodes = generationHtmlDocument.DocumentNode.SelectSingleNode( "//span[contains(@class, 'motlisthead_years')]" );
                             var generationYears = yearNodes.InnerText.Split(',');
-                            car.ModelYearFrom = new DateTime( 1, 1, Convert.ToInt32( generationYears.First() ) );
-                            car.ModelYearTo = new DateTime( 1, 1, Convert.ToInt32( generationYears.Last() ) );
+                            car.ModelYearFrom = new DateTime( Convert.ToInt32( generationYears.First() ), 1, 1 );
+                            car.ModelYearTo = new DateTime( Convert.ToInt32( generationYears.Last() ), 1, 1 );
                             //var engineTypeNodes = generationHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'sbox10')]//div[contains(@class, 'tt')]" );
                             //var engineTypes = new List<string>();
                             //foreach( var engineTypeNode in engineTypeNodes ) {
@@ -231,12 +234,17 @@ namespace Review.Services {
                                         //}
 
                                         // Assuming you have a method to scrape engine data
-                                        var engines = await ScrapeEngineData( formattedEngineUrl );
-                                        car.Engines.AddRange( engines );
+                                        var engines = new List<Model.Engine>(); 
+                                        engines = await ScrapeEngineData( formattedEngineUrl );
+                                        car.Engines = new List<Model.Engine>( engines );
                                     }
+                                    await Task.Delay( 1000 );
                                 }
+                                await Task.Delay( 1000 );
                             }
+                            await Task.Delay( 1000 );
                         }
+                        await Task.Delay( 1000 );
                         //await CreateCarAsync( car );
                         cars.Add( car );
                     }                  

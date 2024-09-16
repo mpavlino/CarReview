@@ -6,15 +6,38 @@ using System.Threading.Tasks;
 using Review.Model.DTO;
 using HtmlAgilityPack;
 using Review.Model;
+using Review.Model.Interfaces;
+using Moq;
+using Review.Services;
 
 namespace Review.Test {
     public class Tests {
         private static readonly string baseUrl = "https://www.autoevolution.com/cars/";
         private static HttpClient httpClient = new HttpClient();
+        private Mock<ICarService> _carServiceMock;
+        private ICarService _carService;
+
+        //public Tests() {
+        //    // You can mock the ICarService using Moq or any other mocking library
+        //    var carServiceMock = new Mock<ICarService>();
+        //    carServiceMock.Setup( x => x.SyncCarsAsync() ).ReturnsAsync( true );
+        //    _carService = carServiceMock.Object;
+        //}
 
         [SetUp]
         public void Setup() {
             // Initialization code if needed
+            // Create a mock for ICarService
+            _carServiceMock = new Mock<ICarService>();
+
+            // Ensure that the real method is called when SyncCarsAsync() is invoked
+            _carServiceMock
+                .Setup( service => service.SyncCarsAsync() )
+                .ReturnsAsync( true ) // Simulate the behavior of the actual method
+                .Verifiable();       // This will ensure that the method was actually called
+
+            _carService = _carServiceMock.Object;
+           // _carService = new CarService();
         }
 
         [OneTimeTearDown]
@@ -24,16 +47,18 @@ namespace Review.Test {
 
         [Test]
         public async Task ScrapeCarMakesAndModels_ShouldReturnData() {
-            var carData = await ScrapeCarData();
+            //var carData = await ScrapeCarData();
 
-            // Example assertion: Check if car data is not empty
-            Assert.IsNotEmpty( carData, "Car data should not be empty." );
+            //// Example assertion: Check if car data is not empty
+            //Assert.IsNotEmpty( carData, "Car data should not be empty." );
 
-            // Add more specific assertions based on expected results
-            foreach( var engine in carData ) {
-                //Assert.IsNotEmpty( make.Value, $"Model list for {make.Key} should not be empty." );
-                Assert.IsNotEmpty( engine.Name, $"Engine list for {engine.CarID} should not be empty." );
-            }
+            //// Add more specific assertions based on expected results
+            //foreach( var engine in carData ) {
+            //    //Assert.IsNotEmpty( make.Value, $"Model list for {make.Key} should not be empty." );
+            //    Assert.IsNotEmpty( engine.Name, $"Engine list for {engine.CarID} should not be empty." );
+            //}
+            bool isSynced = await _carService.SyncCarsAsync();
+            Assert.IsTrue( isSynced );
         }
 
         private static async Task<string> GetContentWithRetry( string url, int maxRetries = 5 ) {

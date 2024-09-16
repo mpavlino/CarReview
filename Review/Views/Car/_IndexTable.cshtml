@@ -5,10 +5,10 @@
         <tr>
             <th>Brand</th>
             <th class="d-none d-md-table-cell">Model</th>
-            <th class="d-none d-md-table-cell">Generation</th>
+            @* <th class="d-none d-md-table-cell">Generation</th> *@
             <th class="d-table-cell d-md-none">Model</th>
             <th class="d-none d-xxl-table-cell">Country</th>
-            <th class="d-none d-xxl-table-cell">Engine</th>
+            @* <th class="d-none d-xxl-table-cell">Engine</th> *@
             <th class="d-none d-md-table-cell">Reviewer</th>
             <th class="d-none d-md-table-cell">Rating</th>
             <th data-sortable="false"></th>
@@ -30,12 +30,12 @@
                     <td class="d-none d-md-table-cell">
                         <a asp-action="Blog" asp-route-id="@item.ID">@item.Model</a>
                     </td>
-                    <td class="d-none d-md-table-cell">@item.Generation (@item.ModelYear.Year)</td>
+                    @* <td class="d-none d-md-table-cell">@item.Generation (@item.ModelYear.Year)</td> *@
                     <td class="d-table-cell d-md-none">
                         <a asp-action="Blog" asp-route-id="@item.ID">@item.Model (@item.Generation)</a>
                     </td>
                     <td class="d-none d-xxl-table-cell">@item.Brand.Country?.Name</td>
-                    <td class="d-none d-xxl-table-cell">@item.Engine</td>
+                    @* <td class="d-none d-xxl-table-cell">@item.Engine</td> *@
                     <td class="d-none d-md-table-cell">
                         <a asp-controller="Reviewer" asp-action="Details" asp-route-id="@item.ReviewerID">@item.Reviewer?.FullName</a>
                     </td>

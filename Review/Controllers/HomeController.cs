@@ -43,6 +43,11 @@ namespace Review.Controllers
             return View( carsViewModelList );
         }
 
+        public async Task<IActionResult> TestCarSync() {
+            var test = await _carService.SyncCarsAsync();
+            return RedirectToAction( "Index" );    
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
