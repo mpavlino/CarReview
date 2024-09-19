@@ -35,7 +35,7 @@ namespace Review.Controllers
                 else {
                     cars = await _carService.SearchCarsByTextAsync( query );
                 }
-                cars = cars.OrderBy( x => x.Brand?.Name ).ThenBy( x => x.Model );
+                cars = cars.OrderBy( x => x.Brand?.Name ).ThenBy( x => x.Model.Name ).ThenBy( x => x.Generation );
                 foreach( var car in cars.Where( x => x.ImageData != null ) ) {
                     carsViewModelList.Add( new CarViewModel( car ) );
                 }

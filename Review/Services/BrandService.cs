@@ -299,6 +299,7 @@ namespace Review.Services {
                         if( modelNodes != null ) {
                             foreach( var modelNode in modelNodes ) {
                                 var modelName = modelNode.InnerText.Trim();
+                                modelName = modelName.Substring( makeName.Length ).Trim();
 
                                 // Create a new Model instance and add it to the list
                                 var model = new Model.Model {

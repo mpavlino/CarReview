@@ -142,13 +142,17 @@ namespace Review.Services {
         public async Task<bool> SyncCarsAsync() {
             try {
                 var cars = await GetAllCarsFromWebAsync();
+                var allCars = await GetAllCarsAsync();
                 foreach( var car in cars ) {
-                    await CreateCarAsync( car );
+                    var carExists = allCars.Where( x => x.ModelID == car.ModelID && x.Generation == car.Generation );
+                    if( !carExists.Any() ) {
+                        await CreateCarAsync( car );
+                    }
                 }
                 return true;
             }
             catch( Exception ex ) {
-                _logger.LogError( ex, $"An error occurred while syncing cars. { ex.Message }" );
+                _logger.LogError( ex, $"An error occurred while syncing cars. {ex.Message}" );
                 throw;
             }
         }
@@ -164,89 +168,104 @@ namespace Review.Services {
                 brands = brands.Where( b => b.Name.ToLower() == "audi" ).ToList(); 
                 foreach( var brand in brands ) {
                     var models = await _brandService.GetModelsByBrandId( brand.ID );
+                    models = models.Where( m => m.Name.ToLower() == "a4" );
                     foreach( var model in models ) {
-                        var car = new Car();    
-                        car.BrandID = brand.ID;
-                        car.ModelID = model.Id;
-                        var modelName = model.Name.Substring( brand.Name.Length + 1 ).Replace(" ", "-");
-                        var modelUrl = $"https://www.autoevolution.com/{brand.Name.ToLower()}/{modelName.ToLower()}";
+                        //var modelName = model.Name.Substring( brand.Name.Length + 1 ).Replace(" ", "-");
+                        var modelUrl = $"https://www.autoevolution.com/{brand.Name.ToLower()}/{model.Name.ToLower()}";
                         // Fetch the make's page to get models
                         var modelPageContent = await _httpClient.GetStringAsync( modelUrl );
                         var modelHtmlDocument = new HtmlDocument();
                         modelHtmlDocument.LoadHtml( modelPageContent );
 
-                        var generationUrlNodes = modelHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'carmodel')]//a[1]" );
+                        var generationUrlNodes = modelHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'carmodel')]//h2//a[1]" );
                         foreach( var generationUrlNode in generationUrlNodes ) {
+                            var car = new Car();
+                            car.BrandID = brand.ID;
+                            car.ModelID = model.Id;
+                            car.Engines = new List<Model.Engine>();
                             var generationUrl = generationUrlNode.GetAttributeValue( "href", string.Empty );
 
-                            // Ensure the URL is absolute
-                            if( !generationUrl.StartsWith( "http" ) ) {
-                                generationUrl = new Uri( new Uri( baseUrl ), generationUrl ).AbsoluteUri;
-                            }
+                            if( generationUrl != null && generationUrl.Contains( baseUrl ) ) {
 
-                            // Fetch the generation page to get models
-                            var generationPageContent = await _httpClient.GetStringAsync( generationUrl );
-                            var generationHtmlDocument = new HtmlDocument();
-                            generationHtmlDocument.LoadHtml( generationPageContent );
+                                // Ensure the URL is absolute
+                                if( !generationUrl.StartsWith( "http" ) ) {
+                                    generationUrl = new Uri( new Uri( baseUrl ), generationUrl ).AbsoluteUri;
+                                }
+
+                               
+                                // Fetch the generation page to get models
+                                var generationPageContent = await _httpClient.GetStringAsync( generationUrl );
+                                var generationHtmlDocument = new HtmlDocument();
+                                generationHtmlDocument.LoadHtml( generationPageContent );
 
 
-                            var generationNameNode = generationHtmlDocument.DocumentNode.SelectSingleNode( "//h1/a[1]" );
-                            if( generationNameNode != null ) {
-                                car.Generation = generationNameNode.InnerText;
-                            }
-                            // XPath to find all model names inside <h4> tags within <div> with class 'carmod'
-                            var generationDataNodes = generationHtmlDocument.DocumentNode.SelectSingleNode( "//div[contains(@class, 'modelbox')]//p" );
-                            var modelGenerationData = generationDataNodes.InnerText.Trim(); //description
+                                var generationNameNode = generationHtmlDocument.DocumentNode.SelectSingleNode( "//h1/a[1]" );
+                                if( generationNameNode != null ) {
+                                    car.Generation = generationNameNode.InnerText.Replace( "Photos, engines &amp; full specs", "" ).Trim();
+                                }
 
-                            var yearNodes = generationHtmlDocument.DocumentNode.SelectSingleNode( "//span[contains(@class, 'motlisthead_years')]" );
-                            var generationYears = yearNodes.InnerText.Split(',');
-                            car.ModelYearFrom = new DateTime( Convert.ToInt32( generationYears.First() ), 1, 1 );
-                            car.ModelYearTo = new DateTime( Convert.ToInt32( generationYears.Last() ), 1, 1 );
-                            //var engineTypeNodes = generationHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'sbox10')]//div[contains(@class, 'tt')]" );
-                            //var engineTypes = new List<string>();
-                            //foreach( var engineTypeNode in engineTypeNodes ) {
-                            //    engineTypes.Add( engineTypeNode.InnerText.Trim() );
-                            //}
+                                var generationImageNode = generationHtmlDocument.DocumentNode.SelectSingleNode( "//img[@class='curpo']" );
+                                var imageUrl = generationImageNode.GetAttributeValue( "src", string.Empty );
+                                byte[] imageBytes = await _httpClient.GetByteArrayAsync( imageUrl );
+                                car.ImageData = imageBytes;
 
-                            var engineNodes = generationHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'sbox10')]//ul" );
-                            var engineList = new List<string>();
-                            foreach( var engine in engineNodes ) {
-                                var carEngine = new Model.Engine();
-                                var engineListNodes = engine.SelectNodes( ".//li[contains(@class, 'ellip')]" );
-                                foreach( var engineNode in engineListNodes ) {
-                                    engineList.Add( engineNode.InnerText.Trim() );
-                                    var engineFragment = engineNode.GetAttributeValue( "id", string.Empty );
+                                // XPath to find all model names inside <h4> tags within <div> with class 'carmod'
+                                var generationDataNodes = generationHtmlDocument.DocumentNode.SelectSingleNode( "//div[contains(@class, 'modelbox')]//p" );
+                                var modelGenerationData = generationDataNodes.InnerText.Trim(); //description
 
-                                    // Construct the correct engine URL format
-                                    if( !string.IsNullOrEmpty( engineFragment ) ) {
-                                        var baseGenerationUrl = generationUrl.Split( '#' )[0]; // Remove any existing fragment
-                                        var formattedEngineUrl = $"{baseGenerationUrl}#aeng_{engineFragment}";
+                                var yearNodes = generationHtmlDocument.DocumentNode.SelectSingleNode( "//span[contains(@class, 'motlisthead_years')]" );
+                                var generationYears = yearNodes.InnerText.Split( ',' );
+                                car.ModelYearFrom = new DateTime( Convert.ToInt32( generationYears.First() ), 1, 1 );
+                                if( generationYears.Length > 1 ) {
+                                    car.ModelYearTo = new DateTime( Convert.ToInt32( generationYears.Last() ), 1, 1 );
+                                }
+                                //var engineTypeNodes = generationHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'sbox10')]//div[contains(@class, 'tt')]" );
+                                //var engineTypes = new List<string>();
+                                //foreach( var engineTypeNode in engineTypeNodes ) {
+                                //    engineTypes.Add( engineTypeNode.InnerText.Trim() );
+                                //}
 
-                                        // Fetch the engine page to get engine data
-                                        var enginePageContent = await _httpClient.GetStringAsync( formattedEngineUrl );
-                                        var engineHtmlDocument = new HtmlDocument();
-                                        engineHtmlDocument.LoadHtml( enginePageContent );
-                                        //var engineDataNodes = engineHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'enginedata')]//table[contains(@class, 'techdata')]" );
-                                        //foreach( var engineDataNode in engineDataNodes ) {
-                                        //    var textDiv = engineDataNode.SelectSingleNode( ".//th//div" );
-                                        //    var text = textDiv?.InnerText;
-                                        //    // Further processing of the engine data
-                                        //}
+                                var engineNodes = generationHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'sbox10')]//ul" );
+                                var engineList = new List<string>();
+                                foreach( var engine in engineNodes ) {
+                                    var carEngine = new Model.Engine();
+                                    var engineListNodes = engine.SelectNodes( ".//li[contains(@class, 'ellip')]" );
+                                    foreach( var engineNode in engineListNodes ) {
+                                        engineList.Add( engineNode.InnerText.Trim() );
+                                        var engineFragment = engineNode.GetAttributeValue( "id", string.Empty );
 
-                                        // Assuming you have a method to scrape engine data
-                                        var engines = new List<Model.Engine>(); 
-                                        engines = await ScrapeEngineData( formattedEngineUrl );
-                                        car.Engines = new List<Model.Engine>( engines );
+                                        // Construct the correct engine URL format
+                                        if( !string.IsNullOrEmpty( engineFragment ) ) {
+                                            var baseGenerationUrl = generationUrl.Split( '#' )[0]; // Remove any existing fragment
+                                            var formattedEngineUrl = $"{baseGenerationUrl}#aeng_{engineFragment}";
+
+                                            // Fetch the engine page to get engine data
+                                            var enginePageContent = await _httpClient.GetStringAsync( formattedEngineUrl );
+                                            var engineHtmlDocument = new HtmlDocument();
+                                            engineHtmlDocument.LoadHtml( enginePageContent );
+                                            //var engineDataNodes = engineHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'enginedata')]//table[contains(@class, 'techdata')]" );
+                                            //foreach( var engineDataNode in engineDataNodes ) {
+                                            //    var textDiv = engineDataNode.SelectSingleNode( ".//th//div" );
+                                            //    var text = textDiv?.InnerText;
+                                            //    // Further processing of the engine data
+                                            //}
+
+                                            // Assuming you have a method to scrape engine data
+                                            var engines = new List<Model.Engine>();
+                                            engines = await ScrapeEngineData( formattedEngineUrl );
+                                            car.Engines.AddRange( engines );
+                                        }
+                                        await Task.Delay( 1000 );
                                     }
                                     await Task.Delay( 1000 );
                                 }
                                 await Task.Delay( 1000 );
                             }
-                            await Task.Delay( 1000 );
+                            cars.Add( car );
                         }
                         await Task.Delay( 1000 );
                         //await CreateCarAsync( car );
-                        cars.Add( car );
+                        
                     }                  
                 }
                 return cars;
@@ -265,8 +284,10 @@ namespace Review.Services {
             var engineHtmlDocument = new HtmlDocument();
             engineHtmlDocument.LoadHtml( enginePageContent );
 
+            var engineId = engineUrl.Split( '#' )[1];
+            engineId = engineId.Replace( "aeng_li_", "" );
             // Extracting engine data from tables with class 'techdata'
-            var engineDataNodes = engineHtmlDocument.DocumentNode.SelectNodes( "//table[@class='techdata']" );
+            var engineDataNodes = engineHtmlDocument.DocumentNode.SelectNodes( $"//div[@id='{engineId}']//table[@class='techdata']" );
             var engine = new Model.Engine();
             if( engineDataNodes != null ) {
                 foreach( var engineDataNode in engineDataNodes ) {
