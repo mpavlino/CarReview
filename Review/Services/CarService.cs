@@ -168,10 +168,10 @@ namespace Review.Services {
                 brands = brands.Where( b => b.Name.ToLower() == "audi" ).ToList(); 
                 foreach( var brand in brands ) {
                     var models = await _brandService.GetModelsByBrandId( brand.ID );
-                    models = models.Where( m => m.Name.ToLower() == "a4" );
+                    models = models.Where( m => m.Name.ToLower() == "a3 sportback" );
                     foreach( var model in models ) {
-                        //var modelName = model.Name.Substring( brand.Name.Length + 1 ).Replace(" ", "-");
-                        var modelUrl = $"https://www.autoevolution.com/{brand.Name.ToLower()}/{model.Name.ToLower()}";
+                        var modelName = model.Name.Replace(" ", "-");
+                        var modelUrl = $"https://www.autoevolution.com/{brand.Name.ToLower()}/{modelName.ToLower()}";
                         // Fetch the make's page to get models
                         var modelPageContent = await _httpClient.GetStringAsync( modelUrl );
                         var modelHtmlDocument = new HtmlDocument();
@@ -255,15 +255,15 @@ namespace Review.Services {
                                             engines = await ScrapeEngineData( formattedEngineUrl );
                                             car.Engines.AddRange( engines );
                                         }
-                                        await Task.Delay( 1000 );
+                                        await Task.Delay( 800 );
                                     }
-                                    await Task.Delay( 1000 );
+                                    await Task.Delay( 800 );
                                 }
-                                await Task.Delay( 1000 );
+                                await Task.Delay( 700 );
                             }
                             cars.Add( car );
                         }
-                        await Task.Delay( 1000 );
+                        await Task.Delay( 500 );
                         //await CreateCarAsync( car );
                         
                     }                  
