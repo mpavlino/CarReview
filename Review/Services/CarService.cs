@@ -165,13 +165,14 @@ namespace Review.Services {
                 string baseUrl = "https://www.autoevolution.com/cars/";
 
                 var brands = await _brandService.GetAllBrandsAsync();
-                brands = brands.Where( b => b.Name.ToLower() == "audi" ).ToList(); 
+                brands = brands.Where( b => b.Name.ToLower() == "mercedes benz" ).ToList(); 
                 foreach( var brand in brands ) {
                     var models = await _brandService.GetModelsByBrandId( brand.ID );
-                    models = models.Where( m => m.Name.ToLower() == "a3 sportback" );
+                    models = models.Where( m => m.Name.ToLower() == "c-klasse and predecessors" );
                     foreach( var model in models ) {
+                        var brandName = brand.Name.Replace(" ", "-");
                         var modelName = model.Name.Replace(" ", "-");
-                        var modelUrl = $"https://www.autoevolution.com/{brand.Name.ToLower()}/{modelName.ToLower()}";
+                        var modelUrl = $"https://www.autoevolution.com/{brandName.ToLower()}/{modelName.ToLower()}";
                         // Fetch the make's page to get models
                         var modelPageContent = await _httpClient.GetStringAsync( modelUrl );
                         var modelHtmlDocument = new HtmlDocument();
@@ -255,11 +256,11 @@ namespace Review.Services {
                                             engines = await ScrapeEngineData( formattedEngineUrl );
                                             car.Engines.AddRange( engines );
                                         }
-                                        await Task.Delay( 800 );
+                                        await Task.Delay( 700 );
                                     }
-                                    await Task.Delay( 800 );
+                                    await Task.Delay( 700 );
                                 }
-                                await Task.Delay( 700 );
+                                await Task.Delay( 500 );
                             }
                             cars.Add( car );
                         }

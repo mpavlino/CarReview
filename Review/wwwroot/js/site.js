@@ -3,15 +3,26 @@
 var SiteModule = (function () {
 
     const loader = document.getElementById('page-loader');
+    const overlay = document.getElementById('page-overlay');
 
     // Show loader when the page starts loading
     function showLoader() {
-        loader.style.display = 'block';
+        if (loader) {
+            loader.style.display = 'block';
+        }
+        if (overlay) {
+            overlay.style.display = 'block'; // Show overlay to disable UI
+        }
     }
 
     // Hide loader when the page has fully loaded
     function hideLoader() {
-        loader.style.display = 'none';
+        if (loader) {
+            loader.style.display = 'none';
+        }
+        if (overlay) {
+            overlay.style.display = 'none'; // Hide overlay to enable UI
+        }
     }
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -211,6 +222,10 @@ document.addEventListener('DOMContentLoaded', function () {
             uploadedImagesInput.value = base64Strings.join(';');
         }
     }
+
+    $("#syncCars").on('click', function () {
+        showLoader();
+    });
 
     //// Show the loader immediately
     //showLoader();

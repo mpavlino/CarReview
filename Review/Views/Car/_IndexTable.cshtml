@@ -4,10 +4,10 @@
     <thead>
         <tr>
             <th>Brand</th>
-            <th class="d-none d-md-table-cell">Model</th>
-            @* <th class="d-none d-md-table-cell">Generation</th> *@
-            <th class="d-table-cell d-md-none">Model</th>
-            <th class="d-none d-xxl-table-cell">Country</th>
+            <th>Model</th>
+           @*  <th class="d-none d-md-table-cell">Generation</th> *@
+            @* <th class="d-table-cell d-md-none">Model</th> *@
+            @* <th class="d-none d-xxl-table-cell">Country</th> *@
             @* <th class="d-none d-xxl-table-cell">Engine</th> *@
             <th class="d-none d-md-table-cell">Reviewer</th>
             <th class="d-none d-md-table-cell">Rating</th>
@@ -23,18 +23,24 @@
         }
         else {
             @foreach( var item in Model ) {
+                var years = item.ModelYearTo.HasValue ? @String.Format("{0}-{1}", item.ModelYearFrom.Year, item.ModelYearTo.Value.Year) : item.ModelYearFrom.Year.ToString();
+                var generationName = item.Generation.Replace(item.Brand?.Name, "").Replace(item.Model?.Name, "").Replace(item.ModelYearFrom.Year.ToString(), "");
+                if( item.ModelYearTo.HasValue ) {
+                    generationName = generationName.Replace(item.ModelYearTo.Value.Year.ToString(), "");
+                }
                 <tr>
                     <td>
                         <a asp-action="Details" asp-route-id="@item.ID">@item.Brand?.Name</a>
                     </td>
                     <td class="d-none d-md-table-cell">
-                        <a asp-action="Blog" asp-route-id="@item.ID">@item.Model</a>
+                        @* <a asp-action="Blog" asp-route-id="@item.ID">@item.Model?.Name @generationName (@years)</a> *@
+                        <a asp-action="Blog" asp-route-id="@item.ID">@item.Generation</a>
                     </td>
                     @* <td class="d-none d-md-table-cell">@item.Generation (@item.ModelYear.Year)</td> *@
-                    <td class="d-table-cell d-md-none">
-                        <a asp-action="Blog" asp-route-id="@item.ID">@item.Model (@item.Generation)</a>
-                    </td>
-                    <td class="d-none d-xxl-table-cell">@item.Brand.Country?.Name</td>
+@*                     <td class="d-none d-md-table-cell">
+                        <a asp-action="Blog" asp-route-id="@item.ID">@item.Generation</a>
+                    </td> *@
+                    @* <td class="d-none d-xxl-table-cell">@item.Brand.Country?.Name</td> *@
                     @* <td class="d-none d-xxl-table-cell">@item.Engine</td> *@
                     <td class="d-none d-md-table-cell">
                         <a asp-controller="Reviewer" asp-action="Details" asp-route-id="@item.ReviewerID">@item.Reviewer?.FullName</a>
