@@ -17,7 +17,7 @@ namespace Review.Model.Interfaces {
         Task<bool> CreateCarAsync( Car car );
         Task<Car> UpdateCarAsync( int id, Car model );
         Task DeleteCarAsync( int id );
-        Task<bool> SyncCarsAsync();
+        Task<bool> SyncCarsAsync( int id );
         Task<List<CarReview>> GetCarReviewsByCarIdAsync( int id );
         Task<CarReview> GetCarReviewByIdAsync( int id );
         Task<bool> CreateCarReviewAsync( CarReview carReview );

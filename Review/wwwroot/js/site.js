@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    $("#syncCars").on('click', function () {
+    $(".syncCars").on('click', function () {
         showLoader();
     });
 

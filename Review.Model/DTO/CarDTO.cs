@@ -17,7 +17,7 @@ namespace Review.Model.DTO {
         public string Description { get; set; }
         public int? ReviewerID { get; set; }
         public ReviewerDTO Reviewer { get; set; }
-        public int Rating { get; set; }
+        public decimal Rating { get; set; }
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }
         public List<CarReviewDTO> CarReviews { get; set; }

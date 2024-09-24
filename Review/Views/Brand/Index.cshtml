@@ -7,21 +7,16 @@
 </div>
 @if( User.IsInRole( "Administrator" ) ) {
     <div class="row my-4">
-        <div class="col-sm-6 col-md-6 col-lg-2 col-xl-2">
+        <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
             <a asp-action="Create" class="btn btn-outline-primary" style="display: inline-block; width: 100%;"><i class="bi-plus-circle"></i> New brand</a>
         </div>
-        <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2">
+        <div class="col-6 col-xs-6 col-sm-6 col-md-4 col-lg-2 col-xl-2">
             <a asp-action="SyncBrands" id="syncBrands" class="btn btn-outline-secondary" style="display: inline-block; width: 100%;"><i class="bi-arrow-repeat"></i> Sync Brands</a>
         </div>
     </div>
 }
 <div class="card">
     <div class="card-body">
-@*         <div id="loader" class="loader" style="display: none;">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div> *@
         <div id="table-loader" class="loader"></div>
         <div class="table-responsive" style="margin-top: 20px;">
             <table id="tbl-brands" class="table" @* style="display: none;" *@>

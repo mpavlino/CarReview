@@ -5,6 +5,7 @@ using Review.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Review.Models.Car {
     public class CarViewModel {
@@ -54,7 +55,7 @@ namespace Review.Models.Car {
         public DateTime ModelYear { get; set; }
         public string Description { get; set; }
         public int? ReviewerID { get; set; }
-        public int Rating { get; set; }
+        public decimal Rating { get; set; }
         public IFormFile ImageFile { get; set; }
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }

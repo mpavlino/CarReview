@@ -3,13 +3,9 @@
 <table class="table datatable" id="tbl-cars">
     <thead>
         <tr>
-            <th>Brand</th>
-            <th>Model</th>
-           @*  <th class="d-none d-md-table-cell">Generation</th> *@
-            @* <th class="d-table-cell d-md-none">Model</th> *@
-            @* <th class="d-none d-xxl-table-cell">Country</th> *@
-            @* <th class="d-none d-xxl-table-cell">Engine</th> *@
-            <th class="d-none d-md-table-cell">Reviewer</th>
+            <th style="display: none;"></th>
+            <th>Car</th>
+            <th style="display: none;"></th>
             <th class="d-none d-md-table-cell">Rating</th>
             <th data-sortable="false"></th>
         </tr>
@@ -23,28 +19,22 @@
         }
         else {
             @foreach( var item in Model ) {
-                var years = item.ModelYearTo.HasValue ? @String.Format("{0}-{1}", item.ModelYearFrom.Year, item.ModelYearTo.Value.Year) : item.ModelYearFrom.Year.ToString();
-                var generationName = item.Generation.Replace(item.Brand?.Name, "").Replace(item.Model?.Name, "").Replace(item.ModelYearFrom.Year.ToString(), "");
+                decimal rating = 0;
+                if( item.CarReviews.Count > 0 && item.CarReviews != null ) {
+                    item.Rating = Convert.ToDecimal( item.CarReviews.Sum( x => x.Rating ) ) / Convert.ToDecimal( item.CarReviews.Count );
+                    //rating = Convert.ToDecimal( item.CarReviews.Sum( x => x.Rating ) ) / Convert.ToDecimal( item.CarReviews.Count );
+                }
+                var years = item.ModelYearTo.HasValue ? @String.Format( "{0}-{1}", item.ModelYearFrom.Year, item.ModelYearTo.Value.Year ) : item.ModelYearFrom.Year.ToString();
+                var generationName = item.Generation.Replace( item.Brand?.Name, "" ).Replace( item.Model?.Name, "" ).Replace( item.ModelYearFrom.Year.ToString(), "" );
                 if( item.ModelYearTo.HasValue ) {
-                    generationName = generationName.Replace(item.ModelYearTo.Value.Year.ToString(), "");
+                    generationName = generationName.Replace( item.ModelYearTo.Value.Year.ToString(), "" );
                 }
                 <tr>
+                    <td style="display: none;"></td>
                     <td>
-                        <a asp-action="Details" asp-route-id="@item.ID">@item.Brand?.Name</a>
+                        <a asp-action="Details" asp-route-id="@item.ID">@item.Generation</a>
                     </td>
-                    <td class="d-none d-md-table-cell">
-                        @* <a asp-action="Blog" asp-route-id="@item.ID">@item.Model?.Name @generationName (@years)</a> *@
-                        <a asp-action="Blog" asp-route-id="@item.ID">@item.Generation</a>
-                    </td>
-                    @* <td class="d-none d-md-table-cell">@item.Generation (@item.ModelYear.Year)</td> *@
-@*                     <td class="d-none d-md-table-cell">
-                        <a asp-action="Blog" asp-route-id="@item.ID">@item.Generation</a>
-                    </td> *@
-                    @* <td class="d-none d-xxl-table-cell">@item.Brand.Country?.Name</td> *@
-                    @* <td class="d-none d-xxl-table-cell">@item.Engine</td> *@
-                    <td class="d-none d-md-table-cell">
-                        <a asp-controller="Reviewer" asp-action="Details" asp-route-id="@item.ReviewerID">@item.Reviewer?.FullName</a>
-                    </td>
+                    <td style="display: none;"></td>
                     <td class="d-none d-md-table-cell">
                         <div class="star-rating small-stars read-only">
                             @{
@@ -56,6 +46,7 @@
                             <input asp-for="@item.Rating" class="form-check-input" type="radio" id="star2_@item.ID" name="@ratingName" value="2" disabled /><label for="star2_@item.ID" title="2 stars">★</label>
                             <input asp-for="@item.Rating" class="form-check-input" type="radio" id="star1_@item.ID" name="@ratingName" value="1" disabled /><label for="star1_@item.ID" title="1 star">★</label>
                         </div>
+                        @String.Format( "{0}", item.Rating > 0 ? item.Rating.ToString() : "" )
                     </td>
                     <td>
                         <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm d-none d-md-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="Details"><i class="bi-box-arrow-up-right"></i></a>

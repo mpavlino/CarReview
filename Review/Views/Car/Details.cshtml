@@ -1,6 +1,11 @@
 ﻿@model Review.Model.Car
 @{
     ViewData["Title"] = "Details";
+    decimal rating = 0;
+    if( Model.CarReviews.Count > 0 && Model.CarReviews != null ) {
+        Model.Rating = Convert.ToDecimal( Model.CarReviews.Sum( x => x.Rating ) ) / Convert.ToDecimal( Model.CarReviews.Count );
+        rating = Convert.ToDecimal( Model.CarReviews.Sum( x => x.Rating ) ) / Convert.ToDecimal( Model.CarReviews.Count );
+    }
 }
 <ol class="breadcrumb">
     <li><a asp-action="Index">Cars list /</a></li>
@@ -52,6 +57,7 @@
                                 <input asp-for="Rating" class="form-check-input" type="radio" id="star2" name="rating" value="2" disabled /><label for="star2" title="2 stars">★</label>
                                 <input asp-for="Rating" class="form-check-input" type="radio" id="star1" name="rating" value="1" disabled /><label for="star1" title="1 star">★</label>
                             </div>
+                            @String.Format( "{0}", Model.Rating > 0 ? Model.Rating.ToString() : "" )
                         </dd>
                     </dl>
                     <div class="col-sm-12">

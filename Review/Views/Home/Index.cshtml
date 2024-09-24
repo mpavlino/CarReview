@@ -14,12 +14,12 @@
 
 @* <img src="~/images/cars.jpg" alt="ASP.NET" class="img-responsive" /> *@
 @if( SignInManager.IsSignedIn( User ) ) {
-    if (User.IsInRole("Administrator"))
+@*     if (User.IsInRole("Administrator"))
     {
         <div class="col-4" style="margin-bottom: 30px; width: 200px;">
             <a asp-action="TestCarSync" id="syncCars" class="btn btn-outline-primary" style="display: inline-block; width: 100%;"><i class="bi-arrow-repeat"></i> Sync cars</a>
         </div>
-    }
+    } *@
     <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
         <div class="carousel-inner" role="listbox">
             <div class="carousel-item active">

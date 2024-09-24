@@ -177,6 +177,20 @@ namespace Review.API.Controllers {
             }
         }
 
+        [HttpGet( "model/{id:int}" )]
+        public async Task<IActionResult> GetModelById( int id ) {
+            try {
+                var model = await _dbContext.Models.Include( m => m.Brand ).SingleOrDefaultAsync( m => m.Id == id );
+                if( model != null ) {
+                    return Ok( model );
+                }
+                return BadRequest( new { error = "There was an error while retrieving models with provided brand ID", providedID = id } );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+
         [HttpPost( "models/sync" )]
         public async Task<IActionResult> SyncModels( [FromBody] List<Model.Model> models ) {
             try {

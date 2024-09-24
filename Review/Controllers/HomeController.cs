@@ -43,10 +43,10 @@ namespace Review.Controllers
             return View( carsViewModelList );
         }
 
-        public async Task<IActionResult> TestCarSync() {
-            var test = await _carService.SyncCarsAsync();
-            return RedirectToAction( "Index" );    
-        }
+        //public async Task<IActionResult> TestCarSync( int id ) {
+        //    var test = await _carService.SyncCarsAsync( id );
+        //    return RedirectToAction( "Index" );    
+        //}
 
         public IActionResult About()
         {

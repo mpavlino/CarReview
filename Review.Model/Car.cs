@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Review.Model {
     public class Car {
@@ -29,7 +30,7 @@ namespace Review.Model {
         [ForeignKey( nameof( Reviewer ) )]
         public int? ReviewerID { get; set; }
         public Reviewer Reviewer { get; set; }
-        public int Rating { get; set; }
+        public decimal Rating { get; set; }
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }
 

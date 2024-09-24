@@ -26,6 +26,7 @@ namespace Review.Controllers {
     public class BrandController : Controller {
 
         private readonly IBrandService _brandService;
+        private readonly ICarService _carService;
         private readonly IDropdownService _dropdownService;
         private readonly ILogger<BrandController> _logger;
 
@@ -34,8 +35,9 @@ namespace Review.Controllers {
             set { TempData["AlertMessage"] = value; }
         }
 
-        public BrandController( IBrandService brandService, IDropdownService dropdownService, ILogger<BrandController> logger ) {
+        public BrandController( IBrandService brandService, ICarService carService, IDropdownService dropdownService, ILogger<BrandController> logger ) {
             _brandService = brandService;
+            _carService = carService;
             _dropdownService = dropdownService;
             _logger = logger;
         }
@@ -162,6 +164,18 @@ namespace Review.Controllers {
             try {
                 await _brandService.SyncBrandsAsync();
                 return RedirectToAction( "Index" );
+            }
+            catch( HttpRequestException ex ) {
+                _logger.LogError( ex, "An error occurred while syncing brands." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
+            }
+        }
+
+        public async Task<IActionResult> SyncModelCars( int id ) {
+            try {
+                int brandId = _brandService.GetModelById( id ).Result.BrandId;
+                await _carService.SyncCarsAsync( id );
+                return RedirectToAction( "Details", new { id = brandId });
             }
             catch( HttpRequestException ex ) {
                 _logger.LogError( ex, "An error occurred while syncing brands." );

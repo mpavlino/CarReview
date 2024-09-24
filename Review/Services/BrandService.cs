@@ -325,6 +325,7 @@ namespace Review.Services {
 
         public async Task<IEnumerable<Model.Model>> GetModelsByBrandId( int brandId ) {
             try {
+                await SetAuthorizationHeaderAsync();
                 var response = await _httpClient.GetAsync( $"api/brands/models/{brandId}" );
                 response.EnsureSuccessStatusCode();
 
@@ -333,6 +334,21 @@ namespace Review.Services {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, $"An error occurred while getting models for brand ID {brandId}. {ex.Message}" );
+                throw;
+            }
+        }
+
+        public async Task<Model.Model> GetModelById( int id ) {
+            try {
+                await SetAuthorizationHeaderAsync();
+                var response = await _httpClient.GetAsync( $"api/brands/model/{id}" );
+                response.EnsureSuccessStatusCode();
+
+                Model.Model model = await response.Content.ReadFromJsonAsync<Model.Model>();
+                return model;
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, $"An error occurred while getting model by ID {id}. {ex.Message}" );
                 throw;
             }
         }
