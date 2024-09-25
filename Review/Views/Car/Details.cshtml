@@ -6,60 +6,52 @@
         Model.Rating = Convert.ToDecimal( Model.CarReviews.Sum( x => x.Rating ) ) / Convert.ToDecimal( Model.CarReviews.Count );
         rating = Convert.ToDecimal( Model.CarReviews.Sum( x => x.Rating ) ) / Convert.ToDecimal( Model.CarReviews.Count );
     }
+    var groupedEngines = Model.Engines.GroupBy( e => e.FuelType ).ToList();
 }
 <ol class="breadcrumb">
     <li><a asp-action="Index">Cars list /</a></li>
-    <li class="active">&nbsp;@Model.Brand?.Name</li>
+    <li class="active">&nbsp;@Model.Generation</li>
 </ol>
 <div class="pagetitle mb-2">
     <h1>Car details</h1>
 </div>
 @if( Model != null ) {
     <div class="card">
-        <div class="card-body">
-            <div class="row my-4">
+        <div class="card-body pb-0">
+            <div class="row my-3">
                 <div class="col-md-6">
                     <dl class="row">
                         <dt class="col-sm-5">Brand</dt>
                         <dd class="col-sm-7">@Html.DisplayFor( model => model.Brand.Name )</dd>
                         <dt class="col-sm-5">Model</dt>
-                        <dd class="col-sm-7">@Html.DisplayFor( model => model.Model )</dd>
+                        <dd class="col-sm-7">@Html.DisplayFor( model => model.Model.Name )</dd>
                         <dt class="col-sm-5">Generation</dt>
                         <dd class="col-sm-7">@Html.DisplayFor( model => model.Generation )</dd>
-                        <dt class="col-sm-5">Model Year</dt>
-@*                         <dd class="col-sm-7">@Html.DisplayFor( model => model.ModelYear.Year ).</dd>
-                        <dt class="col-sm-5">Engine</dt>
-                        <dd class="col-sm-7">@Html.DisplayFor( model => model.Engine )</dd>
-                        <dt class="col-sm-5">Power</dt>
-                        <dd class="col-sm-7">@Html.DisplayFor( model => model.EnginePower ) hp</dd>
-                        <dt class="col-sm-5">Torque</dt>
-                        <dd class="col-sm-7">@Html.DisplayFor( model => model.Torque ) Nm</dd>
-                        <dt class="col-sm-5">Engine Displacement</dt>
-                        <dd class="col-sm-7">@Html.DisplayFor( model => model.EngineDisplacement ) cm<sup>3</sup></dd>
-                        <dt class="col-sm-5">Max. Speed</dt>
-                        <dd class="col-sm-7">@Html.DisplayFor( model => model.TopSpeed ) km/h</dd>
-                        <dt class="col-sm-5">Acceleration (0-100km/h)</dt>
-                        <dd class="col-sm-7">@Html.DisplayFor( model => model.Acceleration ) sec</dd> *@
-                    </dl>
-                </div>
-                <div class="col-md-6">
-                    <dl class="row">
-                        <dt class="col-sm-4">Country</dt>
-                        <dd class="col-sm-8">@Model?.Brand.Country?.Name</dd>
-                        <dt class="col-sm-4">Reviewer</dt>
-                        <dd class="col-sm-8">@Model?.Reviewer?.FullName</dd>
-                        <dt class="col-sm-4">Rating</dt>
-                        <dd class="col-sm-8">
-                            <div class="star-rating read-only">
-                                <input asp-for="Rating" class="form-check-input" type="radio" id="star5" name="rating" value="5" disabled /><label for="star5" title="5 stars">★</label>
-                                <input asp-for="Rating" class="form-check-input" type="radio" id="star4" name="rating" value="4" disabled /><label for="star4" title="4 stars">★</label>
-                                <input asp-for="Rating" class="form-check-input" type="radio" id="star3" name="rating" value="3" disabled /><label for="star3" title="3 stars">★</label>
-                                <input asp-for="Rating" class="form-check-input" type="radio" id="star2" name="rating" value="2" disabled /><label for="star2" title="2 stars">★</label>
-                                <input asp-for="Rating" class="form-check-input" type="radio" id="star1" name="rating" value="1" disabled /><label for="star1" title="1 star">★</label>
+                        <dt class="col-sm-5">Model year from</dt>
+                        <dd class="col-sm-7">@Html.DisplayFor( model => model.ModelYearFrom )</dd>
+                        <dt class="col-sm-5">Model year to</dt>
+                        <dd class="col-sm-7">@Html.DisplayFor( model => model.ModelYearTo )</dd>
+                        <dt class="col-sm-5 mt-2">Rating</dt>
+                        <dd class="col-sm-7">
+                            <div class="star-rating read-only" data-rating="@Model.Rating">
+                                <span>★★★★★</span>
                             </div>
                             @String.Format( "{0}", Model.Rating > 0 ? Model.Rating.ToString() : "" )
                         </dd>
                     </dl>
+                </div>
+                <div class="col-md-3">
+@*                     <dl class="row">
+                        <dt class="col-sm-4">Rating</dt>
+                        <dd class="col-sm-8">
+                            <div class="star-rating read-only" data-rating="@Model.Rating">
+                                <span>★★★★★</span>
+                            </div>
+                            @String.Format( "{0}", Model.Rating > 0 ? Model.Rating.ToString() : "" )
+                        </dd>
+                    </dl> *@
+                </div>
+                <div class="col-md-3">
                     <div class="col-sm-12">
                         @if( Model.ImageData != null ) {
                             <img src="data:@Model.ImageMimeType;base64,@Convert.ToBase64String(Model.ImageData)" class="car-img img-fluid" alt="Car Image" />
@@ -67,12 +59,48 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            @* TO DO *@
+@*             <div class="row">
                 <dl class="col-12">
                     <dt>Review (About)</dt>
                     <dd>@Html.DisplayFor( model => model.Description )</dd>
                 </dl>
+            </div> *@
+        </div>
+    </div>
+
+    <div class="pagetitle mb-2">
+        <h1>Engines</h1>
+    </div>
+    <div class="card">
+        <div class="card-body pb-0">
+            <div class="row my-3">
+                @if( Model.Engines == null || !Model.Engines.Any() ) {
+                    <p>No engines available.</p>
+                }
+                else {
+                    @if( !groupedEngines.Any() ) {
+                        <p>No engines available by fuel type.</p>
+                    }
+                    else {
+                        @* Create a new row for each group *@
+                        foreach( var group in groupedEngines ) {
+                            <div class="col-md-3">
+                                @* Adjust column size as needed *@
+                                <h5 class="engine-type">@group.Key</h5>
+                                <ul class="list-unstyled mb-0">
+                                    @foreach( var engine in group ) {
+                                        <li class="engine-item fw-semibold">
+                                            <a href="#" class="text-decoration-none text-dark engine-link">@engine.Name</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    }
+                }
             </div>
+
         </div>
     </div>
 

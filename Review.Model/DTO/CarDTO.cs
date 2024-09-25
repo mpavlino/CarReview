@@ -80,6 +80,7 @@ namespace Review.Model.DTO {
             // Mapping Engines
             Engines = p.Engines.Select( e => new EngineDTO {
                 ID = e.ID,
+                Name = e.Name,
                 Cylinders = e.Cylinders,
                 Displacement = e.Displacement,
                 Power = e.Power,

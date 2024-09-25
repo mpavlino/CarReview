@@ -24,11 +24,8 @@
                             </div>
                         </div>
                         <div class="review-rating mb-2">
-                            <div class="star-rating read-only">
-                                @for( int i = 5; i >= 1; i-- ) {
-                                    <input type="radio" id="star@i-@review.ID" name="rating-@review.ID" value="@i" @(review.Rating == i ? "checked" : "") disabled />
-                                    <label for="star@i-@review.ID" title="@i stars">★</label>
-                                }
+                            <div class="star-rating read-only" data-rating="@review.Rating">
+                                <span>★★★★★</span>
                             </div>
                             <span>@review.Rating / 5</span>
                         </div>

@@ -10,7 +10,7 @@ namespace Review.Models.Car {
         public CarReviewViewModel() { }
 
         public CarReviewViewModel( Model.Car car ) { 
-            CarName = String.Format( "{0} {1}", car.Brand.Name, car.Model );
+            CarName = String.Format( "{0} {1}", car.Brand.Name, car.Model.Name );
             CarID = car.ID;
             CreatedOn = DateTime.Now;
         }
@@ -21,7 +21,7 @@ namespace Review.Models.Car {
             CreatedOn = carReview.CreatedOn;
             Rating = carReview.Rating;
             CarID = carReview.CarID;
-            CarName = String.Format( "{0} {1}", carReview.Car.Brand.Name, carReview.Car.Model );
+            CarName = String.Format( "{0} {1}", carReview.Car.Brand.Name, carReview.Car.Model.Name );
             ReviewerID = carReview.ReviewerId;
             Images = carReview.Images;
             //if( carReview.Images != null || carReview.Images.Count > 0 ) {

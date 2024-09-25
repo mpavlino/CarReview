@@ -19,11 +19,11 @@ namespace Review.Model {
         public string Generation { get; set; }
 
         [DataType( DataType.Date )]
-        [DisplayFormat( DataFormatString = "{0:MM/yyyy}", ApplyFormatInEditMode = true )]
+        [DisplayFormat( DataFormatString = "{0:yyyy.}", ApplyFormatInEditMode = true )]
         public DateTime ModelYearFrom { get; set; }
 
         [DataType( DataType.Date )]
-        [DisplayFormat( DataFormatString = "{0:MM/yyyy}", ApplyFormatInEditMode = true )]
+        [DisplayFormat( DataFormatString = "{0:yyyy.}", ApplyFormatInEditMode = true )]
         public DateTime? ModelYearTo { get; set; }
         public string Description { get; set; }
 

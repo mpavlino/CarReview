@@ -39,39 +39,108 @@ body {
 }
 
 .star-rating {
+    direction: ltr;
+    display: inline-block;
+    font-size: 1.7rem;
+    position: relative;
+}
+
+    .star-rating span {
+        color: #ddd; /* Default color for empty stars */
+        position: relative;
+        z-index: 1;
+    }
+
+    .star-rating::before {
+        content: "★★★★★";
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #f5b301; /* Color for filled stars */
+        overflow: hidden;
+        width: 0; /* Controls the width based on rating */
+        z-index: 2;
+        white-space: nowrap;
+    }
+
+    /* Setting specific widths for various rating values */
+    .star-rating[data-rating="5"]::before {
+        width: 100%;
+    }
+
+    .star-rating[data-rating="4.5"]::before {
+        width: 90%;
+    }
+
+    .star-rating[data-rating="4"]::before {
+        width: 80%;
+    }
+
+    .star-rating[data-rating="3.5"]::before {
+        width: 70%;
+    }
+
+    .star-rating[data-rating="3"]::before {
+        width: 60%;
+    }
+
+    .star-rating[data-rating="2.5"]::before {
+        width: 50%;
+    }
+
+    .star-rating[data-rating="2"]::before {
+        width: 40%;
+    }
+
+    .star-rating[data-rating="1.5"]::before {
+        width: 30%;
+    }
+
+    .star-rating[data-rating="1"]::before {
+        width: 20%;
+    }
+
+    .star-rating[data-rating="0.5"]::before {
+        width: 10%;
+    }
+
+    .star-rating[data-rating="0"]::before {
+        width: 0%;
+    }
+/* No stars filled when rating is 0 */
+
+    .small-stars {
+        font-size: 1.4rem;
+        padding: 0rem;
+    }
+
+
+.star-rating-input {
     direction: rtl;
     display: inline-block;
     padding: 0;
 }
 
-    .star-rating input[type="radio"] {
+    .star-rating-input input[type="radio"] {
         display: none;
     }
 
-    .star-rating label {
+    .star-rating-input label {
         font-size: 1.7rem;
         color: #ddd;
         padding: 0 0.1rem;
         cursor: pointer;
     }
 
-    .star-rating input[type="radio"]:checked ~ label {
+    .star-rating-input input[type="radio"]:checked ~ label {
         color: #f5b301;
     }
 
-    .star-rating:not(.read-only) label:hover,
-    .star-rating:not(.read-only) label:hover ~ label {
+    .star-rating-input:not(.read-only) label:hover,
+    .star-rating-input:not(.read-only) label:hover ~ label {
         color: #f5b301;
     }
 
-    .star-rating.read-only label {
-        cursor: default;
-    }
-
-.small-stars label {
-    font-size: 1.2rem;
-    padding: 0rem;
-}
 
 .blog-read {
     line-height: 1;
@@ -138,6 +207,14 @@ body {
     border: 1px solid rgba(0, 0, 0, .3);
     border-radius: 2px;
 }
+
+.engine-type {
+    color: #4154f1 !important;
+}
+
+.engine-link:hover {
+    color: #4154f1 !important;
+} 
 
 /*Generate image css*/
 #search-form {
