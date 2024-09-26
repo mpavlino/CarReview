@@ -87,11 +87,11 @@
                         foreach( var group in groupedEngines ) {
                             <div class="col-md-3">
                                 @* Adjust column size as needed *@
-                                <h5 class="engine-type">@group.Key</h5>
+                                <h5 class="engine-type fw-semibold">@group.Key</h5>
                                 <ul class="list-unstyled mb-0">
                                     @foreach( var engine in group ) {
                                         <li class="engine-item fw-semibold">
-                                            <a href="#" class="text-decoration-none text-dark engine-link">@engine.Name</a>
+                                            <i class="bi-caret-right-fill primary-color"></i><a href="#" class="text-decoration-none text-dark engine-link">@engine.Name</a>
                                         </li>
                                     }
                                 </ul>

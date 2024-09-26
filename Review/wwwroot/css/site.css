@@ -28,6 +28,10 @@ body {
     margin: 15px;
 }
 
+.primary-color {
+    color: #4154f1 !important;
+}
+
 .img-responsive {
     width: 100%;
     height: 100%;

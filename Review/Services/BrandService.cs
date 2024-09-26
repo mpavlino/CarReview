@@ -61,6 +61,7 @@ namespace Review.Services {
                     var syncModelData = externalModels.Select( model => new Model.Model {
                         Id = model.Id,
                         Name = model.Name,
+                        Url = model.Url,
                         BrandId = model.BrandId
                     } ).ToList();
 
@@ -294,16 +295,23 @@ namespace Review.Services {
                         makeHtmlDocument.LoadHtml( makePageContent );
 
                         // XPath to find all model names inside <h4> tags within <div> with class 'carmod'
-                        var modelNodes = makeHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'carmod')]//h4" );
+                        var modelNodes = makeHtmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'carmod')]//a[1]" );
 
                         if( modelNodes != null ) {
                             foreach( var modelNode in modelNodes ) {
                                 var modelName = modelNode.InnerText.Trim();
                                 modelName = modelName.Substring( makeName.Length ).Trim();
 
+                                var modelUrl = modelNode.GetAttributeValue( "href", string.Empty );
+                                // Ensure the URL is absolute
+                                if( !modelUrl.StartsWith( "http" ) ) {
+                                    modelUrl = new Uri( new Uri( baseUrl ), modelUrl ).AbsoluteUri;
+                                }
+
                                 // Create a new Model instance and add it to the list
                                 var model = new Model.Model {
                                     Name = modelName,
+                                    Url = modelUrl,
                                     BrandId = await GetBrandIdByNameAsync( makeName ) // Method to get BrandId by makeName
                                 };
                                 models.Add( model );

@@ -32,7 +32,7 @@ namespace Review.Test {
 
             // Ensure that the real method is called when SyncCarsAsync() is invoked
             _carServiceMock
-                .Setup( service => service.SyncCarsAsync() )
+                .Setup( service => service.SyncCarsAsync( 1 ) )
                 .ReturnsAsync( true ) // Simulate the behavior of the actual method
                 .Verifiable();       // This will ensure that the method was actually called
 
@@ -57,7 +57,7 @@ namespace Review.Test {
             //    //Assert.IsNotEmpty( make.Value, $"Model list for {make.Key} should not be empty." );
             //    Assert.IsNotEmpty( engine.Name, $"Engine list for {engine.CarID} should not be empty." );
             //}
-            bool isSynced = await _carService.SyncCarsAsync();
+            bool isSynced = await _carService.SyncCarsAsync( 1 );
             Assert.IsTrue( isSynced );
         }
 

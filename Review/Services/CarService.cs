@@ -165,9 +165,10 @@ namespace Review.Services {
                 string baseUrl = "https://www.autoevolution.com/cars/";
 
                 var model = await _brandService.GetModelById( id );
-                var brandName = model.Brand?.Name.Replace( " ", "-" );
-                var modelName = model.Name.Replace( " ", "-" );
-                var modelUrl = $"https://www.autoevolution.com/{brandName.ToLower()}/{modelName.ToLower()}";
+                //var brandName = model.Brand?.Name.Replace( " ", "-" );
+                //var modelName = model.Name.Replace( " ", "-" );
+                //var modelUrl = $"https://www.autoevolution.com/{brandName.ToLower()}/{modelName.ToLower()}";
+                var modelUrl = model.Url;
                 // Fetch the make's page to get models
                 var modelPageContent = await _httpClient.GetStringAsync( modelUrl );
                 var modelHtmlDocument = new HtmlDocument();

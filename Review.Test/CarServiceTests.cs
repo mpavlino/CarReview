@@ -54,7 +54,7 @@ namespace Review.Test {
                              .ReturnsAsync( new List<Model.Model> { new Model.Model { Id = 1, Name = "TestModel" } } );
 
             // Act
-            var result = await _carService.SyncCarsAsync();
+            var result = await _carService.SyncCarsAsync(1);
 
             // Assert
             Assert.IsTrue( result, "SyncCarsAsync should return true" );

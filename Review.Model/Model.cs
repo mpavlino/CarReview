@@ -14,6 +14,7 @@ namespace Review.Model {
 
         [Required( ErrorMessage = "Brand name is required." )]
         public string Name { get; set; }
+        public string Url { get; set; }
 
         [ForeignKey( nameof( Brand ) )]
         public int BrandId { get; set; }

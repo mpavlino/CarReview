@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         remainingItems[0].classList.add('active');
                     }
-                    updateUploadedImages();
+                    //updateUploadedImages();
                     Swal.fire(
                         'Removed!',
                         'The image has been removed.',

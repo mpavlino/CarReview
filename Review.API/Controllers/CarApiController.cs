@@ -62,7 +62,7 @@ namespace Review.Controllers {
         [HttpPost( "search" )]
         public ActionResult<IEnumerable<CarDTO>> SearchCars( CarFilterModel filter ) {
             try {
-                var carQuery = this._dbContext.Cars.Include( c => c.Brand ).ThenInclude( c => c.Country ).Include( c => c.Reviewer ).AsQueryable();
+                var carQuery = this._dbContext.Cars.Include( c => c.Brand ).ThenInclude( c => c.Country ).Include( c => c.Reviewer ).Include( c => c.Engines ).AsQueryable();
 
                 //Primjer iterativnog građenja upita - dodaje se "where clause" samo u slučaju da je parametar doista proslijeđen.
                 //To rezultira optimalnijim stablom izraza koje se kvalitetnije potencijalno prevodi u SQL
@@ -72,8 +72,8 @@ namespace Review.Controllers {
                 if( !string.IsNullOrWhiteSpace( filter.Model ) )
                     carQuery = carQuery.Where( p => p.ModelID != null && p.Model.Id.ToString() == filter.Model );
 
-                //if( !string.IsNullOrWhiteSpace( filter.Engine ) )
-                //    carQuery = carQuery.Where( p => p.Engine.ToLower().Contains( filter.Engine.ToLower() ) );
+                if( !string.IsNullOrWhiteSpace( filter.Engine ) )
+                    carQuery = carQuery.Where( p => p.Engines.Any( e => e.Name.ToLower().Contains( filter.Engine.ToLower() ) ) );
 
                 if( !string.IsNullOrWhiteSpace( filter.Country ) )
                     carQuery = carQuery.Where( p => p.Brand.CountryID != null && p.Brand.Country.ID.ToString() == filter.Country );
@@ -251,13 +251,14 @@ namespace Review.Controllers {
                     // Update the properties of the existing CarReview
                     _dbContext.Entry( existing ).CurrentValues.SetValues( carReview );
 
+                    // Remove images that are no longer present
+                    var imagesToRemove = existing.Images.Where( ei => !carReview.Images.Any( ci => ci.ID == ei.ID ) ).ToList();
+                    foreach( var image in imagesToRemove ) {
+                        existing.Images.Remove( image );
+                    }
+
                     // Handle Images
                     if( carReview.Images != null && carReview.Images.Any() ) {
-                        // Remove images that are no longer present
-                        var imagesToRemove = existing.Images.Where( ei => !carReview.Images.Any( ci => ci.ID == ei.ID ) ).ToList();
-                        foreach( var image in imagesToRemove ) {
-                            existing.Images.Remove( image );
-                        }
 
                         // Add or update images
                         foreach( var newImage in carReview.Images ) {

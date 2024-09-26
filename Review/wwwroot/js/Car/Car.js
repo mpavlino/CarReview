@@ -1,5 +1,19 @@
 ﻿"use strict";
 
+
+function performSearch(sender) {
+    var formValues = $(sender).closest('form').serialize();
+
+    $.ajax({
+        url: '/Car/IndexAjax',
+        data: formValues,
+        method: "POST",
+        success: function (html) {
+            $('#tbl-cars tbody').html(html); // Replace only the table body
+        }
+    })
+}
+
 $(document).ready(function () {
     $('#BrandID').change(function () {
         var brandId = $(this).val();

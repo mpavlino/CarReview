@@ -55,7 +55,7 @@ namespace Review.Controllers {
         public async Task<IActionResult> IndexAjax( CarFilterModel filter ) {
             try {
                 var cars = await _carService.SearchCarsAsync( filter );
-                return PartialView( "_IndexTable", cars.ToList() );
+                return PartialView( "_IndexTableBody", cars.ToList() );
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while searching cars." );

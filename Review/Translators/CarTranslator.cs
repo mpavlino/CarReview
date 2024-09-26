@@ -36,6 +36,7 @@ namespace Review.Translators {
                 Rating = carReviewViewModel.Rating,
                 ReviewerId = carReviewViewModel.ReviewerID,
                 CarID = carReviewViewModel.CarID,
+                Images = carReviewViewModel.Images
                 //ImageData = carReviewViewModel.ImageData,
                 //ImageMimeType = carReviewViewModel.ImageMimeType
             };

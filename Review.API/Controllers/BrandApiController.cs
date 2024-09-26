@@ -208,6 +208,7 @@ namespace Review.API.Controllers {
                     else {
                         // Update existing brand
                         existingModel.Name = model.Name;
+                        existingModel.Url = model.Url;
                         // Update other fields if necessary
                     }
                 }
