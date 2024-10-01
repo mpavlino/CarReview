@@ -1,5 +1,19 @@
 ﻿"use strict";
 
+let dataTable;
+
+document.addEventListener('DOMContentLoaded', function () {
+    const tableElement = document.querySelector('#tbl-cars');
+    dataTable = new simpleDatatables.DataTable(tableElement, {
+        searchable: true,  // Disable client-side search (since you're doing server-side search)
+        fixedHeight: true,  // Example option to ensure a fixed height
+        paging: true        // Enable client-side paging
+    });
+    window.datatable = dataTable
+    dataTable.on("datatable.init", () => {
+        dataTable.initialized = true
+    })
+});
 
 function performSearch(sender) {
     var formValues = $(sender).closest('form').serialize();
@@ -9,10 +23,25 @@ function performSearch(sender) {
         data: formValues,
         method: "POST",
         success: function (html) {
-            $('#tbl-cars tbody').html(html); // Replace only the table body
+            // Destroy the existing DataTable instance
+            const tableElement = document.querySelector('#tbl-cars');
+            var table = dataTable;
+            //dataTable = new simpleDatatables.DataTable(tableElement);
+            table.destroy();  // Remove the current table
+
+            // Replace table body with new data
+            $('#tbl-cars tbody').html(html);
+
+            table = new simpleDatatables.DataTable(tableElement, {
+                searchable: true,  // Disable client-side search (since you're doing server-side search)
+                fixedHeight: true,  // Example option to ensure a fixed height
+                paging: true        // Enable client-side paging
+            });
         }
-    })
+    });
 }
+
+
 
 $(document).ready(function () {
     $('#BrandID').change(function () {
