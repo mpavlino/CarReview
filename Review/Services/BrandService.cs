@@ -120,21 +120,14 @@ namespace Review.Services {
                 var htmlDocument = new HtmlDocument();
                 htmlDocument.LoadHtml( mainPageContent );
 
-                // Print the HTML content for debugging
-                // Console.WriteLine(htmlDocument.DocumentNode.OuterHtml);
-
-                // Updated XPath to find divs with class 'carman' and then all 'a' tags within them
+                // Extract data using XPath
                 var makeNodes = htmlDocument.DocumentNode.SelectNodes( "//div[contains(@class, 'carman')]/a[1]" );
 
                 if( makeNodes != null ) {
                     foreach( var makeNode in makeNodes ) {
-                        // Extract the car make's name from the title attribute
                         var makeName = makeNode.GetAttributeValue( "title", string.Empty ).Trim();
-
-                        // Create a new Brand instance and add it to the list
                         var brand = new Brand {
                             Name = makeName,
-                            // Assuming CountryID can be null or set to a default value
                             CountryID = null
                         };
                         brands.Add( brand );
@@ -143,11 +136,16 @@ namespace Review.Services {
 
                 return brands;
             }
+            catch( HttpRequestException ex ) when( ex.StatusCode == System.Net.HttpStatusCode.Forbidden ) {
+                _logger.LogError( "Access to the website is forbidden. Check your headers and IP restrictions." );
+                throw;
+            }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while getting all brands." );
                 throw;
             }
         }
+
 
         // Helper method to get BrandId by makeName
         private async Task<int> GetBrandIdByNameAsync( string makeName ) {

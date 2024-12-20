@@ -28,18 +28,30 @@
                 </div>
             </div>
             <div class="form-group row mb-1 mb-md-3">
-                <label class="col-12 col-lg-3 col-md-5 col-form-label">Model Date</label>
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Model Year From</label>
                 <div class="col-12 col-lg-8 col-md-7">
                     <div class="input-group date" id="datepicker" data-provide="datepicker" data-date-format="mm/yyyy">
-                        <input asp-for="ModelYear" type="text" class="form-control" value="@((Model.ModelYear == DateTime.MinValue) ? string.Empty : Model.ModelYear.ToString("MM/yyyy"))" />
+                        <input asp-for="ModelYearFrom" type="text" class="form-control" value="@((Model.ModelYearFrom == DateTime.MinValue) ? string.Empty : Model.ModelYearFrom.ToString("MM/yyyy"))" />
                         <div class="input-group-addon">
                             <span class="glyphicon glyphicon-th"></span>
                         </div>
                     </div>
-                    <span asp-validation-for="ModelYear" class="text-danger"></span>
+                    <span asp-validation-for="ModelYearFrom" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row mb-1 mb-md-3">
+                <label class="col-12 col-lg-3 col-md-5 col-form-label">Model Year To</label>
+                <div class="col-12 col-lg-8 col-md-7">
+                    <div class="input-group date" id="datepicker" data-provide="datepicker" data-date-format="mm/yyyy">
+                        <input asp-for="ModelYearTo" type="text" class="form-control" value="@((Model.ModelYearTo == DateTime.MinValue) ? string.Empty : Model.ModelYearTo?.ToString("MM/yyyy"))" />
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="ModelYearTo" class="text-danger"></span>
+                </div>
+            </div>
+@*             <div class="form-group row mb-1 mb-md-3">
                 <label class="col-12 col-lg-3 col-md-5 col-form-label">Engine</label>
                 <div class="col-12 col-lg-8 col-md-7 d-flex align-items-center">
                     <input asp-for="Engine" class="form-control mr-2" />
@@ -85,7 +97,7 @@
                     <span class="text-nowrap ms-2">sec (0-100km/h)</span>
                     <span asp-validation-for="Acceleration" class="text-danger ml-2"></span>
                 </div>
-            </div>
+            </div> *@
         </div>
         <div class="col-12 col-md-6">
             <div class="form-group row mb-1 mb-md-3">
@@ -95,7 +107,7 @@
                     <span asp-validation-for="ReviewerID" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-group row mb-1 mb-md-3">
+@*             <div class="form-group row mb-1 mb-md-3">
                 <label class="col-12 col-lg-3 col-md-5 col-form-label">Rating</label>
                 <div class="col-12 col-lg-8 col-md-7">
                     <div class="star-rating">
@@ -107,7 +119,7 @@
                     </div>
                     <span asp-validation-for="Rating" class="text-danger"></span>
                 </div>
-            </div>
+            </div> *@
             <div class="form-group row mb-1 mb-md-3">
                 <label class="col-12 col-lg-3 col-md-5 col-form-label">Image</label>
                 <div class="col-12 col-lg-8 col-md-7">

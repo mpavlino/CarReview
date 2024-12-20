@@ -2179,7 +2179,10 @@
           "System.Diagnostics.EventLog": "8.0.0"
         },
         "runtime": {
-          "Review.Model.dll": {}
+          "Review.Model.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

@@ -45,7 +45,7 @@
                                     <td style="display: none;"></td>
                                     <td>
                                         @if( User.IsInRole( "Administrator" ) ) {
-                                            <a asp-action="SyncModelCars" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm syncCars" data-bs-toggle="tooltip" data-bs-placement="top" title="Sync model data"><i class="bi-arrow-repeat"></i></a>
+                                            <a asp-action="SyncModelCars" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm syncCars" data-bs-toggle="tooltip" data-bs-placement="top" title="Sync model data. This may take a bit longer to execute."><i class="bi-arrow-repeat"></i></a>
                                         }
                                     </td>
                                 </tr>

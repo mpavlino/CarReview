@@ -32,6 +32,9 @@ namespace Review.Services {
 
             string token = _tokenHandler.GenerateToken( userId );
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", token );
+
+            // Add User-Agent header
+            _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd( "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" );
         }
     }
 }

@@ -10,6 +10,8 @@ namespace Review.Translators {
                 BrandID = carViewModel.BrandID,
                 ModelID = carViewModel.ModelID,
                 Generation = carViewModel.Generation,
+                ModelYearFrom = carViewModel.ModelYearFrom,
+                ModelYearTo = carViewModel.ModelYearTo,
                 //Engine = carViewModel.Engine,
                 //EnginePower = carViewModel.EnginePower,
                 //Torque = carViewModel.Torque,

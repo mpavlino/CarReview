@@ -295,3 +295,7 @@ C:\Projects\CarReview\Review\obj\Debug\net8.0\Review.pdb
 C:\Projects\CarReview\Review\obj\Debug\net8.0\Review.genruntimeconfig.cache
 C:\Projects\CarReview\Review\obj\Debug\net8.0\ref\Review.dll
 C:\Projects\CarReview\Review\bin\Debug\net8.0\HtmlAgilityPack.dll
+C:\Projects\CarReview\Review\bin\Debug\net8.0\Review.staticwebassets.endpoints.json
+C:\Projects\CarReview\Review\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Projects\CarReview\Review\obj\Debug\net8.0\staticwebassets\msbuild.Review.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Projects\CarReview\Review\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

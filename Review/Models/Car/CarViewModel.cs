@@ -18,6 +18,8 @@ namespace Review.Models.Car {
             ModelID = car.ModelID;
             ModelName = car.Model?.Name;
             Generation = car.Generation;
+            ModelYearFrom = car.ModelYearFrom;
+            ModelYearTo = car.ModelYearTo;
             //Engine = car.Engine;
             //EnginePower = car.EnginePower;
             //Torque = car.Torque;
@@ -43,16 +45,22 @@ namespace Review.Models.Car {
         [Required( ErrorMessage = "Generation name is required." )]
         [UniqueCarGenerationName( ErrorMessage = "A car with this generation name already exists." )]
         public string Generation { get; set; }
-        [Required( ErrorMessage = "Engine is required." )]
-        public string Engine { get; set; }
-        public string EnginePower { get; set; }
-        public string Torque { get; set; }
-        public string EngineDisplacement { get; set; }
-        public int? TopSpeed { get; set; }
-        public decimal? Acceleration { get; set; }
+        //[Required( ErrorMessage = "Engine is required." )]
+        //public string Engine { get; set; }
+        //public string EnginePower { get; set; }
+        //public string Torque { get; set; }
+        //public string EngineDisplacement { get; set; }
+        //public int? TopSpeed { get; set; }
+        //public decimal? Acceleration { get; set; }
         [DataType( DataType.Date )]
         [DisplayFormat( DataFormatString = "{0:MM/yyyy}", ApplyFormatInEditMode = true )]
-        public DateTime ModelYear { get; set; }
+        public DateTime ModelYearFrom { get; set; }
+        [DataType( DataType.Date )]
+        [DisplayFormat( DataFormatString = "{0:MM/yyyy}", ApplyFormatInEditMode = true )]
+        public DateTime? ModelYearTo { get; set; }
+        //[DataType( DataType.Date )]
+        //[DisplayFormat( DataFormatString = "{0:MM/yyyy}", ApplyFormatInEditMode = true )]
+        //public DateTime ModelYear { get; set; }
         public string Description { get; set; }
         public int? ReviewerID { get; set; }
         public decimal Rating { get; set; }

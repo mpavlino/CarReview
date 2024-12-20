@@ -113,14 +113,14 @@ namespace Review.Controllers {
         [Authorize( Roles = "Administrator" )]
         public async Task<IActionResult> Edit( int id ) {
             try {
-                //ViewBag.PossibleModels = await _dropdownService.GetModelsAsync();
-                ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();
+                ViewBag.PossibleBrands = await _dropdownService.GetBrandsAsync();        
                 ViewBag.PossibleReviewers = await _dropdownService.GetReviewersAsync();
                 var car = await _carService.GetCarByIdAsync( id );
                 if( car == null ) {
                     return NotFound();
                 }
 
+                ViewBag.PossibleModels = await _dropdownService.GetModelsAsync( car.BrandID ?? 0 );
                 var carViewModel = new CarViewModel( car );
                 return View( carViewModel );
             }

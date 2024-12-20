@@ -26,6 +26,10 @@ var SiteModule = (function () {
     }
 document.addEventListener('DOMContentLoaded', function () {
 
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
+
     // Load the saved selected link from sessionStorage
     const savedLink = sessionStorage.getItem('selectedNavLink');
     const navLinks = document.querySelectorAll('#sidebar .nav-link');

@@ -4,15 +4,19 @@ let dataTable;
 
 document.addEventListener('DOMContentLoaded', function () {
     const tableElement = document.querySelector('#tbl-cars');
-    dataTable = new simpleDatatables.DataTable(tableElement, {
-        searchable: true,  // Disable client-side search (since you're doing server-side search)
-        fixedHeight: true,  // Example option to ensure a fixed height
-        paging: true        // Enable client-side paging
-    });
-    window.datatable = dataTable
-    dataTable.on("datatable.init", () => {
-        dataTable.initialized = true
-    })
+    if (tableElement) {
+        dataTable = new simpleDatatables.DataTable(tableElement, {
+            searchable: true,  // Disable client-side search (since you're doing server-side search)
+            fixedHeight: true,  // Example option to ensure a fixed height
+            paging: true        // Enable client-side paging
+        });
+        window.datatable = dataTable
+        dataTable.on("datatable.init", () => {
+            dataTable.initialized = true
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+        })
+    }
 });
 
 function performSearch(sender) {
