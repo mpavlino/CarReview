@@ -1,5 +1,5 @@
 # CarReview
 
-This is ASP.NET Core MVC project (with PostgreSQL database) for car managing and reviewing.
+ASP.NET Core MVC web application (with PostgreSQL database) for car managing and reviewing.
 
 
