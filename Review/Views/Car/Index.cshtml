@@ -15,22 +15,22 @@
 }
 <div class="card">
     <div class="card-body">
-        @* <div class="table-responsive" style="margin-top: 20px;"> *@
-        <table id="tbl-cars" class="table">
-            <thead>
-                <tr>
-                    <th style="display: none;"></th>
-                    <th>Car</th>
-                    <th style="display: none;"></th>
-                    <th class="d-none d-md-table-cell">Rating</th>
-                    <th data-sortable="false"></th>
-                </tr>
-            </thead>
-            <tbody id="tbl-cars-body">
-                <partial name="_IndexTableBody" />
-            </tbody>
-        </table>
-        @* </div> *@
+        <div class="table-responsive" style="margin-top: 20px;">
+            <table id="tbl-cars" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th style="display: none;"></th>
+                        <th>Car</th>
+                        <th style="display: none;"></th>
+                        <th class="d-none d-md-table-cell">Rating</th>
+                        <th data-sortable="false"></th>
+                    </tr>
+                </thead>
+                <tbody id="tbl-cars-body">
+                    <partial name="_IndexTableBody" />
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 @section Scripts {
