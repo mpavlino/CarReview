@@ -1,19 +1,20 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using HtmlAgilityPack;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
+using Microsoft.Playwright;
+using Newtonsoft.Json.Linq;
 using Review.DAL;
+using Review.Handlers;
 using Review.Model;
+using Review.Model.DTO;
 using Review.Model.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using System;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Review.Handlers;
-using Review.Model.DTO;
-using HtmlAgilityPack;
 
 namespace Review.Services {
     public class BrandService : BaseService, IBrandService {
@@ -41,7 +42,8 @@ namespace Review.Services {
             try {
                 // Fetch brands from the external API
                 //IEnumerable<Brand> externalBrands = await GetAllBrandsFromApiAsync(); // This calls the external API
-                IEnumerable<Brand> externalBrands = await GetAllBrandsFromWebAsync(); // This calls the external API
+                //IEnumerable<Brand> externalBrands = await GetAllBrandsFromWebAsync(); // This calls the external API
+                IEnumerable<Brand> externalBrands = await GetAllBrandsFromWebPlaywrightAsync(); // This calls the external API
 
                 // Prepare the data for the sync API
                 var syncData = externalBrands.Select( brand => new Brand {
@@ -56,9 +58,10 @@ namespace Review.Services {
 
                 response.EnsureSuccessStatusCode();
                 if( response.IsSuccessStatusCode ) {
-                    IEnumerable<Model.Model> externalModels = await GetAllModelsFromWebAsync(); // This calls the external API
-                                                                                                // Prepare the data for the sync API
-                    var syncModelData = externalModels.Select( model => new Model.Model {
+                    //IEnumerable<Model.Model> externalModels = await GetAllModelsFromWebAsync(); // This calls the external API
+                    IEnumerable<Model.Model> externalModels = await GetAllModelsFromWebPlaywrightAsync();  
+                 
+                    var syncModelData = externalModels.Select( model => new Model.Model {        // Prepare the data for the sync API
                         Id = model.Id,
                         Name = model.Name,
                         Url = model.Url,
@@ -142,6 +145,27 @@ namespace Review.Services {
             }
             catch( Exception ex ) {
                 _logger.LogError( ex, "An error occurred while getting all brands." );
+                throw;
+            }
+        }
+
+
+        public async Task<IEnumerable<Brand>> GetAllBrandsFromWebPlaywrightAsync() {
+            try {
+                var brands = new List<Brand>();
+                var scraper = new AutoEvolutionScraper();
+
+                var brandList = await scraper.GetBrandsAsync();
+                foreach( var brand in brandList ) {
+                    brands.Add( new Brand {
+                        Name = brand.Name,
+                        CountryID = null
+                    } );
+                }
+                return brands;
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while getting all brands with Playwright." );
                 throw;
             }
         }
@@ -328,6 +352,28 @@ namespace Review.Services {
                 throw;
             }
         }
+
+        public async Task<IEnumerable<Model.Model>> GetAllModelsFromWebPlaywrightAsync() {
+            try {
+                var models = new List<Model.Model>();
+                var scraper = new AutoEvolutionScraper();
+
+                var modelList = await scraper.GetModelsAsync();
+                foreach( var model in modelList ) {
+                    models.Add( new Model.Model {
+                        Name = model.Name,
+                        Url = model.Url,
+                        BrandId = await GetBrandIdByNameAsync( model.BrandName ) // Method to get BrandId by makeName
+                    } );
+                }
+                return models;
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while getting all models with Playwright." );
+                throw;
+            }
+        }
+
 
         public async Task<IEnumerable<Model.Model>> GetModelsByBrandId( int brandId ) {
             try {
