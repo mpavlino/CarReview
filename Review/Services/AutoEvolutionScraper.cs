@@ -1,7 +1,9 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Playwright;
 using Review.Handlers;
 using Review.Model.DTO;
 using Review.Model.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -10,6 +12,11 @@ using System.Threading.Tasks;
 namespace Review.Services {
     public class AutoEvolutionScraper : ICarScraper {
         private const string BaseUrl = "https://www.autoevolution.com/cars/";
+        private readonly ILogger<AutoEvolutionScraper> _logger;
+
+        public AutoEvolutionScraper( ILogger<AutoEvolutionScraper> logger ) {
+            _logger = logger;
+        }
 
         public async Task<List<CarManDTO>> GetBrandsAsync() {
             var (playwright, browser) = await PlaywrightFactory.CreateAsync();
@@ -26,10 +33,13 @@ namespace Review.Services {
             );
 
             var raw = await page.EvaluateAsync<JsonElement>(
-    @"() => {
-    return Array.from(document.querySelectorAll('div.carman a'))
-        .map(a => {
+            @"() => {
+    return Array.from(document.querySelectorAll('div.carman'))
+        .map(div => {
             try {
+                const a = div.querySelector('a');
+                if (!a) return null;
+
                 const title = a.getAttribute('title');
                 const href = a.getAttribute('href');
                 if (!title || !href) return null;
@@ -65,19 +75,53 @@ namespace Review.Services {
             await using var context = await browser.NewContextAsync( GetContextOptions() );
             var page = await context.NewPageAsync();
 
+            page.SetDefaultNavigationTimeout( 45000 );
+
+            int processed = 0;
+
             foreach( var brand in brands ) {
                 if( string.IsNullOrWhiteSpace( brand.Url ) )
                     continue;
 
-                await page.GotoAsync( brand.Url, new PageGotoOptions {
-                    WaitUntil = WaitUntilState.DOMContentLoaded,
-                    Timeout = 30000
-                } );
+                bool loaded = false;
 
-                // kratki buffer da lazy load odradi svoje
+                // --- NAVIGATION WITH RETRY ---
+                for( int attempt = 1; attempt <= 2; attempt++ ) {
+                    try {
+                        await page.GotoAsync( brand.Url, new PageGotoOptions {
+                            WaitUntil = attempt == 1
+                                ? WaitUntilState.DOMContentLoaded
+                                : WaitUntilState.Load,
+                            Timeout = 30000
+                        } );
+
+                        loaded = true;
+                        break;
+                    }
+                    catch( TimeoutException ) {
+                        _logger.LogWarning(
+                            "Timeout loading brand '{Brand}' (attempt {Attempt})",
+                            brand.Name,
+                            attempt
+                        );
+                    }
+                }
+
+                if( !loaded ) {
+                    _logger.LogWarning(
+                        "Skipping brand '{Brand}' due to repeated timeouts",
+                        brand.Name
+                    );
+                    continue;
+                }
+
+                // --- SMALL BUFFER FOR LAZY LOAD ---
                 await page.WaitForTimeoutAsync( 1000 );
 
-                var raw = await page.EvaluateAsync<JsonElement>(
+                // --- SCRAPE MODELS (SAFE, NO WAIT) ---
+                JsonElement raw;
+                try {
+                    raw = await page.EvaluateAsync<JsonElement>(
         @"() => {
     const nodes = document.querySelectorAll('div.carmod a');
     if (!nodes || nodes.length === 0)
@@ -100,10 +144,24 @@ namespace Review.Services {
         })
         .filter(x => x !== null);
 }"
-                );
-
-                if( raw.ValueKind != JsonValueKind.Array || raw.GetArrayLength() == 0 )
+                    );
+                }
+                catch( Exception ex ) {
+                    _logger.LogWarning(
+                        ex,
+                        "Evaluate failed for brand '{Brand}', skipping.",
+                        brand.Name
+                    );
                     continue;
+                }
+
+                if( raw.ValueKind != JsonValueKind.Array || raw.GetArrayLength() == 0 ) {
+                    _logger.LogInformation(
+                        "Brand '{Brand}' has no models.",
+                        brand.Name
+                    );
+                    continue;
+                }
 
                 foreach( var x in raw.EnumerateArray() ) {
                     if( !x.TryGetProperty( "name", out var nameProp ) )
@@ -118,7 +176,16 @@ namespace Review.Services {
                     } );
                 }
 
-                await Task.Delay( 300 ); // polite scraping
+                processed++;
+
+                // --- POLITE SCRAPING ---
+                await Task.Delay( 300 );
+
+                // --- COOLDOWN EVERY 20 BRANDS ---
+                if( processed % 20 == 0 ) {
+                    _logger.LogInformation( "Cooldown after {Count} brands...", processed );
+                    await Task.Delay( 3000 );
+                }
             }
 
             await browser.CloseAsync();
@@ -126,6 +193,7 @@ namespace Review.Services {
 
             return models;
         }
+
 
 
         private static BrowserNewContextOptions GetContextOptions()

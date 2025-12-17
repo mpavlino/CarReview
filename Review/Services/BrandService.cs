@@ -21,11 +21,13 @@ namespace Review.Services {
 
         private readonly CarManagerDbContext _dbContext;
         private readonly ILogger<BrandService> _logger;
+        private readonly ICarScraper _carScraper;
 
-        public BrandService( CarManagerDbContext dbContext, HttpClient httpClient, TokenHandler tokenHandler, ILogger<BrandService> logger, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor )
+        public BrandService( CarManagerDbContext dbContext, HttpClient httpClient, TokenHandler tokenHandler, ILogger<BrandService> logger, ICarScraper carScraper, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor )
             : base( httpClient, userManager, httpContextAccessor, tokenHandler ) {
             _dbContext = dbContext;
             _logger = logger;
+            _carScraper = carScraper;
         }
 
         public bool IsBrandNameUnique( string name ) {
@@ -153,9 +155,8 @@ namespace Review.Services {
         public async Task<IEnumerable<Brand>> GetAllBrandsFromWebPlaywrightAsync() {
             try {
                 var brands = new List<Brand>();
-                var scraper = new AutoEvolutionScraper();
 
-                var brandList = await scraper.GetBrandsAsync();
+                var brandList = await _carScraper.GetBrandsAsync();
                 foreach( var brand in brandList ) {
                     brands.Add( new Brand {
                         Name = brand.Name,
@@ -356,9 +357,8 @@ namespace Review.Services {
         public async Task<IEnumerable<Model.Model>> GetAllModelsFromWebPlaywrightAsync() {
             try {
                 var models = new List<Model.Model>();
-                var scraper = new AutoEvolutionScraper();
 
-                var modelList = await scraper.GetModelsAsync();
+                var modelList = await _carScraper.GetModelsAsync();
                 foreach( var model in modelList ) {
                     models.Add( new Model.Model {
                         Name = model.Name,

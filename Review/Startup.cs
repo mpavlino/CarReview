@@ -56,6 +56,7 @@ namespace Review {
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<IReviewerService, ReviewerService>();
             services.AddScoped<IDropdownService, DropdownService>();
+            services.AddScoped<ICarScraper, AutoEvolutionScraper>();
             services.AddSingleton<TokenHandler>();
 
             services.AddHttpClient<ICarService, CarService>( client => {
