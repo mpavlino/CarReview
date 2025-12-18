@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
 using Review.Handlers;
+using Review.Model;
 using Review.Model.DTO;
 using Review.Model.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -14,7 +16,9 @@ namespace Review.Services {
         private const string BaseUrl = "https://www.autoevolution.com/cars/";
         private readonly ILogger<AutoEvolutionScraper> _logger;
 
-        public AutoEvolutionScraper( ILogger<AutoEvolutionScraper> logger ) {
+        public AutoEvolutionScraper(
+            ILogger<AutoEvolutionScraper> logger
+        ) {
             _logger = logger;
         }
 
@@ -192,6 +196,328 @@ namespace Review.Services {
             playwright.Dispose();
 
             return models;
+        }
+
+        public async Task<IEnumerable<Car>> GetAllCarsFromWebAsync( Model.Model model ) {
+            var cars = new List<Car>();
+
+            if( model == null || string.IsNullOrWhiteSpace( model.Url ) )
+                return cars;
+
+            var (playwright, browser) = await PlaywrightFactory.CreateAsync();
+            await using var context = await browser.NewContextAsync( GetContextOptions() );
+            var page = await context.NewPageAsync();
+
+            try {
+                // 1️⃣ MODEL PAGE
+                await page.GotoAsync( model.Url, new() {
+                    WaitUntil = WaitUntilState.DOMContentLoaded,
+                    Timeout = 30000
+                } );
+
+                await page.WaitForTimeoutAsync( 1000 );
+
+                // 2️⃣ GENERATION URLS
+                var generationUrls = await page.EvaluateAsync<JsonElement>(
+        @"() => {
+    return Array.from(document.querySelectorAll('div.carmodel h2 a'))
+        .map(a => {
+            const href = a.getAttribute('href');
+            if (!href) return null;
+            return new URL(href, document.baseURI).href;
+        })
+        .filter(x => x !== null);
+}"
+                );
+
+                if( generationUrls.ValueKind != JsonValueKind.Array )
+                    return cars;
+
+                // 3️⃣ GENERATIONS LOOP
+                foreach( var genUrlEl in generationUrls.EnumerateArray() ) {
+                    var generationUrl = genUrlEl.GetString();
+                    if( string.IsNullOrWhiteSpace( generationUrl ) )
+                        continue;
+
+                    var car = new Car {
+                        BrandID = model.BrandId,
+                        ModelID = model.Id,
+                        Engines = new List<Model.Engine>()
+                    };
+
+                    try {
+                        await page.GotoAsync( generationUrl, new() {
+                            WaitUntil = WaitUntilState.DOMContentLoaded,
+                            Timeout = 30000
+                        } );
+
+                        await page.WaitForTimeoutAsync( 1000 );
+
+                        // 4️⃣ GENERATION BASIC DATA
+                        var genData = await page.EvaluateAsync<JsonElement>(
+        @"() => {
+    const h1 = document.querySelector('h1 a');
+    const img = document.querySelector('img.curpo');
+    const desc = document.querySelector('div.modelbox p');
+    const years = document.querySelector('span.motlisthead_years');
+
+    return {
+        name: h1 ? h1.innerText.replace('Photos, engines & full specs','').trim() : null,
+        image: img ? img.src : null,
+        description: desc ? desc.innerText.trim() : null,
+        years: years ? years.innerText.trim() : null
+    };
+}"
+                        );
+
+                        // NAME
+                        if( genData.TryGetProperty( "name", out var nameProp ) )
+                            car.Generation = nameProp.GetString();
+
+                        // YEARS
+                        if( genData.TryGetProperty( "years", out var yearsProp ) ) {
+                            var years = yearsProp.GetString()?.Split( ',', StringSplitOptions.RemoveEmptyEntries );
+                            if( years?.Length > 0 )
+                                car.ModelYearFrom = new DateTime( int.Parse( years.First() ), 1, 1 );
+                            if( years?.Length > 1 )
+                                car.ModelYearTo = new DateTime( int.Parse( years.Last() ), 1, 1 );
+                        }
+
+                        // IMAGE
+                        if( genData.TryGetProperty( "image", out var imgProp ) ) {
+                            var imgUrl = imgProp.GetString();
+                            if( !string.IsNullOrWhiteSpace( imgUrl ) )
+                                car.ImageData = await page.APIRequest.GetAsync( imgUrl )
+                                    .ContinueWith( t => t.Result.BodyAsync().Result );
+                        }
+
+                        // 5️⃣ ENGINE FRAGMENTS
+                        var engineFragments = await page.EvaluateAsync<JsonElement>(
+        @"() => {
+    return Array.from(document.querySelectorAll('li.ellip'))
+        .map(li => li.getAttribute('id'))
+        .filter(x => x !== null);
+}"
+                        );
+
+                        if( engineFragments.ValueKind == JsonValueKind.Array ) {
+                            foreach( var frag in engineFragments.EnumerateArray() ) {
+                                var fragment = frag.GetString();
+                                if( string.IsNullOrWhiteSpace( fragment ) )
+                                    continue;
+
+                                var engineUrl = $"{generationUrl.Split( '#' )[0]}#aeng_{fragment}";
+
+                                try {
+                                    var engines = await ScrapeEngineData( page, engineUrl );
+                                    car.Engines.AddRange( engines );
+                                }
+                                catch( Exception ex ) {
+                                    _logger.LogWarning( ex, $"Engine scrape failed: {engineUrl}" );
+                                }
+
+                                await Task.Delay( 300 );
+                            }
+                        }
+
+                        cars.Add( car );
+                    }
+                    catch( TimeoutException ) {
+                        _logger.LogWarning( $"Generation timeout: {generationUrl}" );
+                    }
+
+                    await Task.Delay( 500 );
+                }
+            }
+            finally {
+                await browser.CloseAsync();
+                playwright.Dispose();
+            }
+
+            return cars;
+        }
+
+
+        private async Task<List<Model.Engine>> ScrapeEngineData(
+            IPage page,
+            string engineUrl
+        ) {
+            var engines = new List<Model.Engine>();
+
+            try {
+                await page.GotoAsync( engineUrl, new() {
+                    WaitUntil = WaitUntilState.DOMContentLoaded,
+                    Timeout = 30000
+                } );
+
+                await page.WaitForTimeoutAsync( 500 );
+
+                var raw = await page.EvaluateAsync<JsonElement>(
+        @"() => {
+    const hash = location.hash?.replace('#', '');
+    if (!hash) return [];
+
+    const container = document.getElementById(hash.replace('aeng_', ''));
+    if (!container) return [];
+
+    const tables = container.querySelectorAll('table.techdata');
+    if (!tables.length) return [];
+
+    const engines = [];
+
+    tables.forEach(table => {
+        const engine = {};
+
+        const titleEl = table.querySelector('th.title span.col-green');
+        if (titleEl)
+            engine.name = titleEl.innerText.trim();
+
+        table.querySelectorAll('tr').forEach(row => {
+            const k = row.querySelector('td.left strong');
+            const v = row.querySelector('td.right');
+            if (!k || !v) return;
+
+            engine[k.innerText.trim()] = v.innerText.trim();
+        });
+
+        engines.push(engine);
+    });
+
+    return engines;
+}"
+                );
+
+                if( raw.ValueKind != JsonValueKind.Array )
+                    return engines;
+
+                foreach( var e in raw.EnumerateArray() ) {
+                    var engine = new Model.Engine();
+
+                    if( e.TryGetProperty( "name", out var n ) )
+                        engine.Name = n.GetString();
+
+                    foreach( var p in e.EnumerateObject() ) {
+                        MapEngineProperty( engine, p.Name, p.Value.GetString() );
+                    }
+
+                    engines.Add( engine );
+                }
+            }
+            catch( TimeoutException ex ) {
+                _logger.LogWarning( ex, $"Engine timeout: {engineUrl}" );
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, $"Engine scrape failed: {engineUrl}" );
+            }
+
+            return engines;
+        }
+
+
+        private static void MapEngineProperty( Model.Engine engine, string key, string value ) {
+            switch( key ) {
+                case "Cylinders:":
+                    engine.Cylinders = value;
+                    break;
+                case "Displacement:":
+                    engine.Displacement = value;
+                    break;
+                case "Power:":
+                    engine.Power = value;
+                    break;
+                case "Torque:":
+                    engine.Torque = value;
+                    break;
+                case "Fuel System:":
+                    engine.FuelSystem = value;
+                    break;
+                case "Fuel:":
+                    engine.FuelType = value;
+                    break;
+                case "Fuel capacity:":
+                    engine.FuelCapacity = ParseDecimal( value );
+                    break;
+                case "Top Speed:":
+                    engine.TopSpeed = ParseInt( value );
+                    break;
+                case "Acceleration 0-62 Mph (0-100 kph):":
+                    engine.Acceleration = ParseDecimal( value );
+                    break;
+                case "Drive Type:":
+                    engine.DriveType = value;
+                    break;
+                case "Gearbox:":
+                    engine.Gearbox = value;
+                    break;
+                case "Front Brakes:":
+                    engine.FrontBrakes = value;
+                    break;
+                case "Rear Brakes:":
+                    engine.RearBrakes = value;
+                    break;
+                case "Tire Size:":
+                    engine.TireSize = value;
+                    break;
+                case "Length:":
+                    engine.Length = value;
+                    break;
+                case "Width:":
+                    engine.Width = value;
+                    break;
+                case "Height:":
+                    engine.Height = value;
+                    break;
+                case "Front/Rear Track:":
+                    engine.FrontRearTrack = value;
+                    break;
+                case "Wheelbase:":
+                    engine.Wheelbase = value;
+                    break;
+                case "Ground Clearance:":
+                    engine.GroundClearance = value;
+                    break;
+                case "Cargo Volume:":
+                    engine.CargoVolume = value;
+                    break;
+                case "Unladen Weight:":
+                    engine.UnladenWeight = value;
+                    break;
+                case "Gross Weight Limit:":
+                    engine.GrossWeightLimit = value;
+                    break;
+                case "Fuel Economy (City):":
+                    engine.FuelEconomyCity = value;
+                    break;
+                case "Fuel Economy (Highway):":
+                    engine.FuelEconomyHighway = value;
+                    break;
+                case "Fuel Economy (Combined):":
+                    engine.FuelEconomyCombined = value;
+                    break;
+                case "CO2 Emissions:":
+                    engine.CO2Emissions = value;
+                    break;
+            }
+        }
+
+
+
+        private static decimal? ParseDecimal( string value ) {
+            if( string.IsNullOrWhiteSpace( value ) )
+                return null;
+
+            var num = value.Split( ' ' )[0].Replace( ',', '.' );
+            return decimal.TryParse( num, NumberStyles.Any, CultureInfo.InvariantCulture, out var d )
+                ? d
+                : null;
+        }
+
+        private static int? ParseInt( string value ) {
+            if( string.IsNullOrWhiteSpace( value ) )
+                return null;
+
+            var num = value.Split( ' ' )[0];
+            return int.TryParse( num, out var i ) ? i : null;
         }
 
 

@@ -9,5 +9,6 @@ namespace Review.Model.Interfaces {
     public interface ICarScraper {
         Task<List<CarManDTO>> GetBrandsAsync();
         Task<List<CarModDTO>> GetModelsAsync();
+        Task<IEnumerable<Car>> GetAllCarsFromWebAsync( Model model );
     }
 }

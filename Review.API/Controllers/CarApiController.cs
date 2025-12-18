@@ -141,7 +141,7 @@ namespace Review.Controllers {
         }
 
         [HttpPut( "{id:int}" )]
-        public async Task<ActionResult<CarDTO>> UpdateCar( int id, [FromBody] Car car ) {
+        public async Task<ActionResult<CarDTO>> UpdateCar( int id, [FromBody] CarDTO car ) {
             try {
 
                 Car existing = _dbContext.Cars.FirstOrDefault( p => p.ID == id );

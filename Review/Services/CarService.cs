@@ -25,13 +25,15 @@ namespace Review.Services {
         private CarManagerDbContext _dbContext;
         private readonly ILogger<CarService> _logger;
         private readonly IBrandService _brandService;
+        private readonly ICarScraper _carScraper;
 
         public CarService( CarManagerDbContext dbContext, HttpClient httpClient, TokenHandler tokenHandler, ILogger<CarService> logger,
-            UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor, IBrandService brandService )
+            UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor, IBrandService brandService, ICarScraper carScraper )
             : base( httpClient, userManager, httpContextAccessor, tokenHandler ) {
             _dbContext = dbContext ?? throw new ArgumentNullException( nameof( dbContext ) );
             _logger = logger ?? throw new ArgumentNullException( nameof( logger ) );
             _brandService = brandService;
+            _carScraper = carScraper;
         }
 
         //public bool IsCarModelNameUnique( string name ) {
@@ -141,12 +143,19 @@ namespace Review.Services {
 
         public async Task<bool> SyncCarsAsync( int id ) {
             try {
-                var cars = await GetAllCarsFromWebAsync( id );
+                //var cars = await GetAllCarsFromWebAsync( id );
+                var model = await _brandService.GetModelById( id );
+                var cars = await _carScraper.GetAllCarsFromWebAsync( model );
                 var allCars = await GetAllCarsAsync();
                 foreach( var car in cars ) {
                     var carExists = allCars.Where( x => x.ModelID == car.ModelID && x.Generation == car.Generation );
                     if( !carExists.Any() ) {
                         await CreateCarAsync( car );
+                    }
+                    else {
+                        var existingCarID = carExists.FirstOrDefault().ID;
+                        car.ID = existingCarID;
+                        await UpdateCarAsync( existingCarID, car );
                     }
                 }
                 return true;

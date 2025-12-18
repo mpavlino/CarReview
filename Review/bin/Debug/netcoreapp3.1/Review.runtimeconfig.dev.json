@@ -1,8 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\MirkoP\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\MirkoP\\.nuget\\packages"
-    ]
-  }
-}

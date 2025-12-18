@@ -18,6 +18,7 @@ namespace Review.Test {
         private Mock<HttpClient> _httpClientMock;
         private Mock<ILogger<CarService>> _loggerMock;
         private Mock<IBrandService> _brandServiceMock;
+        private Mock<ICarScraper> _carScraperMock;
         private Mock<TokenHandler> _tokenHandlerMock;
         private Mock<UserManager<AppUser>> _userManagerMock;
         private Mock<IHttpContextAccessor> _httpContextAccessorMock;
@@ -28,6 +29,7 @@ namespace Review.Test {
             _httpClientMock = new Mock<HttpClient>();
             _loggerMock = new Mock<ILogger<CarService>>();
             _brandServiceMock = new Mock<IBrandService>();
+            _carScraperMock = new Mock<ICarScraper>();
             _tokenHandlerMock = new Mock<TokenHandler>();
             _userManagerMock = new Mock<UserManager<AppUser>>();
             _httpContextAccessorMock = new Mock<IHttpContextAccessor>();
@@ -40,7 +42,8 @@ namespace Review.Test {
                 _loggerMock.Object,
                 _userManagerMock.Object,
                 _httpContextAccessorMock.Object,
-                _brandServiceMock.Object
+                _brandServiceMock.Object,
+                _carScraperMock.Object
             );
         }
 
