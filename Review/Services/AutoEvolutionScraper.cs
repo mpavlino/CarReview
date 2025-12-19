@@ -310,7 +310,38 @@ namespace Review.Services {
 
                                 try {
                                     var engines = await ScrapeEngineData( page, engineUrl );
-                                    car.Engines.AddRange( engines );
+                                    foreach( var dto in engines ) {
+                                        car.Engines.Add( new Engine {
+                                            Name = dto.Name,
+                                            Cylinders = dto.Cylinders,
+                                            Displacement = dto.Displacement,
+                                            Power = dto.Power,
+                                            Torque = dto.Torque,
+                                            FuelSystem = dto.FuelSystem,
+                                            FuelType = dto.FuelType,
+                                            FuelCapacity = dto.FuelCapacity,
+                                            TopSpeed = dto.TopSpeed,
+                                            Acceleration = dto.Acceleration,
+                                            DriveType = dto.DriveType,
+                                            Gearbox = dto.Gearbox,
+                                            FrontBrakes = dto.FrontBrakes,
+                                            RearBrakes = dto.RearBrakes,
+                                            TireSize = dto.TireSize,
+                                            Length = dto.Length,
+                                            Width = dto.Width,
+                                            Height = dto.Height,
+                                            FrontRearTrack = dto.FrontRearTrack,
+                                            Wheelbase = dto.Wheelbase,
+                                            GroundClearance = dto.GroundClearance,
+                                            CargoVolume = dto.CargoVolume,
+                                            UnladenWeight = dto.UnladenWeight,
+                                            GrossWeightLimit = dto.GrossWeightLimit,
+                                            FuelEconomyCity = dto.FuelEconomyCity,
+                                            FuelEconomyHighway = dto.FuelEconomyHighway,
+                                            FuelEconomyCombined = dto.FuelEconomyCombined,
+                                            CO2Emissions = dto.CO2Emissions
+                                        } );
+                                    }
                                 }
                                 catch( Exception ex ) {
                                     _logger.LogWarning( ex, $"Engine scrape failed: {engineUrl}" );
@@ -338,11 +369,11 @@ namespace Review.Services {
         }
 
 
-        private async Task<List<Model.Engine>> ScrapeEngineData(
+        private async Task<List<EngineDTO>> ScrapeEngineData(
             IPage page,
             string engineUrl
         ) {
-            var engines = new List<Model.Engine>();
+            var engines = new List<EngineDTO>();
 
             try {
                 await page.GotoAsync( engineUrl, new() {
@@ -353,45 +384,48 @@ namespace Review.Services {
                 await page.WaitForTimeoutAsync( 500 );
 
                 var raw = await page.EvaluateAsync<JsonElement>(
-        @"() => {
-    const hash = location.hash?.replace('#', '');
-    if (!hash) return [];
-
-    const container = document.getElementById(hash.replace('aeng_', ''));
-    if (!container) return [];
-
-    const tables = container.querySelectorAll('table.techdata');
-    if (!tables.length) return [];
-
-    const engines = [];
-
-    tables.forEach(table => {
-        const engine = {};
-
-        const titleEl = table.querySelector('th.title span.col-green');
-        if (titleEl)
-            engine.name = titleEl.innerText.trim();
-
-        table.querySelectorAll('tr').forEach(row => {
-            const k = row.querySelector('td.left strong');
-            const v = row.querySelector('td.right');
-            if (!k || !v) return;
-
-            engine[k.innerText.trim()] = v.innerText.trim();
-        });
-
-        engines.push(engine);
-    });
-
-    return engines;
-}"
+                    @"() => {
+                        const hash = location.hash?.replace('#', '');
+                        if (!hash) return null;
+                    
+                        const container = document.getElementById(hash.replace('aeng_li_', ''));
+                        if (!container) return null;
+                    
+                        // 🔑 parent svih engine tablica
+                        const engineData = container.querySelector('div.enginedata');
+                        if (!engineData) return null;
+                    
+                        const tables = engineData.querySelectorAll('table.techdata');
+                        if (!tables.length) return null;
+                    
+                        const engine = {};
+                    
+                        tables.forEach(table => {
+                            // ime motora (samo jednom)
+                            const titleEl = table.querySelector('th.title span.col-green');
+                            if (titleEl && !engine.name)
+                                engine.name = titleEl.innerText.trim();
+                    
+                            // key-value redovi
+                            table.querySelectorAll('tr').forEach(row => {
+                                const k = row.querySelector('td.left strong');
+                                const v = row.querySelector('td.right');
+                                if (!k || !v) return;
+                    
+                                engine[k.innerText.trim()] = v.innerText.trim();
+                            });
+                        });
+                    
+                        return engine;
+                    }"
                 );
+
 
                 if( raw.ValueKind != JsonValueKind.Array )
                     return engines;
 
                 foreach( var e in raw.EnumerateArray() ) {
-                    var engine = new Model.Engine();
+                    var engine = new EngineDTO();
 
                     if( e.TryGetProperty( "name", out var n ) )
                         engine.Name = n.GetString();
@@ -414,7 +448,7 @@ namespace Review.Services {
         }
 
 
-        private static void MapEngineProperty( Model.Engine engine, string key, string value ) {
+        private static void MapEngineProperty( EngineDTO engine, string key, string value ) {
             switch( key ) {
                 case "Cylinders:":
                     engine.Cylinders = value;
