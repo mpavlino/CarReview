@@ -257,7 +257,7 @@ namespace Review.Services {
                         var genData = await page.EvaluateAsync<JsonElement>(
         @"() => {
     const h1 = document.querySelector('h1 a');
-    const img = document.querySelector('img.curpo');
+    const img = document.querySelector('div.curpo img');
     const desc = document.querySelector('div.modelbox p');
     const years = document.querySelector('span.motlisthead_years');
 

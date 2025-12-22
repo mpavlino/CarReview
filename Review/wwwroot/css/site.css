@@ -184,6 +184,14 @@ body {
     white-space: pre-wrap;
 }
 
+td {
+    vertical-align: middle !important;
+}
+
+table {
+    border-collapse: collapse !important;
+}
+
 .home-title {
     font-size: 38px;
     font-weight: 700;

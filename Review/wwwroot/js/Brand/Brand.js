@@ -48,6 +48,8 @@ var BrandsModule = (function () {
                 tableLoader.style.display = 'none';
                 //overlay.style.display = 'none';
                 //datatable.attributes.removeNamedItem("style");
+                const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+                const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
             });
         } catch (error) {
             console.error("Error initializing DataTable:", error);

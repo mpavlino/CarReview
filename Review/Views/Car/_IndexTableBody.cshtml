@@ -22,7 +22,7 @@ else {
         <tr>
             <td style="display: none;"></td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.ID">@item.Generation</a>
+                <a class="text-decoration-none" asp-action="Details" asp-route-id="@item.ID">@item.Generation</a>
             </td>
             <td style="display: none;"></td>
             <td class="d-none d-md-table-cell">
@@ -31,7 +31,7 @@ else {
                 </div>
                 @String.Format( "{0}", item.Rating > 0 ? item.Rating.ToString() : "" )
             </td>
-            <td>
+            <td class="text-center">
                 <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm d-none d-md-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="Details"><i class="bi-box-arrow-up-right"></i></a>
                 @if( User.IsInRole( "Administrator" ) ) {
                     <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi-pencil-square"></i></a>
