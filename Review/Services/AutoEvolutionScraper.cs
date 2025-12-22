@@ -384,58 +384,53 @@ namespace Review.Services {
                 await page.WaitForTimeoutAsync( 500 );
 
                 var raw = await page.EvaluateAsync<JsonElement>(
-                    @"() => {
-                        const hash = location.hash?.replace('#', '');
-                        if (!hash) return null;
-                    
-                        const container = document.getElementById(hash.replace('aeng_li_', ''));
-                        if (!container) return null;
-                    
-                        // 🔑 parent svih engine tablica
-                        const engineData = container.querySelector('div.enginedata');
-                        if (!engineData) return null;
-                    
-                        const tables = engineData.querySelectorAll('table.techdata');
-                        if (!tables.length) return null;
-                    
-                        const engine = {};
-                    
-                        tables.forEach(table => {
-                            // ime motora (samo jednom)
-                            const titleEl = table.querySelector('th.title span.col-green');
-                            if (titleEl && !engine.name)
-                                engine.name = titleEl.innerText.trim();
-                    
-                            // key-value redovi
-                            table.querySelectorAll('tr').forEach(row => {
-                                const k = row.querySelector('td.left strong');
-                                const v = row.querySelector('td.right');
-                                if (!k || !v) return;
-                    
-                                engine[k.innerText.trim()] = v.innerText.trim();
-                            });
-                        });
-                    
-                        return engine;
-                    }"
+        @"() => {
+    const hash = location.hash?.replace('#', '');
+    if (!hash) return null;
+
+    const container = document.getElementById(hash.replace('aeng_li_', ''));
+    if (!container) return null;
+
+    const engineData = container.querySelector('div.enginedata');
+    if (!engineData) return null;
+
+    const tables = engineData.querySelectorAll('table.techdata');
+    if (!tables.length) return null;
+
+    const engine = {};
+
+    tables.forEach(table => {
+        const titleEl = table.querySelector('th.title span.col-green');
+        if (titleEl && !engine.name)
+            engine.name = titleEl.innerText.trim();
+
+        table.querySelectorAll('tr').forEach(row => {
+            const k = row.querySelector('td.left strong');
+            const v = row.querySelector('td.right');
+            if (!k || !v) return;
+
+            engine[k.innerText.trim()] = v.innerText.trim();
+        });
+    });
+
+    return engine;
+}"
                 );
 
-
-                if( raw.ValueKind != JsonValueKind.Array )
+                // 🔑 SAD PROVJERAVAMO OBJECT, NE ARRAY
+                if( raw.ValueKind != JsonValueKind.Object )
                     return engines;
 
-                foreach( var e in raw.EnumerateArray() ) {
-                    var engine = new EngineDTO();
+                var engine = new EngineDTO();
 
-                    if( e.TryGetProperty( "name", out var n ) )
-                        engine.Name = n.GetString();
+                if( raw.TryGetProperty( "name", out var n ) )
+                    engine.Name = n.GetString();
 
-                    foreach( var p in e.EnumerateObject() ) {
-                        MapEngineProperty( engine, p.Name, p.Value.GetString() );
-                    }
-
-                    engines.Add( engine );
+                foreach( var p in raw.EnumerateObject() ) {
+                    MapEngineProperty( engine, p.Name, p.Value.GetString() );
                 }
+
+                engines.Add( engine );
             }
             catch( TimeoutException ex ) {
                 _logger.LogWarning( ex, $"Engine timeout: {engineUrl}" );
