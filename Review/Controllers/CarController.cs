@@ -218,6 +218,20 @@ namespace Review.Controllers {
             }
         }
 
+        public async Task<IActionResult> EngineDetails( int id ) {
+            try {
+                var engine = await _carService.GetEngineDataByIdAsync( id );
+                if( engine == null ) {
+                    return NotFound();
+                }
+                return View( engine );
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, "An error occurred while preparing the engine details view." );
+                return View( "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = ex.Message } );
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> Blog( int id ) {
             try {

@@ -181,6 +181,28 @@ namespace Review.Controllers {
         }
         #endregion
 
+        #region Engine 
+
+        [HttpGet( "engines/{id:int}" )]
+        public ActionResult<EngineDTO> GetEngineById( int id ) {
+            try {
+                var engine = _dbContext.Engines
+                    .Where( e => e.ID == id )
+                    .Select( EngineDTO.SelectorExpression )
+                    .FirstOrDefault();
+                if( engine == null ) {
+                    return NotFound( new { message = "Engine not found" } );
+                }
+                return Ok( engine );
+            }
+            catch( Exception ex ) {
+                return StatusCode( 500, new { message = ex.Message } );
+            }
+        }
+
+        #endregion
+
+
         #region CarReview
 
 

@@ -1,0 +1,163 @@
+﻿@using Microsoft.AspNetCore.Html
+@model Engine
+
+@{
+    ViewData["Title"] = $"Detalji motora {Model.Name}";
+}
+
+@* <ol class="breadcrumb">
+    <li><a asp-action="Index">Cars list /</a></li>
+    <li class="active">&nbsp;@Model.Car.Generation</li>
+</ol> *@
+
+<!-- Header -->
+<div class="pagetitle mb-2">
+    <h4 class="fw-bold">@Model.Name</h4>
+    <p class="text-muted">
+        @Model.Car?.Brand?.Name @Model.Car?.Model?.Name
+    </p>
+</div>
+
+<div class="row g-4">
+
+    <!-- Engine specifications -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-primary text-white">
+                Specifikacije motora
+            </div>
+            <div class="card-body mt-1">
+                <dl class="row mb-0">
+                    @Display( "Cilindri", Model.Cylinders )
+                    @Display( "Zapremina", Model.Displacement )
+                    @Display( "Snaga", Model.Power )
+                    @Display( "Okretni moment", Model.Torque )
+                    @Display( "Sustav goriva", Model.FuelSystem )
+                    @Display( "Vrsta goriva", Model.FuelType )
+                    @Display( "Kapacitet spremnika", Model.FuelCapacity, "L" )
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-success text-white">
+                Performanse
+            </div>
+            <div class="card-body mt-1">
+                <dl class="row mb-0">
+                    @Display( "Maks. brzina", Model.TopSpeed, "km/h" )
+                    @Display( "Ubrzanje (0–100)", Model.Acceleration, "s" )
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transmission -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-secondary text-white">
+                Prijenos
+            </div>
+            <div class="card-body mt-1">
+                <dl class="row mb-0">
+                    @Display( "Pogon", Model.DriveType )
+                    @Display( "Mjenjač", Model.Gearbox )
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <!-- Brakes & Tires -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-dark text-white">
+                Kočnice i gume
+            </div>
+            <div class="card-body mt-1">
+                <dl class="row mb-0">
+                    @Display( "Prednje kočnice", Model.FrontBrakes )
+                    @Display( "Stražnje kočnice", Model.RearBrakes )
+                    @Display( "Dimenzija guma", Model.TireSize )
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dimensions -->
+    <div class="col-md-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">
+                Dimenzije
+            </div>
+            <div class="card-body mt-1">
+                <dl class="row mb-0">
+                    @Display( "Dužina", Model.Length )
+                    @Display( "Širina", Model.Width )
+                    @Display( "Visina", Model.Height )
+                    @Display( "Međuosovinski razmak", Model.Wheelbase )
+                    @Display( "Trag kotača", Model.FrontRearTrack )
+                    @Display( "Udaljenost od tla", Model.GroundClearance )
+                    @Display( "Prtljažni prostor", Model.CargoVolume )
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weight & Fuel -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-warning">
+                Masa
+            </div>
+            <div class="card-body mt-1">
+                <dl class="row mb-0">
+                    @Display( "Masa praznog vozila", Model.UnladenWeight )
+                    @Display( "Dopuštena ukupna masa", Model.GrossWeightLimit )
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-danger text-white">
+                Potrošnja i emisije
+            </div>
+            <div class="card-body mt-1">
+                <dl class="row mb-0">
+                    @Display( "Grad", Model.FuelEconomyCity )
+                    @Display( "Otvorena cesta", Model.FuelEconomyHighway )
+                    @Display( "Kombinirano", Model.FuelEconomyCombined )
+                    @Display( "CO₂ emisije", Model.CO2Emissions )
+                </dl>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="mt-4">
+    <a asp-action="Details" asp-controller="Car" asp-route-id="@Model.CarID"
+       class="btn btn-outline-secondary">
+        ← Natrag na automobil
+    </a>
+</div>
+
+
+@functions {
+    public IHtmlContent Display( string label, object value, string suffix = null ) {
+        if( value == null || string.IsNullOrWhiteSpace( value.ToString() ) )
+            return Html.Raw( "" );
+
+        var suffixText = suffix != null ? " " + suffix : "";
+
+        return Html.Raw( $@"
+            <dt class='col-sm-5'>{label}</dt>
+            <dd class='col-sm-7'>{value}{suffixText}</dd>
+        " );
+    }
+}
+

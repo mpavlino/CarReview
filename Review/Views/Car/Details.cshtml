@@ -91,7 +91,7 @@
                                 <ul class="list-unstyled mb-0">
                                     @foreach( var engine in group ) {
                                         <li class="engine-item fw-semibold">
-                                            <i class="bi-caret-right-fill primary-color"></i><a href="#" class="text-decoration-none text-dark engine-link">@engine.Name</a>
+                                            <i class="bi-caret-right-fill primary-color"></i><a asp-action="EngineDetails" asp-route-id="@engine.ID" class="text-decoration-none text-dark engine-link">@engine.Name</a>
                                         </li>
                                     }
                                 </ul>

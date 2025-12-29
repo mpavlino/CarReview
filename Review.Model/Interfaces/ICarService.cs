@@ -12,6 +12,7 @@ namespace Review.Model.Interfaces {
         bool IsCarGenerationNameUnique( string name );
         Task<IEnumerable<Car>> GetAllCarsAsync();
         Task<Car> GetCarByIdAsync( int id );
+        Task<Engine> GetEngineDataByIdAsync( int id );
         Task<IEnumerable<Car>> SearchCarsAsync( CarFilterModel filter );
         Task<IEnumerable<Car>> SearchCarsByTextAsync( string query );
         Task<bool> CreateCarAsync( Car car );

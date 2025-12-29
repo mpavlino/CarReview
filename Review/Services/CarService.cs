@@ -72,6 +72,20 @@ namespace Review.Services {
             }
         }
 
+        public async Task<Model.Engine> GetEngineDataByIdAsync( int id ) {
+            try {
+                await SetAuthorizationHeaderAsync();
+                var response = await _httpClient.GetAsync( $"api/cars/engines/{id}" );
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<Model.Engine>();
+            }
+            catch( Exception ex ) {
+                _logger.LogError( ex, $"An error occurred while getting car engine with ID {id}." );
+                throw new Exception( ex.Message );
+            }
+        }
+
         public async Task<IEnumerable<Car>> SearchCarsAsync( CarFilterModel filter ) {
             try {
                 await SetAuthorizationHeaderAsync();
